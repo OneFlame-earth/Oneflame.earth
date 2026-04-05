@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <!-- Dark background circle -->
+  <circle cx="16" cy="16" r="16" fill="#0A0806"/>
+  <!-- Candle body -->
+  <rect x="13" y="20" width="6" height="8" rx="1" fill="#D4C4A8"/>
+  <!-- Wick -->
+  <line x1="16" y1="20" x2="16" y2="17" stroke="#2A1A0A" stroke-width="1.2" stroke-linecap="round"/>
+  <!-- Outer flame glow -->
+  <ellipse cx="16" cy="13" rx="5" ry="7" fill="#E05A1B" opacity="0.6"/>
+  <!-- Main flame -->
+  <path d="M16 5 C16 5 20 10 20 14 C20 17 18.2 19 16 19 C13.8 19 12 17 12 14 C12 10 16 5 16 5Z" fill="#C8963E"/>
+  <!-- Inner flame highlight -->
+  <path d="M16 9 C16 9 18 12 18 14.5 C18 16 17.1 17 16 17 C14.9 17 14 16 14 14.5 C14 12 16 9 16 9Z" fill="#F5DFA8"/>
+  <!-- Tiny white tip -->
+  <ellipse cx="16" cy="10" rx="1.2" ry="1.8" fill="#FDFAF5" opacity="0.9"/>
+</svg>
