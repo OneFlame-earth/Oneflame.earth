@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>All Flames — One Flame</title>
+<meta name="description" content="Every flame burning on the One Flame global peace map. Live public ledger.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #C8963E; --gold-light: #E8B86D; --ember: #E05A1B;
+    --deep: #0A0806; --dark: #13100A; --mid: #1E1810; --smoke: #2A211A;
+    --text: #F0E6D3; --text-muted: #9A8570; --white: #FDFAF5;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--deep); color: var(--text); font-family: 'DM Sans', sans-serif; font-weight: 300; min-height: 100vh; }
+
+  .page-header { background: rgba(10,8,6,0.96); border-bottom: 1px solid rgba(200,150,62,0.15); padding: 0 24px; height: 52px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 10; }
+  .header-logo { font-family: 'Cormorant Garamond', serif; font-size: 16px; font-weight: 400; color: var(--gold); letter-spacing: 0.15em; text-decoration: none; text-transform: uppercase; }
+  .header-right { display: flex; gap: 10px; align-items: center; }
+  .btn-nav { font-size: 11px; color: var(--text-muted); text-decoration: none; padding: 5px 12px; border: 1px solid rgba(200,150,62,0.2); border-radius: 2px; transition: all 0.2s; }
+  .btn-nav:hover { color: var(--gold); border-color: var(--gold); }
+  .btn-gold { background: var(--gold); color: var(--deep); font-size: 11px; font-weight: 500; text-decoration: none; padding: 6px 14px; border-radius: 2px; transition: all 0.2s; }
+  .btn-gold:hover { background: var(--gold-light); }
+
+  .hero { padding: 48px 24px 32px; text-align: center; border-bottom: 1px solid rgba(200,150,62,0.08); }
+  .hero-eyebrow { font-size: 11px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); margin-bottom: 12px; }
+  .hero-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(36px, 6vw, 64px); font-weight: 300; color: var(--white); line-height: 1.1; margin-bottom: 8px; }
+  .hero-title em { font-style: italic; color: var(--gold-light); }
+  .hero-sub { font-size: 14px; color: var(--text-muted); margin-bottom: 24px; }
+
+  .stats-row { display: flex; justify-content: center; gap: 32px; flex-wrap: wrap; }
+  .stat { text-align: center; }
+  .stat-num { font-family: 'Cormorant Garamond', serif; font-size: 40px; font-weight: 300; color: var(--gold); line-height: 1; display: block; }
+  .stat-label { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-muted); margin-top: 4px; display: block; }
+
+  .filters { padding: 16px 24px; display: flex; gap: 10px; align-items: center; flex-wrap: wrap; border-bottom: 1px solid rgba(200,150,62,0.06); max-width: 1100px; margin: 0 auto; width: 100%; }
+  .filter-label { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); }
+  .filter-input { background: rgba(200,150,62,0.05); border: 1px solid rgba(200,150,62,0.2); border-radius: 3px; color: var(--text); font-family: 'DM Sans', sans-serif; font-size: 13px; padding: 6px 12px; outline: none; transition: border-color 0.2s; flex: 1; min-width: 180px; max-width: 280px; }
+  .filter-input:focus { border-color: var(--gold); }
+  .filter-input::placeholder { color: var(--text-muted); opacity: 0.6; }
+
+  .ledger { max-width: 1100px; margin: 0 auto; padding: 0 24px 60px; }
+
+  .ledger-table { width: 100%; border-collapse: collapse; margin-top: 8px; }
+  .ledger-table th { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-muted); padding: 12px 16px; text-align: left; border-bottom: 1px solid rgba(200,150,62,0.12); font-weight: 400; }
+  .ledger-table td { padding: 14px 16px; border-bottom: 1px solid rgba(200,150,62,0.06); vertical-align: middle; }
+  .ledger-table tr { transition: background 0.15s; }
+  .ledger-table tr:hover td { background: rgba(200,150,62,0.03); }
+
+  .flame-code { font-family: monospace; font-size: 15px; color: var(--gold); letter-spacing: 0.15em; font-weight: 700; }
+  .flame-nick { font-size: 14px; color: var(--white); }
+  .flame-anon { font-size: 13px; color: var(--text-muted); font-style: italic; }
+  .flame-intention { font-size: 13px; color: var(--text-muted); font-style: italic; max-width: 220px; }
+  .flame-location { font-size: 12px; color: var(--text-muted); }
+  .flame-time { font-size: 12px; color: var(--text-muted); white-space: nowrap; }
+  .flame-actions { display: flex; gap: 8px; align-items: center; }
+  .btn-map { font-size: 11px; color: var(--text-muted); text-decoration: none; padding: 4px 10px; border: 1px solid rgba(200,150,62,0.2); border-radius: 2px; transition: all 0.2s; white-space: nowrap; cursor: pointer; background: none; font-family: 'DM Sans', sans-serif; }
+  .btn-map:hover { color: var(--gold); border-color: var(--gold); }
+
+  .time-bar { height: 3px; background: rgba(200,150,62,0.1); border-radius: 2px; margin-top: 4px; overflow: hidden; min-width: 80px; }
+  .time-fill { height: 100%; background: linear-gradient(90deg, var(--ember), var(--gold)); border-radius: 2px; }
+
+  .loading-state { text-align: center; padding: 60px 24px; color: var(--text-muted); font-size: 14px; }
+  .loading-flame { font-size: 32px; display: block; margin-bottom: 12px; animation: pulse 1s ease-in-out infinite; }
+  @keyframes pulse { 0%,100%{opacity:0.7} 50%{opacity:1} }
+
+  .empty-state { text-align: center; padding: 60px 24px; }
+  .empty-flame { font-size: 48px; margin-bottom: 16px; display: block; }
+  .empty-title { font-family: 'Cormorant Garamond', serif; font-size: 28px; font-weight: 300; color: var(--white); margin-bottom: 8px; }
+  .empty-sub { font-size: 14px; color: var(--text-muted); margin-bottom: 24px; }
+
+  .live-dot { display: inline-block; width: 7px; height: 7px; background: var(--gold); border-radius: 50%; margin-right: 6px; animation: blink 2s ease-in-out infinite; }
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+  @media (max-width: 700px) {
+    .ledger-table th:nth-child(4), .ledger-table td:nth-child(4),
+    .ledger-table th:nth-child(5), .ledger-table td:nth-child(5) { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<header class="page-header">
+  <a href="index.html" class="header-logo">One Flame</a>
+  <div class="header-right">
+    <a href="map.html" class="btn-nav">🗺 Live Map</a>
+    <a href="map.html" class="btn-gold">🕯 Light a Flame</a>
+    <a href="index.html" class="btn-nav">← Home</a>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="hero-eyebrow"><span class="live-dot"></span>Live · Updates every 30 seconds</div>
+  <h1 class="hero-title">Every <em>Flame</em> Burning</h1>
+  <p class="hero-sub">A public record of every candle lit for peace. Real people. Real places. Real voices.</p>
+  <div class="stats-row">
+    <div class="stat">
+      <span class="stat-num" id="totalCount">0</span>
+      <span class="stat-label">Total flames</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num" id="countryCount">0</span>
+      <span class="stat-label">Regions</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num" id="todayCount">0</span>
+      <span class="stat-label">Lit today</span>
+    </div>
+  </div>
+</div>
+
+<div class="filters">
+  <span class="filter-label">Search</span>
+  <input class="filter-input" id="searchInput" type="text" placeholder="Search by code, name or intention..." oninput="renderTable()">
+</div>
+
+<div class="ledger">
+  <div id="loadingState" class="loading-state">
+    <span class="loading-flame">🕯</span>
+    Loading all flames...
+  </div>
+  <div id="emptyState" class="empty-state" style="display:none">
+    <span class="empty-flame">🕯</span>
+    <div class="empty-title">No flames yet</div>
+    <p class="empty-sub">Be the first to light a flame for peace.</p>
+    <a href="map.html" class="btn-gold" style="display:inline-block;padding:12px 28px;border-radius:3px;">Light the first flame</a>
+  </div>
+  <table class="ledger-table" id="ledgerTable" style="display:none">
+    <thead>
+      <tr>
+        <th>Code</th>
+        <th>Name</th>
+        <th>Intention</th>
+        <th>Location</th>
+        <th>Time remaining</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody id="ledgerBody"></tbody>
+  </table>
+</div>
+
+<script>
+const SUPABASE_URL = 'https://rytjvdptbjnlhayclcvu.supabase.co';
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJ5dGp2ZHB0YmpubGhheWNsY3Z1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzUzMzA1MjksImV4cCI6MjA5MDkwNjUyOX0.y6qVpN-tJKafDVY_yUk0K6yQ9xXYy5xfIhFoJvqWf48';
+
+let allCandles = [];
+
+function timeRemaining(expiresAt) {
+  const diff = new Date(expiresAt) - new Date();
+  if (diff <= 0) return { text: 'Expired', pct: 0 };
+  const days = Math.floor(diff / 86400000);
+  const hours = Math.floor((diff % 86400000) / 3600000);
+  const total = 7 * 24 * 3600000;
+  const pct = Math.min((diff / total) * 100, 100);
+  return { text: days > 0 ? `${days}d ${hours}h` : `${hours}h`, pct };
+}
+
+function shareCandle(code) {
+  const url = `https://oneflame.earth/map.html?candle=${code}`;
+  if (navigator.share) {
+    navigator.share({ title: 'One Flame', text: `Find flame ${code} on the peace map`, url });
+  } else {
+    navigator.clipboard.writeText(url).then(() => alert('Link copied!'));
+  }
+}
+
+async function loadCandles() {
+  const now = new Date().toISOString();
+  const res = await fetch(`${SUPABASE_URL}/rest/v1/candles?payment_confirmed=eq.true&expires_at=gt.${encodeURIComponent(now)}&select=*&order=created_at.desc`, {
+    headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}` }
+  });
+  return res.json();
+}
+
+function renderTable() {
+  const query = (document.getElementById('searchInput')?.value || '').toLowerCase();
+  const filtered = allCandles.filter(c =>
+    !query ||
+    c.code.toLowerCase().includes(query) ||
+    (c.nickname || '').toLowerCase().includes(query) ||
+    (c.intention || '').toLowerCase().includes(query) ||
+    (c.location_name || '').toLowerCase().includes(query)
+  );
+
+  const tbody = document.getElementById('ledgerBody');
+  tbody.innerHTML = filtered.map(c => {
+    const tr = timeRemaining(c.expires_at);
+    return `<tr>
+      <td><div class="flame-code">🕯 ${c.code}</div></td>
+      <td>${c.nickname ? `<div class="flame-nick">${c.nickname}</div>` : '<div class="flame-anon">Anonymous</div>'}</td>
+      <td><div class="flame-intention">${c.intention || 'Peace'}</div></td>
+      <td><div class="flame-location">📍 ${c.location_name || 'The World'}</div></td>
+      <td>
+        <div class="flame-time">${tr.text}</div>
+        <div class="time-bar"><div class="time-fill" style="width:${tr.pct}%"></div></div>
+      </td>
+      <td>
+        <div class="flame-actions">
+          <a href="map.html?candle=${c.code}" class="btn-map">View on map</a>
+          <button class="btn-map" onclick="shareCandle('${c.code}')">Share</button>
+        </div>
+      </td>
+    </tr>`;
+  }).join('');
+
+  if (filtered.length === 0 && query) {
+    tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;padding:40px;color:var(--text-muted);font-size:14px;">No flames found matching "${query}"</td></tr>`;
+  }
+}
+
+function updateStats() {
+  document.getElementById('totalCount').textContent = allCandles.length.toLocaleString();
+  const regions = new Set(allCandles.map(c => c.location_name)).size;
+  document.getElementById('countryCount').textContent = regions;
+  const today = allCandles.filter(c => {
+    const created = new Date(c.created_at);
+    const now = new Date();
+    return created.toDateString() === now.toDateString();
+  }).length;
+  document.getElementById('todayCount').textContent = today;
+}
+
+async function init() {
+  try {
+    allCandles = await loadCandles();
+    document.getElementById('loadingState').style.display = 'none';
+
+    if (allCandles.length === 0) {
+      document.getElementById('emptyState').style.display = 'block';
+    } else {
+      document.getElementById('ledgerTable').style.display = 'table';
+      renderTable();
+      updateStats();
+    }
+  } catch(e) {
+    document.getElementById('loadingState').innerHTML = '<span class="loading-flame">⚠️</span>Could not load flames. Please refresh.';
+    console.error(e);
+  }
+
+  setInterval(async () => {
+    try {
+      allCandles = await loadCandles();
+      renderTable();
+      updateStats();
+    } catch(e) {}
+  }, 30000);
+}
+
+window.addEventListener('load', init);
+</script>
+</body>
+</html>
