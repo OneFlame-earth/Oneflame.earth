@@ -1,0 +1,984 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Living Map — One Flame</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="apple-touch-icon" href="favicon.svg">
+<meta name="theme-color" content="#0A0806">
+<meta name="description" content="Place your candle on the global peace map. Find flames lit by people around the world.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="One Flame">
+<meta property="og:title" content="One Flame — The Living Peace Map">
+<meta property="og:description" content="Someone lit a flame for peace. Join them. £0.99. Burns for 7 days. oneflame.earth">
+<meta property="og:image" content="https://oneflame.earth/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:alt" content="One Flame — Light your flame for peace. oneflame.earth">
+<meta property="og:url" content="https://oneflame.earth/map.html">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="One Flame — The Living Peace Map">
+<meta name="twitter:description" content="Someone lit a flame for peace. Join them. £0.99. Burns for 7 days.">
+<meta name="twitter:image" content="https://oneflame.earth/og-image.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #C8963E;
+    --gold-light: #E8B86D;
+    --ember: #E05A1B;
+    --deep: #0A0806;
+    --dark: #13100A;
+    --mid: #1E1810;
+    --smoke: #2A211A;
+    --text: #F0E6D3;
+    --text-muted: #9A8570;
+    --white: #FDFAF5;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; overflow: hidden; }
+  body { background: var(--deep); color: var(--text); font-family: 'DM Sans', sans-serif; font-weight: 300; display: flex; flex-direction: column; }
+  .map-header { background: rgba(10,8,6,0.96); border-bottom: 1px solid rgba(200,150,62,0.15); padding: 0 20px; height: 50px; display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; z-index: 10; }
+  .header-logo { font-family: 'Cormorant Garamond', serif; font-size: 16px; font-weight: 400; color: var(--gold); letter-spacing: 0.15em; text-decoration: none; text-transform: uppercase; }
+  .header-right { display: flex; align-items: center; gap: 12px; }
+  .live-count { font-size: 11px; color: var(--text-muted); letter-spacing: 0.05em; }
+  .live-count strong { color: var(--gold); }
+  .btn-nav { font-size: 11px; color: var(--text-muted); text-decoration: none; padding: 5px 12px; border: 1px solid rgba(200,150,62,0.2); border-radius: 2px; transition: all 0.2s; }
+  .btn-nav:hover { color: var(--gold); border-color: var(--gold); }
+  .map-wrap { flex: 1; position: relative; overflow: hidden; }
+  #mapSvg { width: 100%; height: 100%; cursor: crosshair; display: block; }
+  .hint-bar { position: absolute; bottom: 16px; left: 50%; transform: translateX(-50%); background: rgba(10,8,6,0.85); border: 1px solid rgba(200,150,62,0.2); border-radius: 20px; padding: 8px 20px; font-size: 12px; color: var(--text-muted); letter-spacing: 0.05em; pointer-events: none; white-space: nowrap; backdrop-filter: blur(8px); }
+  .map-tooltip { position: fixed; background: rgba(10,8,6,0.9); border: 1px solid rgba(200,150,62,0.2); border-radius: 3px; padding: 4px 10px; font-size: 11px; color: var(--gold); pointer-events: none; z-index: 200; white-space: nowrap; display: none; }
+
+  /* MOBILE OVERLAY BACKDROP */
+  .popup-backdrop {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 40;
+    backdrop-filter: blur(2px);
+  }
+  .popup-backdrop.visible { display: block; }
+
+  /* DESKTOP POPUP */
+  .candle-popup {
+    position: absolute;
+    background: var(--smoke);
+    border: 1px solid rgba(200,150,62,0.3);
+    border-radius: 6px;
+    padding: 20px;
+    width: 300px;
+    z-index: 50;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.6);
+    animation: popIn 0.2s ease;
+    max-height: calc(100vh - 100px);
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* MOBILE BOTTOM SHEET */
+  @media (max-width: 600px) {
+    .candle-popup {
+      position: fixed !important;
+      bottom: 0 !important;
+      left: 0 !important;
+      right: 0 !important;
+      top: auto !important;
+      width: 100% !important;
+      max-width: 100% !important;
+      border-radius: 16px 16px 0 0 !important;
+      max-height: 85vh !important;
+      overflow-y: auto !important;
+      -webkit-overflow-scrolling: touch !important;
+      z-index: 50 !important;
+      animation: slideUp 0.3s ease !important;
+      padding-bottom: max(20px, env(safe-area-inset-bottom)) !important;
+    }
+
+    .hint-bar { font-size: 11px; padding: 7px 16px; bottom: 12px; }
+    .header-right .btn-nav:last-child { display: none; }
+  }
+
+  @keyframes slideUp {
+    from { transform: translateY(100%); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+
+  /* MOBILE DRAG HANDLE */
+  .popup-handle {
+    display: none;
+    width: 40px;
+    height: 4px;
+    background: rgba(200,150,62,0.3);
+    border-radius: 2px;
+    margin: 0 auto 16px;
+  }
+
+  @media (max-width: 600px) {
+    .popup-handle { display: block; }
+  }
+
+  @keyframes popIn { from { opacity: 0; transform: scale(0.92); } to { opacity: 1; transform: scale(1); } }
+  .popup-close { position: absolute; top: 10px; right: 12px; background: none; border: none; color: var(--text-muted); font-size: 22px; cursor: pointer; padding: 4px 8px; min-width: 36px; min-height: 36px; display: flex; align-items: center; justify-content: center; }
+  .popup-location { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold); margin-bottom: 6px; }
+  .popup-title { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 300; color: var(--white); margin-bottom: 14px; }
+
+  .popup-divider { border: none; border-top: 1px solid rgba(200,150,62,0.1); margin: 12px 0; }
+  .popup-label { font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 5px; display: block; }
+  .popup-code-display { background: rgba(200,150,62,0.08); border: 1px solid rgba(200,150,62,0.2); border-radius: 3px; padding: 8px 12px; font-family: monospace; font-size: 20px; color: var(--gold); letter-spacing: 0.25em; text-align: center; margin-bottom: 12px; font-weight: 700; }
+  .popup-input { width: 100%; background: rgba(200,150,62,0.05); border: 1px solid rgba(200,150,62,0.2); border-radius: 3px; color: var(--text); font-family: 'DM Sans', sans-serif; font-size: 13px; padding: 9px 12px; margin-bottom: 10px; outline: none; transition: border-color 0.2s; }
+  .popup-input:focus { border-color: var(--gold); }
+  .popup-input::placeholder { color: var(--text-muted); opacity: 0.6; }
+  select.popup-input { background-color: #1E1810; color: var(--text); }
+  select.popup-input option { background-color: #ffffff; color: #1a1a1a; font-size: 14px; padding: 6px; }
+  .intent-chips { display: flex; gap: 5px; flex-wrap: wrap; margin-bottom: 10px; }
+  .intent-chip { padding: 4px 10px; border: 1px solid rgba(200,150,62,0.2); border-radius: 12px; font-size: 11px; color: var(--text-muted); cursor: pointer; background: none; font-family: 'DM Sans', sans-serif; transition: all 0.2s; }
+  .intent-chip:hover, .intent-chip.active { border-color: var(--gold); color: var(--gold); background: rgba(200,150,62,0.08); }
+  .popup-cta { width: 100%; background: var(--gold); border: none; color: var(--deep); font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 500; padding: 14px; border-radius: 3px; cursor: pointer; transition: all 0.2s; letter-spacing: 0.06em; text-transform: uppercase; margin-top: 4px; min-height: 48px; }
+  .popup-cta:hover { background: var(--gold-light); }
+  .popup-cta:disabled { opacity: 0.5; cursor: not-allowed; }
+  .popup-price-note { font-size: 10px; color: var(--text-muted); text-align: center; margin-top: 7px; }
+
+  .success-banner {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: var(--smoke);
+    border: 1px solid var(--gold);
+    border-radius: 6px;
+    padding: 24px 28px;
+    z-index: 200;
+    text-align: center;
+    width: calc(100% - 48px);
+    max-width: 360px;
+    box-shadow: 0 4px 40px rgba(200,150,62,0.3);
+    animation: popIn 0.3s ease;
+  }
+  .success-flame { font-size: 36px; display: block; margin-bottom: 8px; }
+  .success-banner h3 { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 300; color: var(--white); margin-bottom: 4px; }
+  .success-banner p { font-size: 12px; color: var(--text-muted); margin-bottom: 10px; line-height: 1.5; }
+  .success-code { font-family: monospace; font-size: 26px; color: var(--gold); letter-spacing: 0.3em; font-weight: 700; display: block; margin: 10px 0; }
+  .btn-success { background: var(--gold); border: none; color: var(--deep); font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 500; padding: 8px 18px; border-radius: 3px; cursor: pointer; margin: 4px; }
+  .btn-success-outline { background: none; border: 1px solid rgba(200,150,62,0.3); color: var(--text-muted); font-family: 'DM Sans', sans-serif; font-size: 12px; padding: 8px 16px; border-radius: 3px; cursor: pointer; margin: 4px; }
+  .map-loading { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; background: var(--deep); z-index: 5; flex-direction: column; gap: 12px; }
+  .loading-text { font-size: 12px; color: var(--text-muted); letter-spacing: 0.15em; text-transform: uppercase; }
+  .loading-flame { font-size: 40px; animation: loadPulse 1s ease-in-out infinite; }
+  @keyframes loadPulse { 0%, 100% { transform: scale(1); opacity: 0.8; } 50% { transform: scale(1.15); opacity: 1; } }
+  /* BURGER NAV */
+  .burger-nav { position: fixed; top: 58px; left: 16px; z-index: 500; }
+  .burger-btn { background: rgba(10,8,6,0.92); border: 1px solid rgba(200,150,62,0.25); border-radius: 4px; width: 40px; height: 40px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; cursor: pointer; backdrop-filter: blur(8px); transition: all 0.2s; padding: 0; }
+  .burger-btn:hover { border-color: rgba(200,150,62,0.6); }
+  .burger-btn span { display: block; width: 18px; height: 1.5px; background: #C8963E; border-radius: 1px; transition: all 0.3s; }
+  .burger-btn.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+  .burger-btn.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+  .burger-btn.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+  .nav-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 490; opacity: 0; pointer-events: none; transition: opacity 0.3s; }
+  .nav-overlay.open { opacity: 1; pointer-events: all; }
+  .nav-drawer { position: fixed; top: 0; left: 0; bottom: 0; width: 280px; background: #13100A; border-right: 1px solid rgba(200,150,62,0.2); z-index: 495; transform: translateX(-100%); transition: transform 0.35s cubic-bezier(0.4,0,0.2,1); display: flex; flex-direction: column; box-shadow: 4px 0 40px rgba(0,0,0,0.5); }
+  .nav-drawer.open { transform: translateX(0); }
+  .nav-drawer-header { display: flex; align-items: center; justify-content: space-between; padding: 20px 20px 16px; border-bottom: 1px solid rgba(200,150,62,0.1); height: 64px; flex-shrink: 0; }
+  .nav-logo-text { font-family: 'Cormorant Garamond', serif; font-size: 16px; font-weight: 400; color: #C8963E; letter-spacing: 0.2em; text-transform: uppercase; }
+  .nav-close { background: none; border: none; color: #9A8570; font-size: 24px; cursor: pointer; padding: 4px 8px; line-height: 1; transition: color 0.2s; }
+  .nav-close:hover { color: #C8963E; }
+  .nav-links { list-style: none; padding: 16px 0; flex: 1; overflow-y: auto; }
+  .nav-link { display: block; padding: 14px 24px; font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 300; color: #9A8570; text-decoration: none; letter-spacing: 0.03em; transition: all 0.2s; border-left: 2px solid transparent; }
+  .nav-link:hover { color: #E8B86D; background: rgba(200,150,62,0.06); border-left-color: #C8963E; padding-left: 28px; }
+  .nav-link.active { color: #C8963E; border-left-color: #C8963E; background: rgba(200,150,62,0.05); }
+  .nav-cta-wrap { padding: 16px 20px; border-top: 1px solid rgba(200,150,62,0.1); flex-shrink: 0; }
+  .nav-cta-btn { display: block; width: 100%; background: #C8963E; color: #0A0806; font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 500; padding: 13px 16px; border-radius: 3px; text-decoration: none; text-align: center; letter-spacing: 0.06em; text-transform: uppercase; transition: background 0.2s; }
+  .nav-cta-btn:hover { background: #E8B86D; }
+  .nav-footer-text { padding: 14px 24px; border-top: 1px solid rgba(200,150,62,0.06); flex-shrink: 0; }
+  .nav-footer-text span { display: block; font-size: 11px; color: rgba(154,133,112,0.5); letter-spacing: 0.05em; line-height: 1.8; }
+</style>
+</head>
+<body>
+
+<header class="map-header">
+  
+  <div class="header-right">
+    <div class="live-count">🕯 <strong id="liveCount">0</strong> flames burning</div>
+    <a href="flames.html" class="btn-nav">All Flames</a>
+    <a href="index.html" class="btn-nav">← Home</a>
+  </div>
+</header>
+
+<div class="map-wrap">
+  <div class="popup-backdrop" id="popupBackdrop" onclick="closePopup()"></div>
+  <!-- BURGER MENU -->
+  <div class="burger-nav">
+    <button class="burger-btn" id="burgerBtn" onclick="toggleNav()" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+  <div class="nav-overlay" id="navOverlay" onclick="toggleNav()"></div>
+  <nav class="nav-drawer" id="navDrawer">
+    <div class="nav-drawer-header">
+      <span class="nav-logo-text">ONE FLAME</span>
+      <button class="nav-close" onclick="toggleNav()">×</button>
+    </div>
+    <ul class="nav-links">
+      <li><a href="index.html" class="nav-link">🏠 Home</a></li>
+      <li><a href="map.html" class="nav-link active">🗺 The Living Map</a></li>
+      <li><a href="flames.html" class="nav-link">🕯 All Flames</a></li>
+      <li><a href="countries.html" class="nav-link">🌍 Countries</a></li>
+      <li><a href="receipts.html" class="nav-link">🏅 Charity Receipts</a></li>
+      <li><a href="cookies.html" class="nav-link">🍪 Cookie Policy</a></li>
+    </ul>
+    <div class="nav-cta-wrap">
+      <a href="map.html" class="nav-cta-btn">🕯 Light My Flame — £0.99</a>
+    </div>
+    <div class="nav-footer-text">
+      <span>oneflame.earth</span>
+      <span>Easter 2026 · World Cup 2026</span>
+    </div>
+  </nav>
+  <div class="map-loading" id="mapLoading">
+    <div class="loading-flame">🕯</div>
+    <div class="loading-text">Loading the living map</div>
+  </div>
+  <svg id="mapSvg" viewBox="0 0 1000 500" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet"></svg>
+  <div class="hint-bar">Click anywhere on the map to place your flame</div>
+  <div class="map-tooltip" id="mapTooltip"></div>
+</div>
+
+<script>
+const SUPABASE_URL = 'https://rytjvdptbjnlhayclcvu.supabase.co';
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJ5dGp2ZHB0YmpubGhheWNsY3Z1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzUzMzA1MjksImV4cCI6MjA5MDkwNjUyOX0.y6qVpN-tJKafDVY_yUk0K6yQ9xXYy5xfIhFoJvqWf48';
+const STRIPE_LINK = 'https://buy.stripe.com/7sY6oIgzr7zaavDaE1eME00';
+
+// D3 handles the real world map - loaded via CDN in HTML head
+
+function latLngToSvg(lat, lng) {
+  return { x: ((lng + 180) / 360) * 1000, y: ((90 - lat) / 180) * 500 };
+}
+
+function svgToLatLng(clientX, clientY) {
+  const svg = document.getElementById('mapSvg');
+  const rect = svg.getBoundingClientRect();
+  const svgX = ((clientX - rect.left) / rect.width) * 1000;
+  const svgY = ((clientY - rect.top) / rect.height) * 500;
+  return {
+    lat: parseFloat((90 - (svgY / 500) * 180).toFixed(4)),
+    lng: parseFloat(((svgX / 1000) * 360 - 180).toFixed(4))
+  };
+}
+
+function approxLocation(lat, lng) {
+  // UK and Ireland
+  if (lat > 49 && lat < 61 && lng > -11 && lng < 2) return 'United Kingdom';
+  // Scandinavia
+  if (lat > 54 && lat < 72 && lng > 4 && lng < 32) return 'Scandinavia';
+  // Western Europe
+  if (lat > 35 && lat < 55 && lng > -10 && lng < 20) return 'Western Europe';
+  // Eastern Europe
+  if (lat > 40 && lat < 55 && lng > 20 && lng < 40) return 'Eastern Europe';
+  // Russia
+  if (lat > 50 && lng > 30 && lng < 180) return 'Russia';
+  // Turkey
+  if (lat > 36 && lat < 42 && lng > 26 && lng < 45) return 'Turkey';
+  // Greenland
+  if (lat > 60 && lng > -60 && lng < -15) return 'Greenland';
+  // Canada
+  if (lat > 48 && lat < 70 && lng > -140 && lng < -52) return 'Canada';
+  // USA
+  if (lat > 24 && lat < 50 && lng > -125 && lng < -65) return 'United States';
+  // Mexico
+  if (lat > 14 && lat < 30 && lng > -118 && lng < -86) return 'Mexico';
+  // Central America and Caribbean
+  if (lat > 7 && lat < 24 && lng > -92 && lng < -60) return 'Central America';
+  // Colombia Venezuela
+  if (lat > 0 && lat < 15 && lng > -80 && lng < -58) return 'Northern South America';
+  // Brazil
+  if (lat > -35 && lat < 5 && lng > -75 && lng < -34) return 'Brazil';
+  // Southern South America
+  if (lat > -56 && lat < -15 && lng > -82 && lng < -52) return 'Southern South America';
+  // North Africa
+  if (lat > 15 && lat < 38 && lng > -18 && lng < 40) return 'North Africa';
+  // West Africa
+  if (lat > -5 && lat < 18 && lng > -18 && lng < 15) return 'West Africa';
+  // East Africa
+  if (lat > -12 && lat < 18 && lng > 28 && lng < 52) return 'East Africa';
+  // Southern Africa
+  if (lat > -35 && lat < -12 && lng > 12 && lng < 42) return 'Southern Africa';
+  // Middle East
+  if (lat > 12 && lat < 38 && lng > 34 && lng < 62) return 'Middle East';
+  // Iran
+  if (lat > 25 && lat < 40 && lng > 44 && lng < 64) return 'Iran';
+  // Central Asia
+  if (lat > 35 && lat < 55 && lng > 50 && lng < 88) return 'Central Asia';
+  // India
+  if (lat > 8 && lat < 35 && lng > 68 && lng < 90) return 'India';
+  // China
+  if (lat > 18 && lat < 55 && lng > 73 && lng < 135) return 'China';
+  // Japan
+  if (lat > 30 && lat < 46 && lng > 128 && lng < 148) return 'Japan';
+  // South Korea
+  if (lat > 33 && lat < 39 && lng > 124 && lng < 132) return 'South Korea';
+  // Southeast Asia
+  if (lat > -10 && lat < 28 && lng > 92 && lng < 142) return 'Southeast Asia';
+  // Australia
+  if (lat > -44 && lat < -10 && lng > 113 && lng < 154) return 'Australia';
+  // New Zealand
+  if (lat > -47 && lat < -34 && lng > 166 && lng < 178) return 'New Zealand';
+  // Pacific Islands
+  if (lat > -30 && lat < 30 && lng > 140) return 'Pacific';
+  // Arctic
+  if (lat > 70) return 'Arctic Region';
+  // Antarctic
+  if (lat < -60) return 'Antarctic Region';
+  return 'The Ocean';
+}
+
+function timeRemaining(expiresAt) {
+  const diff = new Date(expiresAt) - new Date();
+  if (diff <= 0) return 'Expired';
+  const days = Math.floor(diff / 86400000);
+  const hours = Math.floor((diff % 86400000) / 3600000);
+  if (days > 0) return `${days}d ${hours}h remaining`;
+  return `${hours}h remaining`;
+}
+
+function generateCode() {
+  const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+  return Array.from({length: 5}, () => chars[Math.floor(Math.random() * chars.length)]).join('');
+}
+
+async function sbFetch(path, options = {}) {
+  const res = await fetch(`${SUPABASE_URL}/rest/v1/${path}`, {
+    headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}`, 'Content-Type': 'application/json', ...options.headers },
+    ...options
+  });
+  const text = await res.text();
+  if (!res.ok) throw new Error(`Supabase ${res.status}: ${text}`);
+  return text ? JSON.parse(text) : [];
+}
+
+async function loadCandles() {
+  const now = new Date().toISOString();
+  return sbFetch(`candles?payment_confirmed=eq.true&expires_at=gt.${encodeURIComponent(now)}&select=*&order=created_at.desc`);
+}
+
+async function insertCandle(data) {
+  const res = await fetch(`${SUPABASE_URL}/rest/v1/candles`, {
+    method: 'POST',
+    headers: {
+      'apikey': SUPABASE_KEY,
+      'Authorization': `Bearer ${SUPABASE_KEY}`,
+      'Content-Type': 'application/json',
+      'Prefer': 'return=minimal'
+    },
+    body: JSON.stringify(data)
+  });
+  if (!res.ok) {
+    const errText = await res.text();
+    console.error('Insert failed:', res.status, errText);
+    throw new Error(`Insert failed: ${res.status} ${errText}`);
+  }
+  return true;
+}
+
+let candles = [];
+let generatedCode = null;
+let selectedLat = null;
+let selectedLng = null;
+let selectedIntent = '';
+
+async function buildMap() {
+  const svg = document.getElementById('mapSvg');
+  const W = 1000, H = 500;
+
+  // Draw graticule grid lines first
+  for (let lat = -80; lat <= 80; lat += 20) {
+    const y = ((90 - lat) / H) * H;
+    const l = document.createElementNS('http://www.w3.org/2000/svg','line');
+    l.setAttribute('x1',0); l.setAttribute('y1', ((90-lat)/180)*500);
+    l.setAttribute('x2',1000); l.setAttribute('y2', ((90-lat)/180)*500);
+    l.setAttribute('stroke','rgba(200,150,62,0.05)'); l.setAttribute('stroke-width','0.5');
+    svg.appendChild(l);
+  }
+  for (let lng = -180; lng <= 180; lng += 30) {
+    const x = ((lng + 180) / 360) * 1000;
+    const l = document.createElementNS('http://www.w3.org/2000/svg','line');
+    l.setAttribute('x1',x); l.setAttribute('y1',0);
+    l.setAttribute('x2',x); l.setAttribute('y2',500);
+    l.setAttribute('stroke','rgba(200,150,62,0.05)'); l.setAttribute('stroke-width','0.5');
+    svg.appendChild(l);
+  }
+
+  // Load Natural Earth world map data from CDN — 8 second timeout
+  try {
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), 8000);
+    const topoResponse = await fetch(
+      'https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json',
+      { signal: controller.signal }
+    );
+    clearTimeout(timer);
+    const world = await topoResponse.json();
+
+    // Use topojson to get country features
+    const countries = topojson.feature(world, world.objects.countries);
+    const projection = d3.geoEquirectangular()
+      .scale(159.15)
+      .translate([500, 250]);
+    const path = d3.geoPath().projection(projection);
+
+    // Create a group for all countries
+    const g = document.createElementNS('http://www.w3.org/2000/svg','g');
+    g.setAttribute('id', 'countriesGroup');
+
+    countries.features.forEach(feature => {
+      const p = document.createElementNS('http://www.w3.org/2000/svg','path');
+      const d = path(feature);
+      if (!d) return;
+      p.setAttribute('d', d);
+      p.setAttribute('fill','rgba(200,150,62,0.08)');
+      p.setAttribute('stroke','rgba(200,150,62,0.28)');
+      p.setAttribute('stroke-width','0.6');
+      p.setAttribute('stroke-linejoin','round');
+      p.style.transition = 'fill 0.2s';
+      p.addEventListener('mouseenter', () => p.setAttribute('fill','rgba(200,150,62,0.18)'));
+      p.addEventListener('mouseleave', () => p.setAttribute('fill','rgba(200,150,62,0.08)'));
+      g.appendChild(p);
+    });
+
+    svg.appendChild(g);
+  } catch(e) {
+    console.error('Map load error:', e);
+    // Fallback - ocean background only
+  }
+
+  svg.addEventListener('click', handleMapClick);
+  svg.addEventListener('mousemove', e => {
+    const { lat, lng } = svgToLatLng(e.clientX, e.clientY);
+    const tt = document.getElementById('mapTooltip');
+    tt.style.display = 'block';
+    tt.style.left = (e.clientX + 14) + 'px';
+    tt.style.top = (e.clientY - 30) + 'px';
+    tt.textContent = `${approxLocation(lat, lng)} · ${lat.toFixed(1)}°, ${lng.toFixed(1)}°`;
+  });
+  svg.addEventListener('mouseleave', () => { document.getElementById('mapTooltip').style.display = 'none'; });
+}
+
+function handleMapClick(e) {
+  if (e.target.closest('.candle-popup')) return;
+  closePopup();
+  const { lat, lng } = svgToLatLng(e.clientX, e.clientY);
+  selectedLat = lat; selectedLng = lng;
+  generatedCode = generateCode();
+  showPlacePopup(e.clientX, e.clientY, lat, lng);
+}
+
+function showPlacePopup(cx, cy, lat, lng) {
+  const wrap = document.querySelector('.map-wrap');
+  const popup = document.createElement('div');
+  popup.className = 'candle-popup'; popup.id = 'activePopup';
+  const loc = approxLocation(lat, lng);
+
+  popup.innerHTML = `
+    <div class="popup-handle"></div>
+    <button class="popup-close" onclick="closePopup()">×</button>
+    <div class="popup-location">📍 ${loc}</div>
+    <div class="popup-title">Place your flame here</div>
+    <span class="popup-label">Your flame code</span>
+    <div class="popup-code-display" id="popupCode">${generatedCode}</div>
+    <span class="popup-label">Your country <span style="color:var(--ember)">*</span></span>
+    <select class="popup-input" id="countryInput" style="cursor:pointer;">
+      <option value="">Select your country...</option>
+      <option>Afghanistan</option><option>Albania</option><option>Algeria</option><option>Argentina</option><option>Armenia</option><option>Australia</option><option>Austria</option><option>Azerbaijan</option><option>Bahrain</option><option>Bangladesh</option><option>Belarus</option><option>Belgium</option><option>Bolivia</option><option>Bosnia and Herzegovina</option><option>Brazil</option><option>Bulgaria</option><option>Cambodia</option><option>Canada</option><option>Chile</option><option>China</option><option>Colombia</option><option>Croatia</option><option>Cyprus</option><option>Czech Republic</option><option>Denmark</option><option>Ecuador</option><option>Egypt</option><option>Estonia</option><option>Ethiopia</option><option>Finland</option><option>France</option><option>Georgia</option><option>Germany</option><option>Ghana</option><option>Greece</option><option>Hungary</option><option>Iceland</option><option>India</option><option>Indonesia</option><option>Iran</option><option>Iraq</option><option>Ireland</option><option>Israel</option><option>Italy</option><option>Japan</option><option>Jordan</option><option>Kazakhstan</option><option>Kenya</option><option>Kuwait</option><option>Latvia</option><option>Lebanon</option><option>Lithuania</option><option>Malaysia</option><option>Mexico</option><option>Moldova</option><option>Morocco</option><option>Nepal</option><option>Netherlands</option><option>New Zealand</option><option>Nigeria</option><option>North Korea</option><option>Norway</option><option>Oman</option><option>Pakistan</option><option>Palestine</option><option>Peru</option><option>Philippines</option><option>Poland</option><option>Portugal</option><option>Qatar</option><option>Romania</option><option>Russia</option><option>Saudi Arabia</option><option>Serbia</option><option>Singapore</option><option>Slovakia</option><option>Slovenia</option><option>South Africa</option><option>South Korea</option><option>Spain</option><option>Sri Lanka</option><option>Sweden</option><option>Switzerland</option><option>Syria</option><option>Taiwan</option><option>Thailand</option><option>Tunisia</option><option>Turkey</option><option>Ukraine</option><option>United Arab Emirates</option><option>United Kingdom</option><option>United States</option><option>Uruguay</option><option>Uzbekistan</option><option>Venezuela</option><option>Vietnam</option><option>Yemen</option><option>Zimbabwe</option>
+    </select>
+    <span class="popup-label">Your home town <span style="color:var(--ember)">*</span></span>
+    <input class="popup-input" id="hometownInput" type="text" placeholder="e.g. Padstow, Cornwall..." maxlength="60" autocomplete="off">
+    <span class="popup-label">Nickname (optional)</span>
+    <input class="popup-input" id="nicknameInput" type="text" placeholder="e.g. Maria, João, Alex..." maxlength="30" autocomplete="off">
+    <span class="popup-label">Your intention</span>
+    <div class="intent-chips">
+      <button class="intent-chip" onclick="selectIntent(this,'Peace')">Peace</button>
+      <button class="intent-chip" onclick="selectIntent(this,'Hope')">Hope</button>
+      <button class="intent-chip" onclick="selectIntent(this,'Love')">Love</button>
+      <button class="intent-chip" onclick="selectIntent(this,'For the children')">For the children</button>
+      <button class="intent-chip" onclick="selectIntent(this,'Health')">Health</button>
+    </div>
+    <input class="popup-input" id="intentInput" type="text" placeholder="Or write your own..." maxlength="60" autocomplete="off">
+    <button class="popup-cta" id="popupCta" onclick="proceedToPayment()">🕯 Light My Flame — £0.99</button>
+    <div class="popup-price-note">Apple Pay · Card · Secure via Stripe</div>`;
+
+  positionPopup(popup, cx, cy, wrap);
+}
+
+
+
+function isMobile() { return window.innerWidth <= 600; }
+
+function positionPopup(popup, cx, cy, wrap) {
+  wrap.appendChild(popup);
+  document.getElementById('popupBackdrop').classList.add('visible');
+
+  if (isMobile()) {
+    // On mobile it is a bottom sheet - CSS handles positioning
+    return;
+  }
+
+  // Desktop positioning
+  const wRect = wrap.getBoundingClientRect();
+  const pw = popup.offsetWidth || 300;
+  const ph = popup.offsetHeight || 400;
+  let left = cx - wRect.left - pw / 2;
+  let top = cy - wRect.top - ph - 16;
+  if (left < 8) left = 8;
+  if (left + pw > wRect.width - 8) left = wRect.width - pw - 8;
+  if (top < 8) top = cy - wRect.top + 20;
+  if (top + ph > wRect.height - 8) top = wRect.height - ph - 8;
+  popup.style.left = left + 'px';
+  popup.style.top = top + 'px';
+}
+
+function closePopup() {
+  const el = document.getElementById('activePopup');
+  if (el) el.remove();
+  document.getElementById('popupBackdrop').classList.remove('visible');
+  selectedIntent = '';
+}
+
+function selectIntent(btn, val) {
+  document.querySelectorAll('.intent-chip').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  selectedIntent = val;
+  const inp = document.getElementById('intentInput');
+  if (inp) inp.value = val;
+}
+
+// ─── COUNTRY COORDINATES ─────────────────────────────────────
+// Centre coordinates for every country in the dropdown
+// Used to place the dot accurately regardless of where user tapped
+const COUNTRY_COORDS = {
+  'Afghanistan': [33.93, 67.71], 'Albania': [41.15, 20.17], 'Algeria': [28.03, 1.66],
+  'Argentina': [-38.42, -63.62], 'Armenia': [40.07, 45.04], 'Australia': [-25.27, 133.78],
+  'Austria': [47.52, 14.55], 'Azerbaijan': [40.14, 47.58], 'Bahrain': [26.00, 50.55],
+  'Bangladesh': [23.68, 90.35], 'Belarus': [53.71, 27.95], 'Belgium': [50.50, 4.47],
+  'Bolivia': [-16.29, -63.59], 'Bosnia and Herzegovina': [43.92, 17.68],
+  'Brazil': [-14.24, -51.93], 'Bulgaria': [42.73, 25.49], 'Cambodia': [12.57, 104.99],
+  'Canada': [56.13, -106.35], 'Chile': [-35.68, -71.54], 'China': [35.86, 104.20],
+  'Colombia': [4.57, -74.30], 'Croatia': [45.10, 15.20], 'Cyprus': [35.13, 33.43],
+  'Czech Republic': [49.82, 15.47], 'Denmark': [56.26, 9.50], 'Ecuador': [-1.83, -78.18],
+  'Egypt': [26.82, 30.80], 'Estonia': [58.60, 25.01], 'Ethiopia': [9.15, 40.49],
+  'Finland': [61.92, 25.75], 'France': [46.23, 2.21], 'Georgia': [42.32, 43.36],
+  'Germany': [51.17, 10.45], 'Ghana': [7.95, -1.02], 'Greece': [39.07, 21.82],
+  'Hungary': [47.16, 19.50], 'Iceland': [64.96, -19.02], 'India': [20.59, 78.96],
+  'Indonesia': [-0.79, 113.92], 'Iran': [32.43, 53.69], 'Iraq': [33.22, 43.68],
+  'Ireland': [53.41, -8.24], 'Israel': [31.05, 34.85], 'Italy': [41.87, 12.57],
+  'Japan': [36.20, 138.25], 'Jordan': [30.59, 36.24], 'Kazakhstan': [48.02, 66.92],
+  'Kenya': [-0.02, 37.91], 'Kuwait': [29.31, 47.48], 'Latvia': [56.88, 24.60],
+  'Lebanon': [33.85, 35.86], 'Lithuania': [55.17, 23.88], 'Malaysia': [4.21, 108.10],
+  'Mexico': [23.63, -102.55], 'Moldova': [47.41, 28.37], 'Morocco': [31.79, -7.09],
+  'Nepal': [28.39, 84.12], 'Netherlands': [52.13, 5.29], 'New Zealand': [-40.90, 174.89],
+  'Nigeria': [9.08, 8.68], 'North Korea': [40.34, 127.51], 'Norway': [60.47, 8.47],
+  'Oman': [21.51, 55.92], 'Pakistan': [30.38, 69.35], 'Palestine': [31.95, 35.23],
+  'Peru': [-9.19, -75.02], 'Philippines': [12.88, 121.77], 'Poland': [51.92, 19.15],
+  'Portugal': [39.40, -8.22], 'Qatar': [25.35, 51.18], 'Romania': [45.94, 24.97],
+  'Russia': [61.52, 105.32], 'Saudi Arabia': [23.89, 45.08], 'Serbia': [44.02, 21.01],
+  'Singapore': [1.35, 103.82], 'Slovakia': [48.67, 19.70], 'Slovenia': [46.15, 14.99],
+  'South Africa': [-30.56, 22.94], 'South Korea': [35.91, 127.77], 'Spain': [40.46, -3.75],
+  'Sri Lanka': [7.87, 80.77], 'Sweden': [60.13, 18.64], 'Switzerland': [46.82, 8.23],
+  'Syria': [34.80, 38.99], 'Taiwan': [23.70, 121.00], 'Thailand': [15.87, 100.99],
+  'Tunisia': [33.89, 9.54], 'Turkey': [38.96, 35.24], 'Ukraine': [48.38, 31.17],
+  'United Arab Emirates': [23.42, 53.85], 'United Kingdom': [55.38, -3.44],
+  'United States': [37.09, -95.71], 'Uruguay': [-32.52, -55.77],
+  'Uzbekistan': [41.38, 64.59], 'Venezuela': [6.42, -66.59], 'Vietnam': [14.06, 108.28],
+  'Yemen': [15.55, 48.52], 'Zimbabwe': [-19.02, 29.15],
+  'Georgia': [42.32, 43.36], 'Cyprus': [35.13, 33.43], 'Luxembourg': [49.82, 6.13],
+  'Malta': [35.94, 14.38], 'Iceland': [64.96, -19.02]
+};
+
+async function proceedToPayment() {
+  const btn = document.getElementById('popupCta');
+  if (!btn) return;
+
+  const country = (document.getElementById('countryInput')?.value || '').trim();
+  const hometown = (document.getElementById('hometownInput')?.value || '').trim();
+  const nickname = (document.getElementById('nicknameInput')?.value || '').trim();
+  const intention = (document.getElementById('intentInput')?.value || selectedIntent || 'Peace').trim();
+
+  if (!country) {
+    document.getElementById('countryInput').style.borderColor = 'var(--ember)';
+    document.getElementById('countryInput').focus();
+    return;
+  }
+  if (!hometown) {
+    document.getElementById('hometownInput').style.borderColor = 'var(--ember)';
+    document.getElementById('hometownInput').focus();
+    return;
+  }
+
+  // Use country centre coordinates for accuracy
+  // Add small random offset so multiple candles from same country don't stack exactly
+  const coords = COUNTRY_COORDS[country] || [selectedLat, selectedLng];
+  const jitter = () => (Math.random() - 0.5) * 2;
+  const finalLat = coords[0] + jitter();
+  const finalLng = coords[1] + jitter();
+
+  btn.disabled = true; btn.textContent = 'Saving...';
+
+  try {
+    await insertCandle({
+      code: generatedCode,
+      nickname: nickname || null,
+      latitude: parseFloat(finalLat.toFixed(4)),
+      longitude: parseFloat(finalLng.toFixed(4)),
+      location_name: `${hometown}, ${country}`,
+      intention,
+      payment_confirmed: false
+    });
+
+    // Direct redirect instead of window.open - fixes Safari popup blocking on iPhone
+    const stripeUrl = `${STRIPE_LINK}?client_reference_id=${generatedCode}`;
+    closePopup();
+
+    // Show brief confirmation before redirecting
+    const overlay = document.createElement('div');
+    overlay.style.cssText = 'position:fixed;inset:0;background:rgba(10,8,6,0.95);z-index:300;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:40px;';
+    overlay.innerHTML = `
+      <div style="font-size:52px;margin-bottom:20px;">🕯</div>
+      <div style="font-family:Georgia,serif;font-size:28px;color:#FDFAF5;margin-bottom:8px;">Your flame code</div>
+      <div style="font-family:monospace;font-size:36px;color:#C8963E;letter-spacing:0.3em;font-weight:700;margin-bottom:16px;">${generatedCode}</div>
+      <div style="font-size:14px;color:#9A8570;margin-bottom:32px;line-height:1.6;">Save this code. Your flame will appear<br>on the map after payment completes.</div>
+      <div style="font-size:13px;color:#9A8570;margin-bottom:8px;">Taking you to secure payment...</div>
+      <div style="width:200px;height:2px;background:rgba(200,150,62,0.2);border-radius:1px;overflow:hidden;margin:0 auto;">
+        <div style="height:100%;background:#C8963E;border-radius:1px;animation:loadBar 2s ease forwards;"></div>
+      </div>
+      <style>@keyframes loadBar{from{width:0}to{width:100%}}</style>`;
+    document.body.appendChild(overlay);
+
+    // Redirect after 2 seconds so user sees their code
+    setTimeout(() => {
+      window.location.href = stripeUrl;
+    }, 2000);
+
+  } catch(err) {
+    console.error('Payment flow error:', err);
+    btn.disabled = false;
+    btn.textContent = '🕯 Light My Flame — £0.99';
+    alert('Could not save your candle. Error: ' + err.message + '\n\nPlease screenshot this and report it.');
+  }
+}
+
+function showSuccessBanner(code) {
+  const backdrop = document.createElement('div');
+  backdrop.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:199;';
+  backdrop.id = 'successBackdrop';
+  document.body.appendChild(backdrop);
+
+  const { text } = getShareText(code);
+  const b = document.createElement('div');
+  b.className = 'success-banner';
+  b.innerHTML = `
+    <span class="success-flame">🕯</span>
+    <h3>Your flame is placed</h3>
+    <p>Complete payment in the tab that just opened.<br>Your flame appears on this map within minutes.</p>
+    <span class="success-code">${code}</span>
+    <p>Save this code. It is your flame forever.</p>
+    <button class="btn-success" onclick="shareCandle('${code}')">Share My Flame</button>
+    <button class="btn-success-outline" onclick="document.getElementById('successBackdrop').remove();this.closest('.success-banner').remove()">Close</button>`;
+  document.body.appendChild(b);
+}
+
+// ─── BURGER NAV ──────────────────────────────────────────────
+function toggleNav() {
+  const btn = document.getElementById('burgerBtn');
+  const drawer = document.getElementById('navDrawer');
+  const overlay = document.getElementById('navOverlay');
+  btn.classList.toggle('open');
+  drawer.classList.toggle('open');
+  overlay.classList.toggle('open');
+  document.body.style.overflow = drawer.classList.contains('open') ? 'hidden' : '';
+}
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
+    const drawer = document.getElementById('navDrawer');
+    if (drawer && drawer.classList.contains('open')) toggleNav();
+  }
+});
+
+// ─── DOT SIZE SCALING ────────────────────────────────────────
+// As candle count grows dots shrink to keep map readable
+function getDotSize(totalCandles) {
+  if (totalCandles < 100) return { dot: 4, glow: 8 };
+  if (totalCandles < 500) return { dot: 3.5, glow: 7 };
+  if (totalCandles < 1000) return { dot: 3, glow: 6 };
+  if (totalCandles < 5000) return { dot: 2.5, glow: 5 };
+  if (totalCandles < 10000) return { dot: 2, glow: 4 };
+  return { dot: 1.5, glow: 3 };
+}
+
+// ─── MULTILINGUAL SHARE TEXT ─────────────────────────────────
+function getShareText(code, lang) {
+  const url = `https://oneflame.earth/map.html?candle=${code}`;
+  const texts = {
+    ro: `Am aprins o flacără pentru pace. Codul meu: ${code}. Adaugă-l pe tine!`,
+    fr: `J'ai allumé une flamme pour la paix. Mon code: ${code}. Ajoutez la vôtre!`,
+    de: `Ich habe eine Flamme für den Frieden entzündet. Mein Code: ${code}. Füge deine hinzu!`,
+    hi: `मैंने शांति के लिए एक लौ जलाई। मेरा कोड: ${code}। अपनी जोड़ें!`,
+    ar: `أضأت شعلة من أجل السلام. كودي: ${code}. أضف شعلتك!`,
+    es: `Encendí una llama por la paz. Mi código: ${code}. ¡Añade la tuya!`,
+    pt: `Acendi uma chama pela paz. Meu código: ${code}. Adicione a sua!`,
+    ko: `평화를 위해 불꽃을 밝혔습니다. 내 코드: ${code}. 당신의 것을 추가하세요!`,
+    tr: `Barış için bir alev yaktım. Kodum: ${code}. Kendininkini ekle!`,
+    uk: `Я запалив вогонь заради миру. Мій код: ${code}. Додай свій!`,
+    pl: `Zapaliłem płomień dla pokoju. Mój kod: ${code}. Dodaj swój!`,
+    el: `Άναψα μια φλόγα για την ειρήνη. Ο κωδικός μου: ${code}. Πρόσθεσε τη δική σου!`,
+    zh: `我点亮了和平之火。我的代码: ${code}。添加你的火焰！`,
+    th: `ฉันจุดเปลวไฟเพื่อสันติภาพ รหัสของฉัน: ${code} เพิ่มของคุณ!`,
+  };
+  const lang2 = (navigator.language || 'en').substring(0, 2).toLowerCase();
+  const text = texts[lang2] || `I lit a flame for peace. My code: ${code}. Add yours!`;
+  return { text, url };
+}
+
+function shareCandle(code) {
+  const { text, url } = getShareText(code);
+  if (navigator.share) {
+    navigator.share({ title: 'One Flame', text, url });
+  } else {
+    navigator.clipboard.writeText(`${text} ${url}`).then(() => alert('Link copied to clipboard!'));
+  }
+}
+
+function renderCandles(list) {
+  const svg = document.getElementById('mapSvg');
+  svg.querySelectorAll('.candle-dot').forEach(el => el.remove());
+  const sizes = getDotSize(list.length);
+
+  list.forEach(c => {
+    const pos = latLngToSvg(c.latitude, c.longitude);
+    const g = document.createElementNS('http://www.w3.org/2000/svg','g');
+    g.setAttribute('class','candle-dot'); g.style.cursor = 'pointer';
+
+    const glow = document.createElementNS('http://www.w3.org/2000/svg','circle');
+    glow.setAttribute('cx', pos.x); glow.setAttribute('cy', pos.y);
+    glow.setAttribute('r', sizes.glow);
+    glow.setAttribute('fill','rgba(200,150,62,0.25)');
+    const anim = document.createElementNS('http://www.w3.org/2000/svg','animate');
+    anim.setAttribute('attributeName','r');
+    anim.setAttribute('values',`${sizes.glow * 0.7};${sizes.glow * 1.3};${sizes.glow * 0.7}`);
+    anim.setAttribute('dur', (2 + Math.random() * 2) + 's'); anim.setAttribute('repeatCount','indefinite');
+    glow.appendChild(anim);
+
+    const dot = document.createElementNS('http://www.w3.org/2000/svg','circle');
+    dot.setAttribute('cx', pos.x); dot.setAttribute('cy', pos.y);
+    dot.setAttribute('r', sizes.dot);
+    dot.setAttribute('fill','#C8963E');
+
+    g.appendChild(glow); g.appendChild(dot);
+    g.addEventListener('mouseenter', e => {
+      dot.setAttribute('r', sizes.dot * 1.5);
+      dot.setAttribute('fill','#E8B86D');
+      const tt = document.getElementById('mapTooltip');
+      tt.innerHTML = `<strong style="color:var(--gold);letter-spacing:0.1em;">${c.code}</strong>&nbsp;&nbsp;${c.nickname || 'Anonymous'}`;
+      tt.style.display = 'block';
+      tt.style.left = (e.clientX + 14) + 'px';
+      tt.style.top = (e.clientY - 36) + 'px';
+    });
+    g.addEventListener('mousemove', e => {
+      const tt = document.getElementById('mapTooltip');
+      tt.style.left = (e.clientX + 14) + 'px';
+      tt.style.top = (e.clientY - 36) + 'px';
+    });
+    g.addEventListener('mouseleave', () => {
+      dot.setAttribute('r', sizes.dot);
+      dot.setAttribute('fill','#C8963E');
+      document.getElementById('mapTooltip').style.display = 'none';
+    });
+    svg.appendChild(g);
+  });
+  document.getElementById('liveCount').textContent = list.length.toLocaleString();
+}
+
+function highlightOwnCandle(c) {
+  const svg = document.getElementById('mapSvg');
+  svg.querySelectorAll('.own-candle').forEach(el => el.remove());
+
+  const pos = latLngToSvg(c.latitude, c.longitude);
+
+  // Pulsing ring to distinguish their candle
+  const ring = document.createElementNS('http://www.w3.org/2000/svg','circle');
+  ring.setAttribute('class','own-candle');
+  ring.setAttribute('cx', pos.x); ring.setAttribute('cy', pos.y);
+  ring.setAttribute('r','12');
+  ring.setAttribute('fill','none');
+  ring.setAttribute('stroke','#E8B86D');
+  ring.setAttribute('stroke-width','2');
+  ring.setAttribute('opacity','0.8');
+
+  const ringAnim = document.createElementNS('http://www.w3.org/2000/svg','animate');
+  ringAnim.setAttribute('attributeName','r');
+  ringAnim.setAttribute('values','8;18;8');
+  ringAnim.setAttribute('dur','2s');
+  ringAnim.setAttribute('repeatCount','indefinite');
+  ring.appendChild(ringAnim);
+
+  const ringAnim2 = document.createElementNS('http://www.w3.org/2000/svg','animate');
+  ringAnim2.setAttribute('attributeName','opacity');
+  ringAnim2.setAttribute('values','0.8;0;0.8');
+  ringAnim2.setAttribute('dur','2s');
+  ringAnim2.setAttribute('repeatCount','indefinite');
+  ring.appendChild(ringAnim2);
+
+  svg.appendChild(ring);
+}
+
+function showSuccessReturn(c) {
+  const backdrop = document.createElement('div');
+  backdrop.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:199;';
+  backdrop.id = 'successBackdrop';
+  document.body.appendChild(backdrop);
+
+  const b = document.createElement('div');
+  b.className = 'success-banner';
+  b.style.cssText = 'border-color: var(--gold-light);';
+  b.innerHTML = `
+    <span class="success-flame">🕯</span>
+    <h3>Your flame is burning</h3>
+    <p>Welcome back. Your candle is now live on the map.<br>Look for the pulsing ring — that is yours.</p>
+    <span class="success-code">${c.code}</span>
+    <p style="font-size:11px;color:var(--text-muted);">📍 ${c.location_name || 'The World'} · Burns for 7 days</p>
+    <button class="btn-success" onclick="shareCandle('${c.code}')">Share My Flame</button>
+    <button class="btn-success-outline" onclick="document.getElementById('successBackdrop')?.remove();this.closest('.success-banner').remove()">View the map</button>`;
+  document.body.appendChild(b);
+
+  highlightOwnCandle(c);
+}
+
+function checkUrlCandle() {
+  const params = new URLSearchParams(window.location.search);
+  const code = params.get('candle');
+  const isSuccess = params.get('success') === 'true';
+
+  if (!code) return;
+
+  // If payment just completed, poll until candle is confirmed
+  if (isSuccess) {
+    let attempts = 0;
+    const poll = setInterval(async () => {
+      attempts++;
+      try {
+        const fresh = await loadCandles();
+        const found = fresh.find(x => x.code === code);
+        if (found) {
+          clearInterval(poll);
+          candles = fresh;
+          renderCandles(candles);
+          setTimeout(() => showSuccessReturn(found), 400);
+        } else if (attempts >= 12) {
+          clearInterval(poll);
+          showWaitingBanner(code);
+        }
+      } catch(e) { clearInterval(poll); }
+    }, 5000);
+    return;
+  }
+
+  // Arriving via "View on map" from flames.html — highlight that candle with an identity label
+  const c = candles.find(x => x.code === code);
+  if (c) {
+    setTimeout(() => {
+      highlightOwnCandle(c);
+      // Show a small floating identity label above the dot
+      const svg = document.getElementById('mapSvg');
+      const pos = latLngToSvg(c.latitude, c.longitude);
+      const label = document.createElementNS('http://www.w3.org/2000/svg','g');
+      label.setAttribute('class','own-candle');
+
+      const rect = document.createElementNS('http://www.w3.org/2000/svg','rect');
+      rect.setAttribute('x', pos.x - 40);
+      rect.setAttribute('y', pos.y - 36);
+      rect.setAttribute('width', 80);
+      rect.setAttribute('height', 22);
+      rect.setAttribute('rx', 3);
+      rect.setAttribute('fill','rgba(10,8,6,0.88)');
+      rect.setAttribute('stroke','rgba(200,150,62,0.5)');
+      rect.setAttribute('stroke-width','1');
+
+      const txt = document.createElementNS('http://www.w3.org/2000/svg','text');
+      txt.setAttribute('x', pos.x);
+      txt.setAttribute('y', pos.y - 21);
+      txt.setAttribute('text-anchor','middle');
+      txt.setAttribute('font-family','DM Sans, sans-serif');
+      txt.setAttribute('font-size','9');
+      txt.setAttribute('font-weight','600');
+      txt.setAttribute('fill','#E8B86D');
+      txt.setAttribute('letter-spacing','0.08em');
+      txt.textContent = `${c.code}  ${c.nickname || 'Anonymous'}`;
+
+      label.appendChild(rect);
+      label.appendChild(txt);
+      svg.appendChild(label);
+    }, 500);
+  }
+
+function showWaitingBanner(code) {
+  const backdrop = document.createElement('div');
+  backdrop.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:199;';
+  document.body.appendChild(backdrop);
+
+  const b = document.createElement('div');
+  b.className = 'success-banner';
+  b.innerHTML = `
+    <span class="success-flame">🕯</span>
+    <h3>Your flame is on its way</h3>
+    <p>Payment confirmed. Your candle should appear on the map within the next minute.</p>
+    <span class="success-code">${code}</span>
+    <p style="font-size:11px;color:var(--text-muted);">Refresh this page in 60 seconds to see your flame.</p>
+    <button class="btn-success" onclick="window.location.href='map.html?candle=${code}&success=true'">Check again</button>
+    <button class="btn-success-outline" onclick="this.closest('.success-banner').remove();document.querySelectorAll('[style*=inset]').forEach(e=>e.remove())">View the map</button>`;
+  document.body.appendChild(b);
+}
+
+async function init() {
+  // Hard safety net — loading screen always clears within 8 seconds no matter what
+  const safetyTimer = setTimeout(() => {
+    document.getElementById('mapLoading').style.display = 'none';
+  }, 8000);
+
+  try { await buildMap(); } catch(e) { console.error('buildMap failed:', e); }
+
+  try {
+    candles = await loadCandles();
+    renderCandles(candles);
+    checkUrlCandle();
+  } catch(e) { console.error(e); }
+
+  clearTimeout(safetyTimer);
+  document.getElementById('mapLoading').style.display = 'none';
+
+  setInterval(async () => {
+    try { candles = await loadCandles(); renderCandles(candles); } catch(e) {}
+  }, 30000);
+}
+
+function loadScript(src) {
+  return new Promise((resolve, reject) => {
+    const s = document.createElement('script');
+    s.src = src;
+    s.onload = resolve;
+    s.onerror = reject;
+    document.head.appendChild(s);
+  });
+}
+
+// Load D3 and TopoJSON, then init — page and loading screen are already visible
+(async () => {
+  try {
+    await loadScript('https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js');
+    await loadScript('https://cdn.jsdelivr.net/npm/topojson-client@3/dist/topojson-client.min.js');
+  } catch(e) {
+    console.warn('CDN script load failed, map will render without country shapes:', e);
+  }
+  init();
+})();
+</script>
+</body>
+</html>
