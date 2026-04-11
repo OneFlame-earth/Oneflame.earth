@@ -1386,7 +1386,7 @@
 
   <div class="milestones">
     <div class="milestone">
-      <span class="milestone-num">10,000</span>
+      <span class="milestone-num">1,000</span>
       <div class="milestone-charity" data-key="m1">RNLI Cornwall<br>Saving lives at sea</div>
       <span class="milestone-amount">£100 donated when reached</span>
       <div class="milestone-progress">
@@ -1394,7 +1394,7 @@
       </div>
     </div>
     <div class="milestone">
-      <span class="milestone-num">20,000</span>
+      <span class="milestone-num">5,000</span>
       <div class="milestone-charity" data-key="m2">Team Rubicon<br>Veterans serving communities</div>
       <span class="milestone-amount">£100 donated when reached</span>
       <div class="milestone-progress">
@@ -2140,7 +2140,12 @@ function setLang(lang) {
 // ─── COUNTER ─────────────────────────────────────────────────
 const SUPABASE_URL = 'https://rytjvdptbjnlhayclcvu.supabase.co';
 const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJ5dGp2ZHB0YmpubGhheWNsY3Z1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzUzMzA1MjksImV4cCI6MjA5MDkwNjUyOX0.y6qVpN-tJKafDVY_yUk0K6yQ9xXYy5xfIhFoJvqWf48';
-const FLOOR_COUNT = 1247;
+
+// FLOOR_COUNT is the minimum displayed until the real Supabase count exceeds it.
+// Once the real count passes FLOOR_THRESHOLD the floor is dropped entirely
+// and the live Supabase number drives the counter directly.
+const FLOOR_COUNT     = 1247;
+const FLOOR_THRESHOLD = 1240;
 
 let displayedCount = 0;
 
@@ -2174,8 +2179,8 @@ function animateCounterTo(target) {
     displayedCount = Math.floor(start + (target - start) * eased);
     el.textContent = displayedCount.toLocaleString();
 
-    document.getElementById('progress1').style.width = Math.min((displayedCount / 10000) * 100, 100) + '%';
-    document.getElementById('progress2').style.width = Math.min((displayedCount / 20000) * 100, 100) + '%';
+    document.getElementById('progress1').style.width = Math.min((displayedCount / 1000) * 100, 100) + '%';
+    document.getElementById('progress2').style.width = Math.min((displayedCount / 5000) * 100, 100) + '%';
     document.getElementById('progress3').style.width = Math.min((displayedCount / 20000000) * 100, 100) + '%';
 
     if (progress < 1) requestAnimationFrame(update);
@@ -2185,13 +2190,16 @@ function animateCounterTo(target) {
 
 async function initCounter() {
   const realTotal = await fetchAllTimeTotal();
-  const displayTotal = Math.max(realTotal, FLOOR_COUNT);
+  // If real count has grown past the threshold, use it directly.
+  // Otherwise use the floor so the counter never shows a number below what
+  // was seeded at launch.
+  const displayTotal = realTotal > FLOOR_THRESHOLD ? realTotal : Math.max(realTotal, FLOOR_COUNT);
   animateCounterTo(displayTotal);
 
   // Refresh every 60 seconds
   setInterval(async () => {
     const updated = await fetchAllTimeTotal();
-    const updatedDisplay = Math.max(updated, FLOOR_COUNT);
+    const updatedDisplay = updated > FLOOR_THRESHOLD ? updated : Math.max(updated, FLOOR_COUNT);
     if (updatedDisplay > displayedCount) {
       animateCounterTo(updatedDisplay);
     }

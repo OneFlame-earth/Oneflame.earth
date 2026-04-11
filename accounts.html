@@ -220,9 +220,67 @@
     .charity-paid { display: none; }
     .history-table th:nth-child(n+3), .history-table td:nth-child(n+3) { display: none; }
   }
+
+  /* BURGER NAV */
+  .burger-nav { position: fixed; top: 60px; left: 16px; z-index: 500; }
+  .burger-btn { background: rgba(10,8,6,0.92); border: 1px solid rgba(200,150,62,0.3); border-radius: 4px; width: 42px; height: 42px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; cursor: pointer; backdrop-filter: blur(8px); transition: all 0.2s; padding: 0; }
+  .burger-btn:hover { border-color: #C8963E; }
+  .burger-btn span { display: block; width: 18px; height: 1.5px; background: #C8963E; border-radius: 1px; transition: all 0.3s; }
+  .burger-btn.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+  .burger-btn.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+  .burger-btn.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+  .nav-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.65); z-index: 490; opacity: 0; pointer-events: none; transition: opacity 0.3s; }
+  .nav-overlay.open { opacity: 1; pointer-events: all; }
+  .nav-drawer { position: fixed; top: 0; left: 0; bottom: 0; width: 280px; background: #13100A; border-right: 1px solid rgba(200,150,62,0.2); z-index: 495; transform: translateX(-100%); transition: transform 0.35s cubic-bezier(0.4,0,0.2,1); display: flex; flex-direction: column; box-shadow: 4px 0 40px rgba(0,0,0,0.6); }
+  .nav-drawer.open { transform: translateX(0); }
+  .nav-drawer-header { display: flex; align-items: center; justify-content: space-between; padding: 20px 20px 16px; border-bottom: 1px solid rgba(200,150,62,0.1); height: 64px; flex-shrink: 0; }
+  .nav-logo-text { font-family: 'Cormorant Garamond', serif; font-size: 16px; font-weight: 400; color: #C8963E; letter-spacing: 0.2em; text-transform: uppercase; }
+  .nav-close { background: none; border: none; color: #9A8570; font-size: 24px; cursor: pointer; padding: 4px 8px; line-height: 1; transition: color 0.2s; }
+  .nav-close:hover { color: #C8963E; }
+  .nav-links { list-style: none; padding: 16px 0; flex: 1; overflow-y: auto; }
+  .nav-link { display: block; padding: 14px 24px; font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 300; color: #9A8570; text-decoration: none; transition: all 0.2s; border-left: 2px solid transparent; }
+  .nav-link:hover { color: #E8B86D; background: rgba(200,150,62,0.06); border-left-color: #C8963E; padding-left: 28px; }
+  .nav-link.active { color: #C8963E; border-left-color: #C8963E; background: rgba(200,150,62,0.05); }
+  .nav-cta-wrap { padding: 16px 20px; border-top: 1px solid rgba(200,150,62,0.1); flex-shrink: 0; }
+  .nav-cta-btn { display: block; width: 100%; background: #C8963E; color: #0A0806; font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 500; padding: 13px 16px; border-radius: 3px; text-decoration: none; text-align: center; letter-spacing: 0.06em; text-transform: uppercase; transition: background 0.2s; }
+  .nav-cta-btn:hover { background: #E8B86D; }
+  .nav-footer-text { padding: 14px 24px; border-top: 1px solid rgba(200,150,62,0.06); flex-shrink: 0; }
+  .nav-footer-text span { display: block; font-size: 11px; color: rgba(154,133,112,0.5); line-height: 1.8; }
 </style>
 </head>
 <body>
+<!-- BURGER MENU -->
+<div class="burger-nav">
+  <button class="burger-btn" id="burgerBtn" onclick="toggleNav()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</div>
+<div class="nav-overlay" id="navOverlay" onclick="toggleNav()"></div>
+<nav class="nav-drawer" id="navDrawer">
+  <div class="nav-drawer-header">
+    <span class="nav-logo-text">ONE FLAME</span>
+    <button class="nav-close" onclick="toggleNav()">×</button>
+  </div>
+  <ul class="nav-links">
+    <li><a href="index.html" class="nav-link">🏠 Home</a></li>
+    <li><a href="map.html" class="nav-link">🗺 The Living Map</a></li>
+    <li><a href="flames.html" class="nav-link">🕯 All Flames</a></li>
+    <li><a href="countries.html" class="nav-link">🌍 Countries</a></li>
+    <li><a href="receipts.html" class="nav-link">🏅 Charity Receipts</a></li>
+    <li><a href="accounts.html" class="nav-link active">📊 Accounts & Transparency</a></li>
+    <li><a href="cookies.html" class="nav-link">🍪 Cookie Policy</a></li>
+    <li><a href="terms.html" class="nav-link">📄 Terms of Use</a></li>
+    <li><a href="privacy.html" class="nav-link">🔒 Privacy Policy</a></li>
+  </ul>
+  <div class="nav-cta-wrap">
+    <a href="map.html" class="nav-cta-btn">🕯 Light Your Candle — £0.99</a>
+  </div>
+  <div class="nav-footer-text">
+    <span>oneflame.earth</span>
+    <span>Easter 2026 · World Cup 2026</span>
+  </div>
+</nav>
+
 
 <header class="page-header">
   <a href="index.html" class="header-logo">One Flame</a>
@@ -378,21 +436,455 @@
       </div>
 
       <div id="charityListContainer">
-        <!-- Populated by JS once charity list is confirmed -->
         <div class="charity-row">
-          <div class="charity-name">RNLI Cornwall<span>Royal National Lifeboat Institution · United Kingdom</span></div>
-          <div class="charity-share" id="rnliShare">£0.00</div>
+          <div class="charity-name">St. Jude Children's Research Hospital<span>Pediatric Cancer/Leukemia · USA</span></div>
+          <div class="charity-share charity-share-dynamic">£0.00</div>
           <div class="charity-paid"><span class="badge-pending">⏳ Pending milestone</span></div>
         </div>
         <div class="charity-row">
-          <div class="charity-name">Team Rubicon<span>Disaster response and veteran support · Global</span></div>
-          <div class="charity-share" id="teamRubiconShare">£0.00</div>
+          <div class="charity-name">SickKids Foundation<span>General Child Health/Surgery · Canada</span></div>
+          <div class="charity-share charity-share-dynamic">£0.00</div>
           <div class="charity-paid"><span class="badge-pending">⏳ Pending milestone</span></div>
         </div>
-        <div class="charity-row" style="opacity:0.5;">
-          <div class="charity-name">88 Further Charities<span>Children's health and hospitals · Global · List being finalised</span></div>
-          <div class="charity-share">£0.00</div>
-          <div class="charity-paid"><span class="badge-pending">⏳ List being confirmed</span></div>
+        <div class="charity-row">
+          <div class="charity-name">Bal Raksha Bharat (Save the Children)<span>Health & Nutrition · India</span></div>
+          <div class="charity-share charity-share-dynamic">£0.00</div>
+          <div class="charity-paid"><span class="badge-pending">⏳ Pending milestone</span></div>
+        </div>
+        <div class="charity-row">
+          <div class="charity-name">Gustave Roussy Foundation<span>Pediatric Oncology/Cancer · France</span></div>
+          <div class="charity-share charity-share-dynamic">£0.00</div>
+          <div class="charity-paid"><span class="badge-pending">⏳ Pending milestone</span></div>
+        </div>
+        <div class="charity-row">
+          <div class="charity-name">Deutsche Kinderkrebsstiftung<span>Childhood Cancer · Germany</span></div>
+          <div class="charity-share charity-share-dynamic">£0.00</div>
+          <div class="charity-paid"><span class="badge-pending">⏳ Pending milestone</span></div>
+        </div>
+        <div class="charity-row">
+          <div class="charity-name">Inocenti Foundation<span>Mobility/Special Needs · Romania</span></div>
+          <div class="charity-share charity-share-dynamic">£0.00</div>
+          <div class="charity-paid"><span class="badge-pending">⏳ Pending milestone</span></div>
+        </div>
+        <div class="charity-row">
+          <div class="charity-name">Caritas Bulgaria<span>Child Healthcare/Social Support · Bulgaria</span></div>
+          <div class="charity-share charity-share-dynamic">£0.00</div>
+          <div class="charity-paid"><span class="badge-pending">⏳ Pending milestone</span></div>
+        </div>
+        <div class="charity-row">
+          <div class="charity-name">The Smile of the Child<span>Medical Support/Emergency Care · Greece</span></div>
+          <div class="charity-share charity-share-dynamic">£0.00</div>
+          <div class="charity-paid"><span class="badge-pending">⏳ Pending milestone</span></div>
+        </div>
+        <div class="charity-row">
+          <div class="charity-name">Al Jalila Foundation<span>Life-saving Treatment/Research · UAE</span></div>
+          <div class="charity-share charity-share-dynamic">£0.00</div>
+          <div class="charity-paid"><span class="badge-pending">⏳ Pending milestone</span></div>
+        </div>
+        <div class="charity-row">
+          <div class="charity-name">Qatar Charity (Children's Healthcare)<span>Global Pediatric Health · Qatar</span></div>
+          <div class="charity-share charity-share-dynamic">£0.00</div>
+          <div class="charity-paid"><span class="badge-pending">⏳ Pending milestone</span></div>
+        </div>
+        <div class="charity-row">
+          <div class="charity-name">American Childhood Cancer Organization<span>Cancer/Leukemia · USA</span></div>
+          <div class="charity-share charity-share-dynamic">£0.00</div>
+          <div class="charity-paid"><span class="badge-pending">⏳ Pending milestone</span></div>
+        </div>
+        <div class="charity-row">
+          <div class="charity-name">BC Children's Hospital Foundation<span>Specialized Pediatrics · Canada</span></div>
+          <div class="charity-share charity-share-dynamic">£0.00</div>
+          <div class="charity-paid"><span class="badge-pending">⏳ Pending milestone</span></div>
+        </div>
+        <div class="charity-row">
+          <div class="charity-name">CanKids KidsCan<span>Pediatric Oncology · India</span></div>
+          <div class="charity-share charity-share-dynamic">£0.00</div>
+          <div class="charity-paid"><span class="badge-pending">⏳ Pending milestone</span></div>
+        </div>
+        <div class="charity-row">
+          <div class="charity-name">Imagine for Margo<span>Childhood Cancer Research · France</span></div>
+          <div class="charity-share charity-share-dynamic">£0.00</div>
+          <div class="charity-paid"><span class="badge-pending">⏳ Pending milestone</span></div>
+        </div>
+        <div class="charity-row">
+          <div class="charity-name">Kinderträume e.V.<span>Life-threatening Illnesses · Germany</span></div>
+          <div class="charity-share charity-share-dynamic">£0.00</div>
+          <div class="charity-paid"><span class="badge-pending">⏳ Pending milestone</span></div>
+        </div>
+        <div class="charity-row">
+          <div class="charity-name">Hospice Casa Sperantei<span>Pediatric Palliative Care · Romania</span></div>
+          <div class="charity-share charity-share-dynamic">£0.00</div>
+          <div class="charity-paid"><span class="badge-pending">⏳ Pending milestone</span></div>
+        </div>
+        <div class="charity-row">
+          <div class="charity-name">For Our Children Foundation<span>Child Health & Development · Bulgaria</span></div>
+          <div class="charity-share charity-share-dynamic">£0.00</div>
+          <div class="charity-paid"><span class="badge-pending">⏳ Pending milestone</span></div>
+        </div>
+        <div class="charity-row">
+          <div class="charity-name">ELPIDA Association<span>Childhood Cancer · Greece</span></div>
+          <div class="charity-share charity-share-dynamic">£0.00</div>
+          <div class="charity-paid"><span class="badge-pending">⏳ Pending milestone</span></div>
+        </div>
+        <div class="charity-row">
+          <div class="charity-name">Make-A-Wish Foundation UAE<span>Critical Illnesses · UAE</span></div>
+          <div class="charity-share charity-share-dynamic">£0.00</div>
+          <div class="charity-paid"><span class="badge-pending">⏳ Pending milestone</span></div>
+        </div>
+        <div class="charity-row">
+          <div class="charity-name">Sidra Medicine Foundation<span>Rare Diseases/Specialized Health · Qatar</span></div>
+          <div class="charity-share charity-share-dynamic">£0.00</div>
+          <div class="charity-paid"><span class="badge-pending">⏳ Pending milestone</span></div>
+        </div>
+        <div class="charity-row">
+          <div class="charity-name">Shriners Hospitals for Children<span>Orthopedics/Mobility · USA</span></div>
+          <div class="charity-share charity-share-dynamic">£0.00</div>
+          <div class="charity-paid"><span class="badge-pending">⏳ Pending milestone</span></div>
+        </div>
+        <div class="charity-row">
+          <div class="charity-name">CHEO Foundation<span>Pediatric Health · Canada</span></div>
+          <div class="charity-share charity-share-dynamic">£0.00</div>
+          <div class="charity-paid"><span class="badge-pending">⏳ Pending milestone</span></div>
+        </div>
+        <div class="charity-row">
+          <div class="charity-name">Childline India Foundation<span>Emergency Medical/Health · India</span></div>
+          <div class="charity-share charity-share-dynamic">£0.00</div>
+          <div class="charity-paid"><span class="badge-pending">⏳ Pending milestone</span></div>
+        </div>
+        <div class="charity-row">
+          <div class="charity-name">Association Petits Princes<span>Severe Sickness · France</span></div>
+          <div class="charity-share charity-share-dynamic">£0.00</div>
+          <div class="charity-paid"><span class="badge-pending">⏳ Pending milestone</span></div>
+        </div>
+        <div class="charity-row">
+          <div class="charity-name">Kindernothilfe<span>Global Child Health · Germany</span></div>
+          <div class="charity-share charity-share-dynamic">£0.00</div>
+          <div class="charity-paid"><span class="badge-pending">⏳ Pending milestone</span></div>
+        </div>
+        <div class="charity-row">
+          <div class="charity-name">Daruieste Viata<span>Oncology/Hospital Infrastructure · Romania</span></div>
+          <div class="charity-share charity-share-dynamic">£0.00</div>
+          <div class="charity-paid"><span class="badge-pending">⏳ Pending milestone</span></div>
+        </div>
+        <div class="charity-row">
+          <div class="charity-name">Cedar Foundation<span>Disability/Mobility · Bulgaria</span></div>
+          <div class="charity-share charity-share-dynamic">£0.00</div>
+          <div class="charity-paid"><span class="badge-pending">⏳ Pending milestone</span></div>
+        </div>
+        <div class="charity-row">
+          <div class="charity-name">Floga Parents Association<span>Cancer/Leukemia · Greece</span></div>
+          <div class="charity-share charity-share-dynamic">£0.00</div>
+          <div class="charity-paid"><span class="badge-pending">⏳ Pending milestone</span></div>
+        </div>
+        <div class="charity-row">
+          <div class="charity-name">Dubai Cares<span>Integrated Child Health · UAE</span></div>
+          <div class="charity-share charity-share-dynamic">£0.00</div>
+          <div class="charity-paid"><span class="badge-pending">⏳ Pending milestone</span></div>
+        </div>
+        <div class="charity-row">
+          <div class="charity-name">Education Above All<span>Healthcare/Displaced Children · Qatar</span></div>
+          <div class="charity-share charity-share-dynamic">£0.00</div>
+          <div class="charity-paid"><span class="badge-pending">⏳ Pending milestone</span></div>
+        </div>
+        <div class="charity-row">
+          <div class="charity-name">HelpAge India<span>Geriatric Health & Rights · India</span></div>
+          <div class="charity-share charity-share-dynamic">£0.00</div>
+          <div class="charity-paid"><span class="badge-pending">⏳ Pending milestone</span></div>
+        </div>
+        <div class="charity-row">
+          <div class="charity-name">Alzheimer Society of Canada<span>Dementia & Alzheimer's · Canada</span></div>
+          <div class="charity-share charity-share-dynamic">£0.00</div>
+          <div class="charity-paid"><span class="badge-pending">⏳ Pending milestone</span></div>
+        </div>
+        <div class="charity-row">
+          <div class="charity-name">Les Petits Frères des Pauvres<span>Isolation & Health · France</span></div>
+          <div class="charity-share charity-share-dynamic">£0.00</div>
+          <div class="charity-paid"><span class="badge-pending">⏳ Pending milestone</span></div>
+        </div>
+        <div class="charity-row">
+          <div class="charity-name">Alzheimer Forschung Initiative<span>Alzheimer's Research · Germany</span></div>
+          <div class="charity-share charity-share-dynamic">£0.00</div>
+          <div class="charity-paid"><span class="badge-pending">⏳ Pending milestone</span></div>
+        </div>
+        <div class="charity-row">
+          <div class="charity-name">Foundation for Elderly Care (FEC)<span>Day Care & Medical Services · Romania</span></div>
+          <div class="charity-share charity-share-dynamic">£0.00</div>
+          <div class="charity-paid"><span class="badge-pending">⏳ Pending milestone</span></div>
+        </div>
+        <div class="charity-row">
+          <div class="charity-name">Caritas Bulgaria (Elderly Division)<span>Home Care & Mobility · Bulgaria</span></div>
+          <div class="charity-share charity-share-dynamic">£0.00</div>
+          <div class="charity-paid"><span class="badge-pending">⏳ Pending milestone</span></div>
+        </div>
+        <div class="charity-row">
+          <div class="charity-name">The People's Trust<span>Social Support for Seniors · Greece</span></div>
+          <div class="charity-share charity-share-dynamic">£0.00</div>
+          <div class="charity-paid"><span class="badge-pending">⏳ Pending milestone</span></div>
+        </div>
+        <div class="charity-row">
+          <div class="charity-name">AARP Foundation<span>Elder Poverty & Health · USA</span></div>
+          <div class="charity-share charity-share-dynamic">£0.00</div>
+          <div class="charity-paid"><span class="badge-pending">⏳ Pending milestone</span></div>
+        </div>
+        <div class="charity-row">
+          <div class="charity-name">Al Jalila Foundation (Elderly Care)<span>Medical Treatment/Research · UAE</span></div>
+          <div class="charity-share charity-share-dynamic">£0.00</div>
+          <div class="charity-paid"><span class="badge-pending">⏳ Pending milestone</span></div>
+        </div>
+        <div class="charity-row">
+          <div class="charity-name">Qatar Charity (Elderly Support)<span>Health & Inclusion · Qatar</span></div>
+          <div class="charity-share charity-share-dynamic">£0.00</div>
+          <div class="charity-paid"><span class="badge-pending">⏳ Pending milestone</span></div>
+        </div>
+        <div class="charity-row">
+          <div class="charity-name">Meals on Wheels America<span>Nutrition & Wellness · USA</span></div>
+          <div class="charity-share charity-share-dynamic">£0.00</div>
+          <div class="charity-paid"><span class="badge-pending">⏳ Pending milestone</span></div>
+        </div>
+        <div class="charity-row">
+          <div class="charity-name">Dignity in Aging<span>Senior Advocacy · Canada</span></div>
+          <div class="charity-share charity-share-dynamic">£0.00</div>
+          <div class="charity-paid"><span class="badge-pending">⏳ Pending milestone</span></div>
+        </div>
+        <div class="charity-row">
+          <div class="charity-name">Dignity Foundation<span>Social Support/Dementia · India</span></div>
+          <div class="charity-share charity-share-dynamic">£0.00</div>
+          <div class="charity-paid"><span class="badge-pending">⏳ Pending milestone</span></div>
+        </div>
+        <div class="charity-row">
+          <div class="charity-name">France Alzheimer<span>Brain Health/Memory Care · France</span></div>
+          <div class="charity-share charity-share-dynamic">£0.00</div>
+          <div class="charity-paid"><span class="badge-pending">⏳ Pending milestone</span></div>
+        </div>
+        <div class="charity-row">
+          <div class="charity-name">Malteser Hilfsdienst<span>Geriatric Nursing/Palliative Care · Germany</span></div>
+          <div class="charity-share charity-share-dynamic">£0.00</div>
+          <div class="charity-paid"><span class="badge-pending">⏳ Pending milestone</span></div>
+        </div>
+        <div class="charity-row">
+          <div class="charity-name">Hospice Casa Sperantei (Geriatric)<span>Palliative Care/Chronic Sickness · Romania</span></div>
+          <div class="charity-share charity-share-dynamic">£0.00</div>
+          <div class="charity-paid"><span class="badge-pending">⏳ Pending milestone</span></div>
+        </div>
+        <div class="charity-row">
+          <div class="charity-name">Cedar Foundation (Elderly Services)<span>Mobility/Long-term Care · Bulgaria</span></div>
+          <div class="charity-share charity-share-dynamic">£0.00</div>
+          <div class="charity-paid"><span class="badge-pending">⏳ Pending milestone</span></div>
+        </div>
+        <div class="charity-row">
+          <div class="charity-name">Mission "ANTHROPOS"<span>Medical Care for the Elderly · Greece</span></div>
+          <div class="charity-share charity-share-dynamic">£0.00</div>
+          <div class="charity-paid"><span class="badge-pending">⏳ Pending milestone</span></div>
+        </div>
+        <div class="charity-row">
+          <div class="charity-name">Family Care Society<span>Senior Social & Health Services · UAE</span></div>
+          <div class="charity-share charity-share-dynamic">£0.00</div>
+          <div class="charity-paid"><span class="badge-pending">⏳ Pending milestone</span></div>
+        </div>
+        <div class="charity-row">
+          <div class="charity-name">Ehssan (Qatar Center for Rehabitation)<span>Geriatric Rehabilitation · Qatar</span></div>
+          <div class="charity-share charity-share-dynamic">£0.00</div>
+          <div class="charity-paid"><span class="badge-pending">⏳ Pending milestone</span></div>
+        </div>
+        <div class="charity-row">
+          <div class="charity-name">BrightFocus Foundation<span>Alzheimer's & Vision Loss · USA</span></div>
+          <div class="charity-share charity-share-dynamic">£0.00</div>
+          <div class="charity-paid"><span class="badge-pending">⏳ Pending milestone</span></div>
+        </div>
+        <div class="charity-row">
+          <div class="charity-name">HelpAge Canada<span>Senior Mobility/Isolation · Canada</span></div>
+          <div class="charity-share charity-share-dynamic">£0.00</div>
+          <div class="charity-paid"><span class="badge-pending">⏳ Pending milestone</span></div>
+        </div>
+        <div class="charity-row">
+          <div class="charity-name">AgeWell Foundation<span>Senior Healthcare/Advocacy · India</span></div>
+          <div class="charity-share charity-share-dynamic">£0.00</div>
+          <div class="charity-paid"><span class="badge-pending">⏳ Pending milestone</span></div>
+        </div>
+        <div class="charity-row">
+          <div class="charity-name">Fondation de France (Solidarité)<span>Vulnerable Elderly · France</span></div>
+          <div class="charity-share charity-share-dynamic">£0.00</div>
+          <div class="charity-paid"><span class="badge-pending">⏳ Pending milestone</span></div>
+        </div>
+        <div class="charity-row">
+          <div class="charity-name">Deutsches Altenhilfswerk<span>Gerontology & Home Care · Germany</span></div>
+          <div class="charity-share charity-share-dynamic">£0.00</div>
+          <div class="charity-paid"><span class="badge-pending">⏳ Pending milestone</span></div>
+        </div>
+        <div class="charity-row">
+          <div class="charity-name">Margareta of Romania Royal Foundation<span>Elderly Isolation & Medical · Romania</span></div>
+          <div class="charity-share charity-share-dynamic">£0.00</div>
+          <div class="charity-paid"><span class="badge-pending">⏳ Pending milestone</span></div>
+        </div>
+        <div class="charity-row">
+          <div class="charity-name">BCRC Bulgaria<span>Humanitarian/Geriatric Aid · Bulgaria</span></div>
+          <div class="charity-share charity-share-dynamic">£0.00</div>
+          <div class="charity-paid"><span class="badge-pending">⏳ Pending milestone</span></div>
+        </div>
+        <div class="charity-row">
+          <div class="charity-name">Lifeline Hellas<span>Medical Equipment for Seniors · Greece</span></div>
+          <div class="charity-share charity-share-dynamic">£0.00</div>
+          <div class="charity-paid"><span class="badge-pending">⏳ Pending milestone</span></div>
+        </div>
+        <div class="charity-row">
+          <div class="charity-name">Red Crescent UAE (Senior Care)<span>Health & Home Assistance · UAE</span></div>
+          <div class="charity-share charity-share-dynamic">£0.00</div>
+          <div class="charity-paid"><span class="badge-pending">⏳ Pending milestone</span></div>
+        </div>
+        <div class="charity-row">
+          <div class="charity-name">Qatar Red Crescent Society<span>Emergency Healthcare for Seniors · Qatar</span></div>
+          <div class="charity-share charity-share-dynamic">£0.00</div>
+          <div class="charity-paid"><span class="badge-pending">⏳ Pending milestone</span></div>
+        </div>
+        <div class="charity-row">
+          <div class="charity-name">Australian Red Cross (Seniors)<span>Loneliness & Home Health · Australia</span></div>
+          <div class="charity-share charity-share-dynamic">£0.00</div>
+          <div class="charity-paid"><span class="badge-pending">⏳ Pending milestone</span></div>
+        </div>
+        <div class="charity-row">
+          <div class="charity-name">Dementia Australia<span>Alzheimer's & Brain Health · Australia</span></div>
+          <div class="charity-share charity-share-dynamic">£0.00</div>
+          <div class="charity-paid"><span class="badge-pending">⏳ Pending milestone</span></div>
+        </div>
+        <div class="charity-row">
+          <div class="charity-name">Charity Foundation Starenki<span>Food & Medicine for Isolated Elderly · Ukraine</span></div>
+          <div class="charity-share charity-share-dynamic">£0.00</div>
+          <div class="charity-paid"><span class="badge-pending">⏳ Pending milestone</span></div>
+        </div>
+        <div class="charity-row">
+          <div class="charity-name">Turbota pro Litnikh v Ukraini<span>Geriatric Rights & Health · Ukraine</span></div>
+          <div class="charity-share charity-share-dynamic">£0.00</div>
+          <div class="charity-paid"><span class="badge-pending">⏳ Pending milestone</span></div>
+        </div>
+        <div class="charity-row">
+          <div class="charity-name">Red Cross of Serbia<span>Home Care & Mobility Aids · Serbia</span></div>
+          <div class="charity-share charity-share-dynamic">£0.00</div>
+          <div class="charity-paid"><span class="badge-pending">⏳ Pending milestone</span></div>
+        </div>
+        <div class="charity-row">
+          <div class="charity-name">Amity Foundation Serbia<span>Social Integration & Health Advocacy · Serbia</span></div>
+          <div class="charity-share charity-share-dynamic">£0.00</div>
+          <div class="charity-paid"><span class="badge-pending">⏳ Pending milestone</span></div>
+        </div>
+        <div class="charity-row">
+          <div class="charity-name">Darülaceze Foundation<span>Geriatric Medical Care/Shelter · Turkey</span></div>
+          <div class="charity-share charity-share-dynamic">£0.00</div>
+          <div class="charity-paid"><span class="badge-pending">⏳ Pending milestone</span></div>
+        </div>
+        <div class="charity-row">
+          <div class="charity-name">Turkish Alzheimer Association<span>Dementia Care & Research · Turkey</span></div>
+          <div class="charity-share charity-share-dynamic">£0.00</div>
+          <div class="charity-paid"><span class="badge-pending">⏳ Pending milestone</span></div>
+        </div>
+        <div class="charity-row">
+          <div class="charity-name">Caritas Georgia (Health Program)<span>Home Nursing & Rehabilitation · Georgia</span></div>
+          <div class="charity-share charity-share-dynamic">£0.00</div>
+          <div class="charity-paid"><span class="badge-pending">⏳ Pending milestone</span></div>
+        </div>
+        <div class="charity-row">
+          <div class="charity-name">Hippo (Humanitarian Foundation)<span>Vulnerable Senior Support · Georgia</span></div>
+          <div class="charity-share charity-share-dynamic">£0.00</div>
+          <div class="charity-paid"><span class="badge-pending">⏳ Pending milestone</span></div>
+        </div>
+        <div class="charity-row">
+          <div class="charity-name">Caritas Azerbaijan<span>Medical & Social Support · Azerbaijan</span></div>
+          <div class="charity-share charity-share-dynamic">£0.00</div>
+          <div class="charity-paid"><span class="badge-pending">⏳ Pending milestone</span></div>
+        </div>
+        <div class="charity-row">
+          <div class="charity-name">Red Crescent Society of Azerbaijan<span>Elderly Disaster/Health Relief · Azerbaijan</span></div>
+          <div class="charity-share charity-share-dynamic">£0.00</div>
+          <div class="charity-paid"><span class="badge-pending">⏳ Pending milestone</span></div>
+        </div>
+        <div class="charity-row">
+          <div class="charity-name">AAGG (Gerontology Association)<span>Geriatric Medicine · Albania</span></div>
+          <div class="charity-share charity-share-dynamic">£0.00</div>
+          <div class="charity-paid"><span class="badge-pending">⏳ Pending milestone</span></div>
+        </div>
+        <div class="charity-row">
+          <div class="charity-name">Caritas Albania (Elderly Care)<span>Home-based Healthcare · Albania</span></div>
+          <div class="charity-share charity-share-dynamic">£0.00</div>
+          <div class="charity-paid"><span class="badge-pending">⏳ Pending milestone</span></div>
+        </div>
+        <div class="charity-row">
+          <div class="charity-name">National Seniors Australia<span>Research & Health Policy · Australia</span></div>
+          <div class="charity-share charity-share-dynamic">£0.00</div>
+          <div class="charity-paid"><span class="badge-pending">⏳ Pending milestone</span></div>
+        </div>
+        <div class="charity-row">
+          <div class="charity-name">Age Concern Ukraine<span>Chronic Sickness Support · Ukraine</span></div>
+          <div class="charity-share charity-share-dynamic">£0.00</div>
+          <div class="charity-paid"><span class="badge-pending">⏳ Pending milestone</span></div>
+        </div>
+        <div class="charity-row">
+          <div class="charity-name">Bread of Life (Hleb Života)<span>Elderly Nursing & Care · Serbia</span></div>
+          <div class="charity-share charity-share-dynamic">£0.00</div>
+          <div class="charity-paid"><span class="badge-pending">⏳ Pending milestone</span></div>
+        </div>
+        <div class="charity-row">
+          <div class="charity-name">Kızılay (Turkish Red Crescent)<span>Elderly Respite & Health · Turkey</span></div>
+          <div class="charity-share charity-share-dynamic">£0.00</div>
+          <div class="charity-paid"><span class="badge-pending">⏳ Pending milestone</span></div>
+        </div>
+        <div class="charity-row">
+          <div class="charity-name">MACAS (Senior Support)<span>Geriatric Mental Health · Australia</span></div>
+          <div class="charity-share charity-share-dynamic">£0.00</div>
+          <div class="charity-paid"><span class="badge-pending">⏳ Pending milestone</span></div>
+        </div>
+        <div class="charity-row">
+          <div class="charity-name">The Smith Family (Seniors Program)<span>Integrated Community Health · Australia</span></div>
+          <div class="charity-share charity-share-dynamic">£0.00</div>
+          <div class="charity-paid"><span class="badge-pending">⏳ Pending milestone</span></div>
+        </div>
+        <div class="charity-row">
+          <div class="charity-name">CARE Australia (Caucasus Branch)<span>Vulnerable Community Health · Georgia</span></div>
+          <div class="charity-share charity-share-dynamic">£0.00</div>
+          <div class="charity-paid"><span class="badge-pending">⏳ Pending milestone</span></div>
+        </div>
+        <div class="charity-row">
+          <div class="charity-name">Project HOPE (Ukraine Response)<span>Medical Supplies for Seniors · Ukraine</span></div>
+          <div class="charity-share charity-share-dynamic">£0.00</div>
+          <div class="charity-paid"><span class="badge-pending">⏳ Pending milestone</span></div>
+        </div>
+        <div class="charity-row">
+          <div class="charity-name">Fondacioni Arsimor Shqiptar<span>Social Care & Senior Health · Albania</span></div>
+          <div class="charity-share charity-share-dynamic">£0.00</div>
+          <div class="charity-paid"><span class="badge-pending">⏳ Pending milestone</span></div>
+        </div>
+        <div class="charity-row">
+          <div class="charity-name">Belhospice (Palliative Care)<span>Cancer & Palliative Care · Serbia</span></div>
+          <div class="charity-share charity-share-dynamic">£0.00</div>
+          <div class="charity-paid"><span class="badge-pending">⏳ Pending milestone</span></div>
+        </div>
+        <div class="charity-row">
+          <div class="charity-name">Handicap International (Turkey)<span>Physical Mobility/Disability · Turkey</span></div>
+          <div class="charity-share charity-share-dynamic">£0.00</div>
+          <div class="charity-paid"><span class="badge-pending">⏳ Pending milestone</span></div>
+        </div>
+        <div class="charity-row">
+          <div class="charity-name">Bolnisi Home Care<span>Geriatric Nursing · Georgia</span></div>
+          <div class="charity-share charity-share-dynamic">£0.00</div>
+          <div class="charity-paid"><span class="badge-pending">⏳ Pending milestone</span></div>
+        </div>
+        <div class="charity-row">
+          <div class="charity-name">Qatar Red Crescent (Region Support)<span>Healthcare Missions · Azerbaijan</span></div>
+          <div class="charity-share charity-share-dynamic">£0.00</div>
+          <div class="charity-paid"><span class="badge-pending">⏳ Pending milestone</span></div>
+        </div>
+        <div class="charity-row">
+          <div class="charity-name">GlobalGiving (Albania Relief)<span>Community Health/Elderly · Albania</span></div>
+          <div class="charity-share charity-share-dynamic">£0.00</div>
+          <div class="charity-paid"><span class="badge-pending">⏳ Pending milestone</span></div>
+        </div>
+        <div class="charity-row">
+          <div class="charity-name">COTA Australia (Aging)<span>Geriatric Policy & Health · Australia</span></div>
+          <div class="charity-share charity-share-dynamic">£0.00</div>
+          <div class="charity-paid"><span class="badge-pending">⏳ Pending milestone</span></div>
+        </div>
+        <div class="charity-row">
+          <div class="charity-name">LifeLine Ukraine<span>Senior Mental Health/Crisis · Ukraine</span></div>
+          <div class="charity-share charity-share-dynamic">£0.00</div>
+          <div class="charity-paid"><span class="badge-pending">⏳ Pending milestone</span></div>
         </div>
       </div>
     </div>
@@ -439,7 +931,7 @@
       <p><strong>Milestone charity donations</strong> are voluntary commitments made personally by the founder. They are separate from operating costs and are paid directly to each charity when a flame milestone is reached. Equal distribution means every charity receives exactly the same amount regardless of size or profile.</p>
       <p><strong>Operating costs</strong> include but are not limited to: Stripe fees, GitHub Pages, Supabase, Namecheap domain, and any AI or software tools used to build and maintain the platform. Up to 20% of net revenue may be applied to these costs.</p>
       <p>By lighting a candle on oneflame.earth you are purchasing a digital product. You are not making a charitable donation directly. The milestone donations described here are a voluntary commitment by the founder of One Flame.</p>
-      <p>For questions about this page please contact <a href="mailto:hello@oneflame.earth" style="color:var(--gold);">hello@oneflame.earth</a></p>
+      <p>For questions about this page please contact <a href="/cdn-cgi/l/email-protection#036b666f6f6c436c6d66656f626e662d666271776b" style="color:var(--gold);"><span class="__cf_email__" data-cfemail="5a323f3636351a35343f3c363b373f743f3b282e32">[email&#160;protected]</span></a></p>
     </div>
   </div>
 </section>
@@ -456,7 +948,7 @@
   <div class="footer-copy">© 2026 One Flame · Michael C · oneflame.earth · All rights reserved.</div>
 </footer>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 const SUPABASE_URL = 'https://rytjvdptbjnlhayclcvu.supabase.co';
 const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJ5dGp2ZHB0YmpubGhheWNsY3Z1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzUzMzA1MjksImV4cCI6MjA5MDkwNjUyOX0.y6qVpN-tJKafDVY_yUk0K6yQ9xXYy5xfIhFoJvqWf48';
 
@@ -512,7 +1004,7 @@ async function loadAccountsData() {
     const founderIncome   = afterTax - estimatedOpCosts;
     const totalDonated    = 0; // Updated manually when milestones hit
     const perCharityPaid  = totalDonated / CHARITY_COUNT;
-    const equalShare      = totalDonated > 0 ? fmt(perCharityPaid) : '£0.00';
+    const shareAmount     = totalDonated > 0 ? fmt(perCharityPaid) : '£0.00';
 
     // Update DOM
     document.getElementById('grossRevenue').textContent    = fmt(grossRevenue);
@@ -533,18 +1025,36 @@ async function loadAccountsData() {
     document.getElementById('hmrcBannerAmount').textContent =
       fmt(hmrcTax) + ' contributed to UK public services to date (estimated at 20% basic rate)';
 
-    // Charity summary
+    // Charity summary cards
     document.getElementById('totalPaidCharities').textContent = totalDonated > 0 ? CHARITY_COUNT : '0';
-    document.getElementById('perCharityAmount').textContent   = equalShare;
-    document.getElementById('rnliShare').textContent          = equalShare;
-    document.getElementById('teamRubiconShare').textContent   = equalShare;
+    document.getElementById('perCharityAmount').textContent   = shareAmount;
+
+    // Update all charity share amounts dynamically
+    document.querySelectorAll('.charity-share-dynamic').forEach(el => {
+      el.textContent = shareAmount;
+    });
+
+    // Update paid badges if donations have been made
+    if (totalDonated > 0) {
+      document.querySelectorAll('.badge-pending').forEach(el => {
+        el.className = 'badge-paid';
+        el.textContent = '✓ Paid';
+      });
+    }
 
   } catch(e) {
     console.error('Accounts load error:', e);
   }
 }
 
-window.addEventListener('load', loadAccountsData);
-</script>
-</body>
-</html>
+
+function toggleNav() {
+  const btn = document.getElementById('burgerBtn');
+  const drawer = document.getElementById('navDrawer');
+  const overlay = document.getElementById('navOverlay');
+  btn.classList.toggle('open');
+  drawer.classList.toggle('open');
+  overlay.classList.toggle('open');
+  document.body.style.overflow = drawer.classList.contains('open') ? 'hidden' : '';
+}
+document.addEventListener('keydown',

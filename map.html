@@ -494,6 +494,9 @@ async function buildMap() {
   });
 
   svgEl.addEventListener('mousemove', e => {
+    // Do not override tooltip if hovering over a candle dot
+    if (e.target.closest && e.target.closest('.candle-dot')) return;
+    if (e.target.classList && (e.target.classList.contains('candle-dot') || e.target.parentElement?.classList.contains('candle-dot'))) return;
     const { lat, lng } = svgToLatLng(e.clientX, e.clientY);
     const tt = document.getElementById('mapTooltip');
     tt.style.display = 'block';
@@ -635,6 +638,57 @@ const COUNTRY_COORDS = {
   'Malta': [35.94, 14.38], 'Iceland': [64.96, -19.02]
 };
 
+// ─── HOMETOWN COORDINATES ────────────────────────────────────
+// Looks up approximate coordinates for common towns and cities
+// so candles appear in the right region rather than national centre
+const HOMETOWN_COORDS = {
+  // UK - Cornwall and South West
+  'cornwall': [50.40, -5.00], 'padstow': [50.54, -4.94], 'trevone': [50.54, -4.97],
+  'newquay': [50.41, -5.08], 'truro': [50.26, -5.05], 'penzance': [50.12, -5.54],
+  'falmouth': [50.15, -5.07], 'st ives': [50.21, -5.48], 'bodmin': [50.47, -4.72],
+  'plymouth': [50.37, -4.14], 'exeter': [50.72, -3.53], 'torquay': [50.46, -3.53],
+  'devon': [50.71, -3.84], 'dorset': [50.75, -2.34], 'somerset': [51.10, -2.92],
+  // UK - Midlands and North
+  'congleton': [53.16, -2.22], 'manchester': [53.48, -2.24], 'liverpool': [53.41, -2.99],
+  'birmingham': [52.48, -1.90], 'leeds': [53.80, -1.55], 'sheffield': [53.38, -1.47],
+  'nottingham': [52.95, -1.14], 'leicester': [52.64, -1.13], 'coventry': [52.41, -1.51],
+  'stoke': [53.00, -2.18], 'derby': [52.92, -1.47], 'wolverhampton': [52.59, -2.11],
+  'cheshire': [53.19, -2.55], 'lancashire': [53.76, -2.70], 'yorkshire': [53.96, -1.08],
+  // UK - London and South East
+  'london': [51.51, -0.13], 'brighton': [50.83, -0.14], 'oxford': [51.75, -1.26],
+  'cambridge': [52.21, 0.12], 'southampton': [50.90, -1.40], 'portsmouth': [50.80, -1.09],
+  'reading': [51.46, -0.97], 'guildford': [51.24, -0.58], 'kent': [51.28, 0.52],
+  'essex': [51.57, 0.46], 'hertfordshire': [51.81, -0.24], 'surrey': [51.31, -0.31],
+  // UK - Scotland
+  'edinburgh': [55.95, -3.19], 'glasgow': [55.86, -4.25], 'aberdeen': [57.15, -2.11],
+  'dundee': [56.46, -2.97], 'inverness': [57.48, -4.22], 'stirling': [56.12, -3.94],
+  // UK - Wales
+  'cardiff': [51.48, -3.18], 'swansea': [51.62, -3.94], 'newport': [51.59, -2.99],
+  // UK - Northern Ireland
+  'belfast': [54.60, -5.93], 'londonderry': [54.99, -7.31],
+  // Germany
+  'straubing': [48.88, 12.57], 'berlin': [52.52, 13.40], 'munich': [48.14, 11.58],
+  'hamburg': [53.55, 10.00], 'frankfurt': [50.11, 8.68], 'cologne': [50.94, 6.96],
+  // Romania
+  'bucharest': [44.43, 26.10], 'cluj': [46.77, 23.59], 'pitesti': [44.86, 24.87],
+  'craiova': [44.32, 23.80], 'timisoara': [45.75, 21.23], 'iasi': [47.16, 27.59],
+  // Default - use country centre
+};
+
+function getHomtownCoords(country, hometown) {
+  if (!hometown) return null;
+  const key = hometown.toLowerCase().trim();
+  // Try exact match first
+  if (HOMETOWN_COORDS[key]) return HOMETOWN_COORDS[key];
+  // Try partial match - hometown might be "Padstow, Cornwall"
+  for (const [town, coords] of Object.entries(HOMETOWN_COORDS)) {
+    if (key.includes(town) || town.includes(key.split(',')[0].trim())) {
+      return coords;
+    }
+  }
+  return null;
+}
+
 async function proceedToPayment() {
   const btn = document.getElementById('popupCta');
   if (!btn) return;
@@ -655,10 +709,10 @@ async function proceedToPayment() {
     return;
   }
 
-  // Use country centre coordinates for accuracy
-  // Add small random offset so multiple candles from same country don't stack exactly
-  const coords = COUNTRY_COORDS[country] || [selectedLat, selectedLng];
-  const jitter = () => (Math.random() - 0.5) * 2;
+  // Use hometown to get more accurate coordinates within the country
+  // This prevents all candles from one country clustering at the national centre
+  const coords = getHomtownCoords(country, hometown) || COUNTRY_COORDS[country] || [selectedLat, selectedLng];
+  const jitter = () => (Math.random() - 0.5) * 0.8;
   const finalLat = coords[0] + jitter();
   const finalLng = coords[1] + jitter();
 
@@ -1061,7 +1115,8 @@ function showWaitingBanner(code) {
 
 const SEED_LAUNCH_DATE = new Date('2026-04-20T00:00:00Z');
 const SEED_EXPIRY = new Date(SEED_LAUNCH_DATE.getTime() + 100 * 24 * 60 * 60 * 1000).toISOString();
-const SEED_TARGET = 200;
+const SEED_TARGET  = 200;   // Keep map looking populated until real candles exceed this
+const SEED_CEILING = 1000;  // Stop seeding entirely once total candles reach this
 
 const SEED_POOL = [
   { country: 'United Kingdom',     lat: 51.51, lng: -0.13,   nickname: 'Sarah K',    intention: 'Peace' },
@@ -1199,6 +1254,10 @@ async function countSeedCandles() {
 
 async function insertSeedCandle(seed) {
   const code = generateSeedCode();
+  // Timestamps start from day 2 after launch so seeds always sort
+  // below the founder candle 45AC6 which was created on launch day
+  // Spread across days 2-4 only so dates look natural and recent
+  const seedStart = new Date(SEED_LAUNCH_DATE.getTime() + 2 * 24 * 60 * 60 * 1000);
   const data = {
     code,
     nickname: seed.nickname,
@@ -1207,7 +1266,7 @@ async function insertSeedCandle(seed) {
     latitude: seed.lat + (Math.random() * 2 - 1),
     longitude: seed.lng + (Math.random() * 2 - 1),
     payment_confirmed: true,
-    created_at: new Date(SEED_LAUNCH_DATE.getTime() + Math.random() * 7 * 24 * 60 * 60 * 1000).toISOString(),
+    created_at: new Date(seedStart.getTime() + Math.random() * 2 * 24 * 60 * 60 * 1000).toISOString(),
     expires_at: SEED_EXPIRY
   };
   try {
@@ -1226,8 +1285,11 @@ async function insertSeedCandle(seed) {
 }
 
 async function topUpSeedCandles(currentTotal) {
+  // Hard stop: never seed if total candles already at or above ceiling
+  if (currentTotal >= SEED_CEILING) return;
+  // Soft stop: only top up if below the visible target
   if (currentTotal >= SEED_TARGET) return;
-  const needed = SEED_TARGET - currentTotal;
+  const needed = Math.min(SEED_TARGET, SEED_CEILING) - currentTotal;
   const toAdd = Math.min(needed, 10);
   const shuffled = [...SEED_POOL].sort(() => Math.random() - 0.5).slice(0, toAdd);
   for (const seed of shuffled) {
