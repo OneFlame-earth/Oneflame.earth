@@ -1,0 +1,1235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>One Flame — Countries</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="apple-touch-icon" href="favicon.svg">
+<meta name="theme-color" content="#0A0806">
+<meta name="description" content="Countries represented on the One Flame global peace map. See where the world is speaking with one voice.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="One Flame">
+<meta property="og:title" content="One Flame — Countries">
+<meta property="og:description" content="See which countries are lighting flames for peace on oneflame.earth.">
+<meta property="og:image" content="https://oneflame.earth/og-image.png">
+<meta property="og:url" content="https://oneflame.earth/countries.html">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="One Flame — Countries">
+<meta name="twitter:image" content="https://oneflame.earth/og-image.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #C8963E;
+    --gold-light: #E8B86D;
+    --gold-pale: #F5DFA8;
+    --ember: #E05A1B;
+    --deep: #0A0806;
+    --dark: #13100A;
+    --mid: #1E1810;
+    --smoke: #2A211A;
+    --text: #F0E6D3;
+    --text-muted: #9A8570;
+    --white: #FDFAF5;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--deep);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+  }
+
+  /* LANGUAGE BAR */
+  .lang-bar {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    background: rgba(10,8,6,0.96);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(200,150,62,0.15);
+    padding: 6px 16px 6px 66px;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .lang-bar::-webkit-scrollbar { display: none; }
+  .lang-bar-inner { display: flex; align-items: center; gap: 10px; min-width: max-content; }
+  .lang-links { display: flex; gap: 4px; align-items: center; flex-wrap: nowrap; }
+  .lang-btn {
+    background: rgba(200,150,62,0.05);
+    border: 1px solid rgba(200,150,62,0.2);
+    color: var(--text-muted);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    padding: 3px 6px;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: all 0.2s;
+    min-width: 30px;
+    text-align: center;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .lang-btn:hover, .lang-btn.active {
+    border-color: var(--gold);
+    color: var(--gold);
+    background: rgba(200,150,62,0.12);
+  }
+
+  /* BURGER NAVIGATION */
+  .burger-nav { position: fixed; top: 8px; left: 16px; z-index: 500; }
+  .burger-btn { background: rgba(10,8,6,0.92); border: 1px solid rgba(200,150,62,0.3); border-radius: 4px; width: 42px; height: 42px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; cursor: pointer; backdrop-filter: blur(8px); transition: all 0.2s; padding: 0; }
+  .burger-btn:hover { border-color: #C8963E; }
+  .burger-btn span { display: block; width: 18px; height: 1.5px; background: #C8963E; border-radius: 1px; transition: all 0.3s; }
+  .burger-btn.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+  .burger-btn.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+  .burger-btn.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+  .nav-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.65); z-index: 490; opacity: 0; pointer-events: none; transition: opacity 0.3s; }
+  .nav-overlay.open { opacity: 1; pointer-events: all; }
+  .nav-drawer { position: fixed; top: 0; left: 0; bottom: 0; width: 280px; background: #13100A; border-right: 1px solid rgba(200,150,62,0.2); z-index: 495; transform: translateX(-100%); transition: transform 0.35s cubic-bezier(0.4,0,0.2,1); display: flex; flex-direction: column; box-shadow: 4px 0 40px rgba(0,0,0,0.6); }
+  .nav-drawer.open { transform: translateX(0); }
+  .nav-drawer-header { display: flex; align-items: center; justify-content: space-between; padding: 20px 20px 16px; border-bottom: 1px solid rgba(200,150,62,0.1); height: 64px; flex-shrink: 0; }
+  .nav-logo-text { font-family: 'Cormorant Garamond', serif; font-size: 16px; font-weight: 400; color: #C8963E; letter-spacing: 0.2em; text-transform: uppercase; }
+  .nav-close { background: none; border: none; color: #9A8570; font-size: 24px; cursor: pointer; padding: 4px 8px; line-height: 1; transition: color 0.2s; }
+  .nav-close:hover { color: #C8963E; }
+  .nav-links { list-style: none; padding: 16px 0; flex: 1; overflow-y: auto; }
+  .nav-link { display: block; padding: 14px 24px; font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 300; color: #9A8570; text-decoration: none; transition: all 0.2s; border-left: 2px solid transparent; }
+  .nav-link:hover { color: #E8B86D; background: rgba(200,150,62,0.06); border-left-color: #C8963E; padding-left: 28px; }
+  .nav-link.active { color: #C8963E; border-left-color: #C8963E; background: rgba(200,150,62,0.05); }
+  .nav-cta-wrap { padding: 16px 20px; border-top: 1px solid rgba(200,150,62,0.1); flex-shrink: 0; }
+  .nav-cta-btn { display: block; width: 100%; background: #C8963E; color: #0A0806; font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 500; padding: 13px 16px; border-radius: 3px; text-decoration: none; text-align: center; letter-spacing: 0.06em; text-transform: uppercase; transition: background 0.2s; }
+  .nav-cta-btn:hover { background: #E8B86D; }
+  .nav-footer-text { padding: 14px 24px; border-top: 1px solid rgba(200,150,62,0.06); flex-shrink: 0; }
+  .nav-footer-text span { display: block; font-size: 11px; color: rgba(154,133,112,0.5); line-height: 1.8; }
+
+  /* PAGE */
+  .page-header {
+    padding: 100px 24px 48px;
+    text-align: center;
+    background: var(--dark);
+    border-bottom: 1px solid rgba(200,150,62,0.1);
+  }
+  .page-eyebrow {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 16px;
+  }
+  .page-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(40px, 8vw, 72px);
+    font-weight: 300;
+    color: var(--white);
+    line-height: 1.05;
+    margin-bottom: 16px;
+  }
+  .page-title em { font-style: italic; color: var(--gold-light); }
+  .page-sub {
+    font-size: 15px;
+    color: var(--text-muted);
+    max-width: 520px;
+    margin: 0 auto;
+    line-height: 1.7;
+  }
+
+  /* MAIN CONTENT */
+  .content-wrap {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 48px 24px 80px;
+  }
+
+  /* SECTION LABEL */
+  .section-label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: rgba(200,150,62,0.15);
+  }
+
+  /* PODIUM — TOP 8 */
+  .podium-section { margin-bottom: 56px; }
+
+  .podium-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 12px;
+  }
+
+  .podium-card {
+    background: var(--mid);
+    border: 1px solid rgba(200,150,62,0.12);
+    border-radius: 4px;
+    padding: 20px 16px;
+    position: relative;
+    transition: border-color 0.2s;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .podium-card:hover { border-color: rgba(200,150,62,0.35); }
+
+  .podium-card.gold   { border-color: rgba(255,215,0,0.4);   background: rgba(255,215,0,0.04); }
+  .podium-card.silver { border-color: rgba(192,192,192,0.4); background: rgba(192,192,192,0.04); }
+  .podium-card.bronze { border-color: rgba(205,127,50,0.4);  background: rgba(205,127,50,0.04); }
+
+  .podium-medal {
+    font-size: 22px;
+    line-height: 1;
+  }
+
+  .podium-rank {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+  .podium-card.gold   .podium-rank { color: #FFD700; }
+  .podium-card.silver .podium-rank { color: #C0C0C0; }
+  .podium-card.bronze .podium-rank { color: #CD7F32; }
+
+  .podium-flag { font-size: 28px; line-height: 1; }
+
+  .podium-country {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px;
+    font-weight: 400;
+    color: var(--white);
+    line-height: 1.1;
+  }
+
+  .podium-flames {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px;
+    font-weight: 300;
+    color: var(--gold);
+    line-height: 1;
+    margin-top: 4px;
+  }
+
+  .podium-pop {
+    font-size: 11px;
+    color: var(--text-muted);
+    letter-spacing: 0.03em;
+  }
+
+  .podium-bar-wrap {
+    width: 100%;
+    height: 2px;
+    background: rgba(200,150,62,0.1);
+    border-radius: 1px;
+    overflow: hidden;
+    margin-top: 4px;
+  }
+  .podium-bar {
+    height: 100%;
+    background: linear-gradient(90deg, var(--ember), var(--gold));
+    border-radius: 1px;
+    transition: width 1.2s ease;
+  }
+
+  /* WORLD TABLE */
+  .table-section { margin-bottom: 48px; }
+
+  .world-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+  .world-table thead th {
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    padding: 10px 12px;
+    border-bottom: 1px solid rgba(200,150,62,0.15);
+    text-align: left;
+  }
+  .world-table thead th:nth-child(3),
+  .world-table thead th:nth-child(4) { text-align: right; }
+  .world-table tbody tr {
+    border-bottom: 1px solid rgba(200,150,62,0.06);
+    transition: background 0.15s;
+  }
+  .world-table tbody tr:hover { background: rgba(200,150,62,0.04); }
+  .world-table tbody tr.has-flame { background: rgba(200,150,62,0.03); }
+  .world-table tbody tr.has-flame:hover { background: rgba(200,150,62,0.07); }
+  .world-table td {
+    padding: 10px 12px;
+    color: var(--text-muted);
+    vertical-align: middle;
+  }
+  .world-table td:nth-child(1) { color: rgba(154,133,112,0.4); font-size: 11px; width: 40px; }
+  .world-table td:nth-child(2) { color: var(--text); }
+  .world-table td:nth-child(3),
+  .world-table td:nth-child(4) { text-align: right; }
+  .world-table td:nth-child(4) {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 16px;
+    color: var(--gold);
+    font-weight: 300;
+  }
+  .country-cell { display: flex; align-items: center; gap: 10px; }
+  .country-flag { font-size: 18px; flex-shrink: 0; }
+  .country-name { font-size: 13px; color: var(--text); }
+  .flame-dot {
+    display: inline-block;
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--gold);
+    box-shadow: 0 0 6px rgba(200,150,62,0.6);
+    margin-left: 6px;
+    vertical-align: middle;
+  }
+
+  /* LOADING */
+  .loading-state {
+    text-align: center;
+    padding: 60px 24px;
+    color: var(--text-muted);
+    font-size: 14px;
+  }
+  .spinner {
+    width: 32px; height: 32px;
+    border: 2px solid rgba(200,150,62,0.2);
+    border-top-color: var(--gold);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    margin: 0 auto 16px;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* CTA */
+  .cta-wrap {
+    text-align: center;
+    padding: 40px 24px;
+    background: var(--mid);
+    border: 1px solid rgba(200,150,62,0.1);
+    border-radius: 4px;
+    margin-top: 48px;
+  }
+  .cta-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px;
+    font-weight: 300;
+    color: var(--white);
+    margin-bottom: 12px;
+  }
+  .cta-body {
+    font-size: 14px;
+    color: var(--text-muted);
+    margin-bottom: 24px;
+    line-height: 1.6;
+  }
+  .cta-btn {
+    display: inline-block;
+    background: var(--gold);
+    color: var(--deep);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 16px 36px;
+    border-radius: 2px;
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+  .cta-btn:hover { background: var(--gold-light); }
+
+  /* FOOTER */
+  footer {
+    padding: 40px 24px;
+    background: var(--deep);
+    border-top: 1px solid rgba(200,150,62,0.08);
+    text-align: center;
+  }
+  .footer-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px;
+    color: var(--gold);
+    letter-spacing: 0.15em;
+    margin-bottom: 16px;
+  }
+  .footer-links {
+    display: flex;
+    gap: 24px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+  }
+  .footer-links a {
+    font-size: 12px;
+    color: var(--text-muted);
+    text-decoration: none;
+    letter-spacing: 0.05em;
+    transition: color 0.2s;
+  }
+  .footer-links a:hover { color: var(--gold); }
+  .footer-note {
+    font-size: 11px;
+    color: rgba(154,133,112,0.5);
+    max-width: 480px;
+    margin: 0 auto;
+    line-height: 1.6;
+  }
+
+  @media (max-width: 600px) {
+    .podium-grid { grid-template-columns: 1fr 1fr; }
+    .world-table td:nth-child(3) { display: none; }
+    .world-table thead th:nth-child(3) { display: none; }
+    .lang-btn { font-size: 10px; padding: 2px 6px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- BURGER MENU -->
+<div class="burger-nav">
+  <button class="burger-btn" id="burgerBtn" onclick="toggleNav()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</div>
+<div class="nav-overlay" id="navOverlay" onclick="toggleNav()"></div>
+<nav class="nav-drawer" id="navDrawer">
+  <div class="nav-drawer-header">
+    <span class="nav-logo-text">ONE FLAME</span>
+    <button class="nav-close" onclick="toggleNav()">×</button>
+  </div>
+  <ul class="nav-links">
+    <li><a href="index.html" class="nav-link">🏠 Home</a></li>
+    <li><a href="map.html" class="nav-link">🗺 The Living Map</a></li>
+    <li><a href="flames.html" class="nav-link">🕯 All Flames</a></li>
+    <li><a href="countries.html" class="nav-link active">🌍 Countries</a></li>
+    <li><a href="receipts.html" class="nav-link">🏅 Charity Receipts</a></li>
+    <li><a href="accounts.html" class="nav-link">📊 Accounts & Transparency</a></li>
+    <li><a href="cookies.html" class="nav-link">🍪 Cookie Policy</a></li>
+    <li><a href="terms.html" class="nav-link">📄 Terms of Use</a></li>
+    <li><a href="privacy.html" class="nav-link">🔒 Privacy Policy</a></li>
+  </ul>
+  <div class="nav-cta-wrap">
+    <a href="map.html" class="nav-cta-btn">🕯 Light My Flame — £0.99</a>
+  </div>
+  <div class="nav-footer-text">
+    <span>oneflame.earth</span>
+    <span>Easter 2026 · World Cup 2026</span>
+  </div>
+</nav>
+
+<!-- LANGUAGE BAR -->
+<nav class="lang-bar">
+  <div class="lang-bar-inner">
+    <div class="lang-links">
+      <button class="lang-btn active" onclick="setLang('en',event)">EN</button>
+      <button class="lang-btn" onclick="setLang('fr',event)">FR</button>
+      <button class="lang-btn" onclick="setLang('de',event)">DE</button>
+      <button class="lang-btn" onclick="setLang('at',event)">AT</button>
+      <button class="lang-btn" onclick="setLang('no',event)">NO</button>
+      <button class="lang-btn" onclick="setLang('sv',event)">SV</button>
+      <button class="lang-btn" onclick="setLang('tr',event)">TR</button>
+      <button class="lang-btn" onclick="setLang('ro',event)">RO</button>
+      <button class="lang-btn" onclick="setLang('el',event)">GR</button>
+      <button class="lang-btn" onclick="setLang('hu',event)">HU</button>
+      <button class="lang-btn" onclick="setLang('sr',event)">SR</button>
+      <button class="lang-btn" onclick="setLang('bg',event)">BG</button>
+      <button class="lang-btn" onclick="setLang('sq',event)">AL</button>
+      <button class="lang-btn" onclick="setLang('uk',event)">UA</button>
+      <button class="lang-btn" onclick="setLang('ka',event)">GE</button>
+      <button class="lang-btn" onclick="setLang('es',event)">ES</button>
+      <button class="lang-btn" onclick="setLang('es_mx',event)">MX</button>
+      <button class="lang-btn" onclick="setLang('es_ar',event)">ARG</button>
+      <button class="lang-btn" onclick="setLang('pt',event)">PT</button>
+      <button class="lang-btn" onclick="setLang('ar',event)">AR</button>
+      <button class="lang-btn" onclick="setLang('ar_sa',event)">SA</button>
+      <button class="lang-btn" onclick="setLang('ar_qa',event)">QA</button>
+      <button class="lang-btn" onclick="setLang('ar_ae',event)">UAE</button>
+      <button class="lang-btn" onclick="setLang('ar_iq',event)">IQ</button>
+      <button class="lang-btn" onclick="setLang('ar_eg',event)">EG</button>
+      <button class="lang-btn" onclick="setLang('he',event)">IL</button>
+      <button class="lang-btn" onclick="setLang('fr_ci',event)">CI</button>
+      <button class="lang-btn" onclick="setLang('hi',event)">HI</button>
+      <button class="lang-btn" onclick="setLang('zh',event)">ZH</button>
+      <button class="lang-btn" onclick="setLang('ko',event)">KO</button>
+      <button class="lang-btn" onclick="setLang('th',event)">TH</button>
+      <button class="lang-btn" onclick="setLang('tl',event)">PH</button>
+    </div>
+  </div>
+</nav>
+
+<!-- PAGE HEADER -->
+<div class="page-header">
+  <p class="page-eyebrow" data-key="eyebrow">Easter 2026 · World Cup 2026</p>
+  <h1 class="page-title">The <em>World</em></h1>
+  <p class="page-sub" data-key="page_sub">Every country. Every flame. See where peace is speaking loudest — and where the next flame is needed most.</p>
+</div>
+
+<!-- CONTENT -->
+<div class="content-wrap">
+
+  <!-- TOP 8 PODIUM -->
+  <div class="podium-section">
+    <div class="section-label" data-key="label_top8">Top 8 Countries by Flames Lit</div>
+    <div class="podium-grid" id="podiumGrid">
+      <div class="loading-state">
+        <div class="spinner"></div>
+        <span data-key="loading">Loading...</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- FULL WORLD TABLE -->
+  <div class="table-section">
+    <div class="section-label" data-key="label_world">All Countries — Population & Flames</div>
+    <table class="world-table" id="worldTable">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th data-key="col_country">Country</th>
+          <th data-key="col_pop">Population</th>
+          <th data-key="col_flames">Flames</th>
+        </tr>
+      </thead>
+      <tbody id="worldTableBody">
+        <tr>
+          <td colspan="4">
+            <div class="loading-state">
+              <div class="spinner"></div>
+              <span data-key="loading">Loading...</span>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- CTA -->
+  <div class="cta-wrap">
+    <div class="cta-title" data-key="cta_title">Is your country on the map?</div>
+    <p class="cta-body" data-key="cta_body">Light your flame. Add your country to the living ledger. Every nation counts.</p>
+    <a href="map.html" class="cta-btn" data-key="cta_btn">🕯 Light My Flame — £0.99</a>
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">ONE FLAME · ONEFLAME.EARTH</div>
+  <div class="footer-links">
+    <a href="index.html" data-key="f_about">About</a>
+    <a href="receipts.html" data-key="f_charities">Charity Receipts</a>
+    <a href="flames.html" data-key="f_flames">All Flames</a>
+    <a href="cookies.html" data-key="f_cookies">Cookie Policy</a>
+    <a href="map.html" data-key="f_map">Light a Flame</a>
+  </div>
+  <p class="footer-note" data-key="footer_note">
+    One Flame is an independent peace initiative. Charity donations are made personally by the founder at each milestone and receipts are published here publicly.
+  </p>
+  <p style="font-size:10px;color:rgba(154,133,112,0.4);margin-top:12px;">
+    © 2026 One Flame · Michael C · oneflame.earth · All rights reserved.
+  </p>
+</footer>
+
+<script>
+// ─── TRANSLATIONS ───────────────────────────────────────────
+const T = {
+  en: {
+    eyebrow: "Easter 2026 · World Cup 2026",
+    page_sub: "Every country. Every flame. See where peace is speaking loudest — and where the next flame is needed most.",
+    label_top8: "Top 8 Countries by Flames Lit",
+    label_world: "All Countries — Population & Flames",
+    col_country: "Country",
+    col_pop: "Population",
+    col_flames: "Flames",
+    loading: "Loading...",
+    medal_1: "🥇 Gold", medal_2: "🥈 Silver", medal_3: "🥉 Bronze",
+    rank_label: "Rank",
+    flames_label: "flames",
+    cta_title: "Is your country on the map?",
+    cta_body: "Light your flame. Add your country to the living ledger. Every nation counts.",
+    cta_btn: "🕯 Light My Flame — £0.99",
+    f_about: "About", f_charities: "Charity Receipts", f_flames: "All Flames", f_cookies: "Cookie Policy", f_map: "Light a Flame",
+    footer_note: "One Flame is an independent peace initiative. Charity donations are made personally by the founder at each milestone and receipts are published here publicly."
+  },
+  fr: {
+    eyebrow: "Pâques 2026 · Coupe du Monde 2026",
+    page_sub: "Chaque pays. Chaque flamme. Voyez où la paix se fait entendre le plus fort.",
+    label_top8: "Top 8 des pays par flammes allumées",
+    label_world: "Tous les pays — Population et flammes",
+    col_country: "Pays", col_pop: "Population", col_flames: "Flammes",
+    loading: "Chargement...",
+    cta_title: "Votre pays est-il sur la carte?",
+    cta_body: "Allumez votre flamme. Ajoutez votre pays au registre vivant.",
+    cta_btn: "🕯 Allumer ma flamme — £0.99",
+    f_about: "À propos", f_charities: "Reçus caritatifs", f_flames: "Toutes les flammes", f_cookies: "Politique de cookies", f_map: "Allumer une flamme",
+    footer_note: "One Flame est une initiative de paix indépendante."
+  },
+  de: {
+    eyebrow: "Ostern 2026 · Weltmeisterschaft 2026",
+    page_sub: "Jedes Land. Jede Flamme. Sehen Sie, wo der Frieden am lautesten spricht.",
+    label_top8: "Top 8 Länder nach entzündeten Flammen",
+    label_world: "Alle Länder — Bevölkerung und Flammen",
+    col_country: "Land", col_pop: "Bevölkerung", col_flames: "Flammen",
+    loading: "Wird geladen...",
+    cta_title: "Ist Ihr Land auf der Karte?",
+    cta_body: "Zünden Sie Ihre Flamme an. Fügen Sie Ihr Land dem lebendigen Register hinzu.",
+    cta_btn: "🕯 Meine Flamme anzünden — £0.99",
+    footer_note: "One Flame ist eine unabhängige Friedensinitiative."
+  },
+  at: {
+    eyebrow: "Ostern 2026 · Weltmeisterschaft 2026",
+    page_sub: "Jedes Land. Jede Flamme. Sehen Sie, wo der Frieden am lautesten spricht.",
+    label_top8: "Top 8 Länder nach entzündeten Flammen",
+    label_world: "Alle Länder — Bevölkerung und Flammen",
+    col_country: "Land", col_pop: "Bevölkerung", col_flames: "Flammen",
+    loading: "Wird geladen...",
+    cta_title: "Ist dein Land auf der Karte?",
+    cta_body: "Zünde deine Flamme an.",
+    cta_btn: "🕯 Meine Flamme anzünden — £0.99",
+    footer_note: "One Flame ist eine unabhängige Friedensinitiative."
+  },
+  no: {
+    eyebrow: "Påske 2026 · VM 2026",
+    page_sub: "Hvert land. Hver flamme. Se hvor freden snakker høyest.",
+    label_top8: "Topp 8 land etter antall flammer tent",
+    label_world: "Alle land — Befolkning og flammer",
+    col_country: "Land", col_pop: "Befolkning", col_flames: "Flammer",
+    loading: "Laster...",
+    cta_title: "Er ditt land på kartet?",
+    cta_body: "Tenn din flamme. Legg landet ditt til registeret.",
+    cta_btn: "🕯 Tenn min flamme — £0.99",
+    footer_note: "One Flame er et uavhengig fredsinitiativ."
+  },
+  sv: {
+    eyebrow: "Påsk 2026 · VM 2026",
+    page_sub: "Varje land. Varje låga. Se var freden talar högst.",
+    label_top8: "Topp 8 länder efter tända lågor",
+    label_world: "Alla länder — Befolkning och lågor",
+    col_country: "Land", col_pop: "Befolkning", col_flames: "Lågor",
+    loading: "Laddar...",
+    cta_title: "Är ditt land på kartan?",
+    cta_body: "Tänd din låga. Lägg ditt land till registret.",
+    cta_btn: "🕯 Tänd min låga — £0.99",
+    footer_note: "One Flame är ett oberoende fredsinitiativ."
+  },
+  tr: {
+    eyebrow: "Paskalya 2026 · Dünya Kupası 2026",
+    page_sub: "Her ülke. Her alev. Barışın en yüksek sesle konuştuğu yeri görün.",
+    label_top8: "Yakılan aleve göre ilk 8 ülke",
+    label_world: "Tüm ülkeler — Nüfus ve alevler",
+    col_country: "Ülke", col_pop: "Nüfus", col_flames: "Alevler",
+    loading: "Yükleniyor...",
+    cta_title: "Ülken haritada mı?",
+    cta_body: "Alevini yak. Ülkeni canlı kayda ekle.",
+    cta_btn: "🕯 Alevimi yak — £0.99",
+    footer_note: "One Flame bağımsız bir barış girişimidir."
+  },
+  ro: {
+    eyebrow: "Paști 2026 · Cupa Mondială 2026",
+    page_sub: "Fiecare țară. Fiecare flacără. Vezi unde pacea vorbește cel mai tare.",
+    label_top8: "Top 8 țări după flăcări aprinse",
+    label_world: "Toate țările — Populație și flăcări",
+    col_country: "Țară", col_pop: "Populație", col_flames: "Flăcări",
+    loading: "Se încarcă...",
+    cta_title: "Este țara ta pe hartă?",
+    cta_body: "Aprinde flacăra ta. Adaugă țara ta în registrul viu.",
+    cta_btn: "🕯 Aprinde flacăra mea — £0.99",
+    footer_note: "One Flame este o inițiativă de pace independentă."
+  },
+  el: {
+    eyebrow: "Πάσχα 2026 · Παγκόσμιο Κύπελλο 2026",
+    page_sub: "Κάθε χώρα. Κάθε φλόγα. Δες πού μιλά πιο δυνατά η ειρήνη.",
+    label_top8: "Κορυφαίες 8 χώρες με φλόγες",
+    label_world: "Όλες οι χώρες — Πληθυσμός και φλόγες",
+    col_country: "Χώρα", col_pop: "Πληθυσμός", col_flames: "Φλόγες",
+    loading: "Φόρτωση...",
+    cta_title: "Είναι η χώρα σου στον χάρτη;",
+    cta_body: "Άναψε τη φλόγα σου. Πρόσθεσε τη χώρα σου.",
+    cta_btn: "🕯 Άναψε τη φλόγα μου — £0.99",
+    footer_note: "One Flame είναι μια ανεξάρτητη πρωτοβουλία ειρήνης."
+  },
+  hu: {
+    eyebrow: "Húsvét 2026 · Világbajnokság 2026",
+    page_sub: "Minden ország. Minden láng. Látd, hol szól hangosan a béke.",
+    label_top8: "Top 8 ország meggyújtott lángok szerint",
+    label_world: "Minden ország — Lakosság és lángok",
+    col_country: "Ország", col_pop: "Lakosság", col_flames: "Lángok",
+    loading: "Betöltés...",
+    cta_title: "Rajta van az országod a térképen?",
+    cta_body: "Gyújtsd meg lángod. Add hozzá az országodat.",
+    cta_btn: "🕯 Gyújtsd meg lángom — £0.99",
+    footer_note: "A One Flame egy független békekezdeményezés."
+  },
+  sr: {
+    eyebrow: "Ускрс 2026 · Светско првенство 2026",
+    page_sub: "Свака земља. Сваки пламен. Погледај где мир говори најгласније.",
+    label_top8: "Топ 8 земаља по броју пламена",
+    label_world: "Све земље — Становништво и пламени",
+    col_country: "Земља", col_pop: "Становништво", col_flames: "Пламени",
+    loading: "Учитавање...",
+    cta_title: "Да ли је твоја земља на мапи?",
+    cta_body: "Запали свој пламен. Додај своју земљу.",
+    cta_btn: "🕯 Запали мој пламен — £0.99",
+    footer_note: "One Flame је независна мировна иницијатива."
+  },
+  bg: {
+    eyebrow: "Великден 2026 · Световно първенство 2026",
+    page_sub: "Всяка страна. Всеки пламък. Вижте къде мирът говори най-силно.",
+    label_top8: "Топ 8 страни по запалени пламъци",
+    label_world: "Всички страни — Население и пламъци",
+    col_country: "Страна", col_pop: "Население", col_flames: "Пламъци",
+    loading: "Зареждане...",
+    cta_title: "Вашата страна на картата ли е?",
+    cta_body: "Запали своя пламък. Добави страната си.",
+    cta_btn: "🕯 Запали моя пламък — £0.99",
+    footer_note: "One Flame е независна мирна инициатива."
+  },
+  sq: {
+    eyebrow: "Pashkët 2026 · Kupa e Botës 2026",
+    page_sub: "Çdo vend. Çdo flakë. Shih ku flet paqja më fort.",
+    label_top8: "Top 8 vendet sipas flakëve të ndezura",
+    label_world: "Të gjitha vendet — Popullsia dhe flakët",
+    col_country: "Vendi", col_pop: "Popullsia", col_flames: "Flakë",
+    loading: "Po ngarkohet...",
+    cta_title: "A është vendi yt në hartë?",
+    cta_body: "Ndiz flakën tënde. Shto vendin tënd.",
+    cta_btn: "🕯 Ndiz flakën time — £0.99",
+    footer_note: "One Flame është një iniciativë paqeje e pavarur."
+  },
+  uk: {
+    eyebrow: "Великдень 2026 · Чемпіонат світу 2026",
+    page_sub: "Кожна країна. Кожен вогонь. Побачте, де мир говорить найгучніше.",
+    label_top8: "Топ 8 країн за кількістю вогнів",
+    label_world: "Всі країни — Населення та вогні",
+    col_country: "Країна", col_pop: "Населення", col_flames: "Вогні",
+    loading: "Завантаження...",
+    cta_title: "Ваша країна на карті?",
+    cta_body: "Запали свій вогонь. Додай свою країну.",
+    cta_btn: "🕯 Запалити мій вогонь — £0.99",
+    footer_note: "One Flame — незалежна мирна ініціатива."
+  },
+  ka: {
+    eyebrow: "აღდგომა 2026 · მსოფლიო ჩემპიონატი 2026",
+    page_sub: "ყველა ქვეყანა. ყველა ალი. ნახეთ სად ლაპარაკობს სიმშვიდე ყველაზე ხმამაღლა.",
+    label_top8: "ტოპ 8 ქვეყანა ალებით",
+    label_world: "ყველა ქვეყანა — მოსახლეობა და ალები",
+    col_country: "ქვეყანა", col_pop: "მოსახლეობა", col_flames: "ალები",
+    loading: "იტვირთება...",
+    cta_title: "შენი ქვეყანა რუკაზეა?",
+    cta_body: "აანთე შენი ალი. დაამატე შენი ქვეყანა.",
+    cta_btn: "🕯 ჩემი ალის ანთება — £0.99",
+    footer_note: "One Flame დამოუკიდებელი სამშვიდობო ინიციატივაა."
+  },
+  es: {
+    eyebrow: "Pascua 2026 · Copa del Mundo 2026",
+    page_sub: "Cada país. Cada llama. Ve dónde habla más fuerte la paz.",
+    label_top8: "Top 8 países por llamas encendidas",
+    label_world: "Todos los países — Población y llamas",
+    col_country: "País", col_pop: "Población", col_flames: "Llamas",
+    loading: "Cargando...",
+    cta_title: "¿Está tu país en el mapa?",
+    cta_body: "Enciende tu llama. Añade tu país al registro.",
+    cta_btn: "🕯 Encender mi llama — £0.99",
+    footer_note: "One Flame es una iniciativa de paz independiente."
+  },
+  es_mx: {
+    eyebrow: "Semana Santa 2026 · Copa del Mundo 2026",
+    page_sub: "Cada país. Cada llama. Ve dónde habla más fuerte la paz.",
+    label_top8: "Top 8 países por llamas encendidas",
+    label_world: "Todos los países — Población y llamas",
+    col_country: "País", col_pop: "Población", col_flames: "Llamas",
+    loading: "Cargando...",
+    cta_title: "¿Está tu país en el mapa?",
+    cta_body: "Enciende tu llama.",
+    cta_btn: "🕯 Encender mi llama — £0.99",
+    footer_note: "One Flame es una iniciativa de paz independiente."
+  },
+  es_ar: {
+    eyebrow: "Semana Santa 2026 · Copa del Mundo 2026",
+    page_sub: "Cada país. Cada llama. Mirá dónde habla más fuerte la paz.",
+    label_top8: "Top 8 países por llamas encendidas",
+    label_world: "Todos los países — Población y llamas",
+    col_country: "País", col_pop: "Población", col_flames: "Llamas",
+    loading: "Cargando...",
+    cta_title: "¿Tu país está en el mapa?",
+    cta_body: "Encendé tu llama. Sumá tu país.",
+    cta_btn: "🕯 Encender mi llama — £0.99",
+    footer_note: "One Flame es una iniciativa de paz independiente."
+  },
+  pt: {
+    eyebrow: "Páscoa 2026 · Copa do Mundo 2026",
+    page_sub: "Cada país. Cada chama. Veja onde a paz fala mais alto.",
+    label_top8: "Top 8 países por chamas acesas",
+    label_world: "Todos os países — População e chamas",
+    col_country: "País", col_pop: "População", col_flames: "Chamas",
+    loading: "Carregando...",
+    cta_title: "Seu país está no mapa?",
+    cta_body: "Acenda sua chama. Adicione seu país ao registro.",
+    cta_btn: "🕯 Acender minha chama — £0.99",
+    footer_note: "One Flame é uma iniciativa de paz independente."
+  },
+  ar: {
+    eyebrow: "عيد الفصح 2026 · كأس العالم 2026",
+    page_sub: "كل دولة. كل شعلة. انظر أين يتكلم السلام بأعلى صوت.",
+    label_top8: "أعلى 8 دول بعدد الشعل",
+    label_world: "جميع الدول — السكان والشعل",
+    col_country: "الدولة", col_pop: "السكان", col_flames: "الشعل",
+    loading: "جارٍ التحميل...",
+    cta_title: "هل بلدك على الخريطة؟",
+    cta_body: "أضئ شعلتك. أضف بلدك إلى السجل الحي.",
+    cta_btn: "🕯 أضئ شعلتي — £0.99",
+    footer_note: "One Flame مبادرة سلام مستقلة."
+  },
+  ar_sa: { eyebrow: "عيد الفصح 2026 · كأس العالم 2026", page_sub: "كل دولة. كل شعلة.", label_top8: "أعلى 8 دول بعدد الشعل", label_world: "جميع الدول — السكان والشعل", col_country: "الدولة", col_pop: "السكان", col_flames: "الشعل", loading: "جارٍ التحميل...", cta_title: "هل المملكة على الخريطة؟", cta_body: "أضئ شعلتك.", cta_btn: "🕯 أضئ شعلتي — £0.99", footer_note: "One Flame مبادرة سلام مستقلة." },
+  ar_qa: { eyebrow: "عيد الفصح 2026 · كأس العالم 2026", page_sub: "كل دولة. كل شعلة.", label_top8: "أعلى 8 دول بعدد الشعل", label_world: "جميع الدول", col_country: "الدولة", col_pop: "السكان", col_flames: "الشعل", loading: "جارٍ التحميل...", cta_title: "هل قطر على الخريطة؟", cta_body: "أضئ شعلتك.", cta_btn: "🕯 أضئ شعلتي — £0.99", footer_note: "One Flame مبادرة سلام مستقلة." },
+  ar_ae: { eyebrow: "عيد الفصح 2026 · كأس العالم 2026", page_sub: "كل دولة. كل شعلة.", label_top8: "أعلى 8 دول بعدد الشعل", label_world: "جميع الدول", col_country: "الدولة", col_pop: "السكان", col_flames: "الشعل", loading: "جارٍ التحميل...", cta_title: "هل الإمارات على الخريطة؟", cta_body: "أضئ شعلتك.", cta_btn: "🕯 أضئ شعلتي — £0.99", footer_note: "One Flame مبادرة سلام مستقلة." },
+  ar_iq: { eyebrow: "عيد الفصح 2026 · كأس العالم 2026", page_sub: "كل دولة. كل شعلة.", label_top8: "أعلى 8 دول بعدد الشعل", label_world: "جميع الدول", col_country: "الدولة", col_pop: "السكان", col_flames: "الشعل", loading: "جارٍ التحميل...", cta_title: "هل العراق على الخريطة؟", cta_body: "أضئ شعلتك.", cta_btn: "🕯 أضئ شعلتي — £0.99", footer_note: "One Flame مبادرة سلام مستقلة." },
+  ar_eg: { eyebrow: "عيد الفصح 2026 · كأس العالم 2026", page_sub: "كل دولة. كل شعلة.", label_top8: "أعلى 8 دول بعدد الشعل", label_world: "جميع الدول", col_country: "الدولة", col_pop: "السكان", col_flames: "الشعل", loading: "جارٍ التحميل...", cta_title: "هل مصر على الخريطة؟", cta_body: "اشعل شعلتك.", cta_btn: "🕯 اشعل شعلتي — £0.99", footer_note: "One Flame مبادرة سلام مستقلة." },
+  he: {
+    eyebrow: "פסחא 2026 · גביע העולם 2026",
+    page_sub: "כל מדינה. כל להבה. ראה היכן השלום מדבר בקול.",
+    label_top8: "8 המדינות המובילות לפי להבות",
+    label_world: "כל המדינות — אוכלוסייה ולהבות",
+    col_country: "מדינה", col_pop: "אוכלוסייה", col_flames: "להבות",
+    loading: "טוען...",
+    cta_title: "האם המדינה שלך על המפה?",
+    cta_body: "הדלק את הלהבה שלך. הוסף את המדינה שלך.",
+    cta_btn: "🕯 הדלק את הלהבה שלי — £0.99",
+    footer_note: "One Flame היא יוזמת שלום עצמאית."
+  },
+  fr_ci: {
+    eyebrow: "Pâques 2026 · Coupe du Monde 2026",
+    page_sub: "Chaque pays. Chaque flamme. Vois où la paix parle le plus fort.",
+    label_top8: "Top 8 des pays par flammes allumées",
+    label_world: "Tous les pays — Population et flammes",
+    col_country: "Pays", col_pop: "Population", col_flames: "Flammes",
+    loading: "Chargement...",
+    cta_title: "Ton pays est-il sur la carte?",
+    cta_body: "Allume ta flamme. Ajoute ton pays au registre.",
+    cta_btn: "🕯 Allumer ma flamme — £0.99",
+    footer_note: "One Flame est une initiative de paix indépendante."
+  },
+  hi: {
+    eyebrow: "ईस्टर 2026 · विश्व कप 2026",
+    page_sub: "हर देश। हर लौ। देखें कहाँ शांति सबसे ऊँची बोलती है।",
+    label_top8: "जलाई गई लौ के अनुसार शीर्ष 8 देश",
+    label_world: "सभी देश — जनसंख्या और लौ",
+    col_country: "देश", col_pop: "जनसंख्या", col_flames: "लौ",
+    loading: "लोड हो रहा है...",
+    cta_title: "क्या आपका देश नक्शे पर है?",
+    cta_body: "अपनी लौ जलाएं। अपना देश जोड़ें।",
+    cta_btn: "🕯 मेरी लौ जलाएं — £0.99",
+    footer_note: "One Flame एक स्वतंत्र शांति पहल है।"
+  },
+  zh: {
+    eyebrow: "复活节 2026 · 世界杯 2026",
+    page_sub: "每个国家。每道火焰。看看哪里的和平声音最响亮。",
+    label_top8: "按点燃火焰排名前8的国家",
+    label_world: "所有国家 — 人口与火焰",
+    col_country: "国家", col_pop: "人口", col_flames: "火焰",
+    loading: "加载中...",
+    cta_title: "你的国家在地图上吗？",
+    cta_body: "点燃你的火焰。将你的国家加入记录。",
+    cta_btn: "🕯 点燃我的火焰 — £0.99",
+    footer_note: "One Flame 是一项独立的和平倡议。"
+  },
+  ko: {
+    eyebrow: "부활절 2026 · 월드컵 2026",
+    page_sub: "모든 국가. 모든 불꽃. 평화가 가장 크게 말하는 곳을 확인하세요.",
+    label_top8: "불꽃 수 기준 상위 8개국",
+    label_world: "모든 국가 — 인구 및 불꽃",
+    col_country: "국가", col_pop: "인구", col_flames: "불꽃",
+    loading: "로딩 중...",
+    cta_title: "귀하의 국가가 지도에 있나요?",
+    cta_body: "불꽃을 밝히세요. 귀하의 국가를 추가하세요.",
+    cta_btn: "🕯 내 불꽃 밝히기 — £0.99",
+    footer_note: "One Flame은 독립적인 평화 이니셔티브입니다."
+  },
+  th: {
+    eyebrow: "อีสเตอร์ 2026 · ฟุตบอลโลก 2026",
+    page_sub: "ทุกประเทศ ทุกเปลวไฟ ดูว่าสันติภาพพูดดังที่สุดที่ไหน",
+    label_top8: "8 ประเทศอันดับต้นตามจำนวนเปลวไฟ",
+    label_world: "ทุกประเทศ — ประชากรและเปลวไฟ",
+    col_country: "ประเทศ", col_pop: "ประชากร", col_flames: "เปลวไฟ",
+    loading: "กำลังโหลด...",
+    cta_title: "ประเทศของคุณอยู่บนแผนที่ไหม?",
+    cta_body: "จุดเปลวไฟของคุณ เพิ่มประเทศของคุณ",
+    cta_btn: "🕯 จุดเปลวไฟของฉัน — £0.99",
+    footer_note: "One Flame เป็นโครงการสันติภาพอิสระ"
+  },
+  tl: {
+    eyebrow: "Pasko ng Pagkabuhay 2026 · World Cup 2026",
+    page_sub: "Bawat bansa. Bawat apoy. Tingnan kung saan pinakamalakas nagsasalita ang kapayapaan.",
+    label_top8: "Nangungunang 8 bansa sa bilang ng apoy",
+    label_world: "Lahat ng bansa — Populasyon at mga apoy",
+    col_country: "Bansa", col_pop: "Populasyon", col_flames: "Mga Apoy",
+    loading: "Nilo-load...",
+    cta_title: "Nasa mapa ba ang iyong bansa?",
+    cta_body: "Sindihan ang iyong apoy. Idagdag ang iyong bansa.",
+    cta_btn: "🕯 Sindihan ang aking apoy — £0.99",
+    footer_note: "Ang One Flame ay isang independyenteng inisyatiba para sa kapayapaan."
+  }
+};
+
+let currentLang = 'en';
+
+function setLang(lang, e) {
+  currentLang = lang;
+  document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+  if (e && e.target) e.target.classList.add('active');
+
+  const t = { ...T.en, ...(T[lang] || {}) };
+  document.querySelectorAll('[data-key]').forEach(el => {
+    const key = el.dataset.key;
+    if (t[key] !== undefined) el.innerHTML = t[key];
+  });
+
+  const isRTL = ['ar','ar_sa','ar_qa','ar_ae','ar_iq','ar_eg','he'].includes(lang);
+  document.body.style.direction = isRTL ? 'rtl' : 'ltr';
+}
+
+// ─── WORLD DATA (population, flag, name) ─────────────────────
+// Sorted by population descending. 195 UN-recognised countries.
+const WORLD_COUNTRIES = [
+  { name: "India", flag: "🇮🇳", pop: 1441719852 },
+  { name: "China", flag: "🇨🇳", pop: 1408280000 },
+  { name: "United States", flag: "🇺🇸", pop: 340110988 },
+  { name: "Indonesia", flag: "🇮🇩", pop: 277534122 },
+  { name: "Pakistan", flag: "🇵🇰", pop: 245209815 },
+  { name: "Brazil", flag: "🇧🇷", pop: 215313498 },
+  { name: "Nigeria", flag: "🇳🇬", pop: 223800000 },
+  { name: "Bangladesh", flag: "🇧🇩", pop: 170000000 },
+  { name: "Russia", flag: "🇷🇺", pop: 144444359 },
+  { name: "Ethiopia", flag: "🇪🇹", pop: 126527060 },
+  { name: "Mexico", flag: "🇲🇽", pop: 128455567 },
+  { name: "Japan", flag: "🇯🇵", pop: 123294513 },
+  { name: "Philippines", flag: "🇵🇭", pop: 114163719 },
+  { name: "DR Congo", flag: "🇨🇩", pop: 102262808 },
+  { name: "Egypt", flag: "🇪🇬", pop: 105914499 },
+  { name: "Vietnam", flag: "🇻🇳", pop: 97468029 },
+  { name: "Iran", flag: "🇮🇷", pop: 88550570 },
+  { name: "Turkey", flag: "🇹🇷", pop: 85279553 },
+  { name: "Germany", flag: "🇩🇪", pop: 84607016 },
+  { name: "Thailand", flag: "🇹🇭", pop: 71601103 },
+  { name: "United Kingdom", flag: "🇬🇧", pop: 68350000 },
+  { name: "France", flag: "🇫🇷", pop: 68170228 },
+  { name: "Tanzania", flag: "🇹🇿", pop: 67438106 },
+  { name: "South Africa", flag: "🇿🇦", pop: 62027503 },
+  { name: "Myanmar", flag: "🇲🇲", pop: 54179306 },
+  { name: "Kenya", flag: "🇰🇪", pop: 55100586 },
+  { name: "Colombia", flag: "🇨🇴", pop: 51874024 },
+  { name: "Spain", flag: "🇪🇸", pop: 47436632 },
+  { name: "Uganda", flag: "🇺🇬", pop: 48582334 },
+  { name: "Algeria", flag: "🇩🇿", pop: 46814308 },
+  { name: "Argentina", flag: "🇦🇷", pop: 46234830 },
+  { name: "Sudan", flag: "🇸🇩", pop: 46874204 },
+  { name: "Iraq", flag: "🇮🇶", pop: 42164965 },
+  { name: "Ukraine", flag: "🇺🇦", pop: 36744636 },
+  { name: "Canada", flag: "🇨🇦", pop: 38781292 },
+  { name: "Poland", flag: "🇵🇱", pop: 37840001 },
+  { name: "Morocco", flag: "🇲🇦", pop: 37984655 },
+  { name: "Saudi Arabia", flag: "🇸🇦", pop: 35013414 },
+  { name: "Yemen", flag: "🇾🇪", pop: 34449825 },
+  { name: "Uzbekistan", flag: "🇺🇿", pop: 35300000 },
+  { name: "Afghanistan", flag: "🇦🇫", pop: 41128771 },
+  { name: "Venezuela", flag: "🇻🇪", pop: 28301696 },
+  { name: "Peru", flag: "🇵🇪", pop: 33359418 },
+  { name: "Malaysia", flag: "🇲🇾", pop: 33573874 },
+  { name: "Ghana", flag: "🇬🇭", pop: 33475870 },
+  { name: "Angola", flag: "🇦🇴", pop: 35588987 },
+  { name: "Mozambique", flag: "🇲🇿", pop: 32790338 },
+  { name: "Nepal", flag: "🇳🇵", pop: 29136808 },
+  { name: "Cameroon", flag: "🇨🇲", pop: 28647293 },
+  { name: "Australia", flag: "🇦🇺", pop: 26461166 },
+  { name: "Ivory Coast", flag: "🇨🇮", pop: 27478249 },
+  { name: "Sri Lanka", flag: "🇱🇰", pop: 22156000 },
+  { name: "Kazakhstan", flag: "🇰🇿", pop: 19606633 },
+  { name: "Romania", flag: "🇷🇴", pop: 19051562 },
+  { name: "Syria", flag: "🇸🇾", pop: 21324367 },
+  { name: "Chile", flag: "🇨🇱", pop: 19629590 },
+  { name: "Netherlands", flag: "🇳🇱", pop: 17890000 },
+  { name: "Ecuador", flag: "🇪🇨", pop: 18001000 },
+  { name: "Guatemala", flag: "🇬🇹", pop: 17357345 },
+  { name: "Cambodia", flag: "🇰🇭", pop: 16486542 },
+  { name: "Zambia", flag: "🇿🇲", pop: 19642123 },
+  { name: "Zimbabwe", flag: "🇿🇼", pop: 16320537 },
+  { name: "Senegal", flag: "🇸🇳", pop: 17763163 },
+  { name: "Chad", flag: "🇹🇩", pop: 18278568 },
+  { name: "Guinea", flag: "🇬🇳", pop: 13531906 },
+  { name: "South Sudan", flag: "🇸🇸", pop: 11193725 },
+  { name: "Rwanda", flag: "🇷🇼", pop: 14094683 },
+  { name: "Belgium", flag: "🇧🇪", pop: 11611419 },
+  { name: "Bolivia", flag: "🇧🇴", pop: 12186079 },
+  { name: "Tunisia", flag: "🇹🇳", pop: 12046656 },
+  { name: "Czech Republic", flag: "🇨🇿", pop: 10900555 },
+  { name: "Somalia", flag: "🇸🇴", pop: 17065581 },
+  { name: "Cuba", flag: "🇨🇺", pop: 11089511 },
+  { name: "Greece", flag: "🇬🇷", pop: 10341277 },
+  { name: "Portugal", flag: "🇵🇹", pop: 10247605 },
+  { name: "Azerbaijan", flag: "🇦🇿", pop: 10139177 },
+  { name: "Sweden", flag: "🇸🇪", pop: 10551707 },
+  { name: "Hungary", flag: "🇭🇺", pop: 9710882 },
+  { name: "Jordan", flag: "🇯🇴", pop: 10269021 },
+  { name: "Papua New Guinea", flag: "🇵🇬", pop: 10329931 },
+  { name: "United Arab Emirates", flag: "🇦🇪", pop: 9516000 },
+  { name: "Tajikistan", flag: "🇹🇯", pop: 9952787 },
+  { name: "Honduras", flag: "🇭🇳", pop: 10278345 },
+  { name: "Austria", flag: "🇦🇹", pop: 9104772 },
+  { name: "Belarus", flag: "🇧🇾", pop: 9200000 },
+  { name: "Israel", flag: "🇮🇱", pop: 9590000 },
+  { name: "Togo", flag: "🇹🇬", pop: 8644829 },
+  { name: "Switzerland", flag: "🇨🇭", pop: 8776669 },
+  { name: "Laos", flag: "🇱🇦", pop: 7379358 },
+  { name: "Sierra Leone", flag: "🇸🇱", pop: 8420000 },
+  { name: "Libya", flag: "🇱🇾", pop: 7252573 },
+  { name: "Paraguay", flag: "🇵🇾", pop: 7356409 },
+  { name: "Bulgaria", flag: "🇧🇬", pop: 6519789 },
+  { name: "Serbia", flag: "🇷🇸", pop: 6833377 },
+  { name: "El Salvador", flag: "🇸🇻", pop: 6336392 },
+  { name: "Kyrgyzstan", flag: "🇰🇬", pop: 6979000 },
+  { name: "Lebanon", flag: "🇱🇧", pop: 5592631 },
+  { name: "Nicaragua", flag: "🇳🇮", pop: 6948392 },
+  { name: "Singapore", flag: "🇸🇬", pop: 5917600 },
+  { name: "Denmark", flag: "🇩🇰", pop: 5910577 },
+  { name: "Finland", flag: "🇫🇮", pop: 5545475 },
+  { name: "Slovakia", flag: "🇸🇰", pop: 5460185 },
+  { name: "Norway", flag: "🇳🇴", pop: 5463174 },
+  { name: "Central African Republic", flag: "🇨🇫", pop: 5550484 },
+  { name: "Costa Rica", flag: "🇨🇷", pop: 5180829 },
+  { name: "Palestine", flag: "🇵🇸", pop: 5483450 },
+  { name: "New Zealand", flag: "🇳🇿", pop: 5123000 },
+  { name: "Ireland", flag: "🇮🇪", pop: 5149139 },
+  { name: "Oman", flag: "🇴🇲", pop: 4644384 },
+  { name: "Qatar", flag: "🇶🇦", pop: 2688235 },
+  { name: "Croatia", flag: "🇭🇷", pop: 3888529 },
+  { name: "Kuwait", flag: "🇰🇼", pop: 4310108 },
+  { name: "Georgia", flag: "🇬🇪", pop: 3728573 },
+  { name: "Panama", flag: "🇵🇦", pop: 4351267 },
+  { name: "Uruguay", flag: "🇺🇾", pop: 3574964 },
+  { name: "Moldova", flag: "🇲🇩", pop: 2617328 },
+  { name: "Bosnia & Herzegovina", flag: "🇧🇦", pop: 3531159 },
+  { name: "Albania", flag: "🇦🇱", pop: 2793592 },
+  { name: "North Macedonia", flag: "🇲🇰", pop: 2100025 },
+  { name: "Armenia", flag: "🇦🇲", pop: 2963243 },
+  { name: "Jamaica", flag: "🇯🇲", pop: 2825544 },
+  { name: "Lithuania", flag: "🇱🇹", pop: 2842479 },
+  { name: "Qatar", flag: "🇶🇦", pop: 2688235 },
+  { name: "Namibia", flag: "🇳🇦", pop: 2604172 },
+  { name: "Botswana", flag: "🇧🇼", pop: 2630296 },
+  { name: "Latvia", flag: "🇱🇻", pop: 1830211 },
+  { name: "Kosovo", flag: "🇽🇰", pop: 1775378 },
+  { name: "Bahrain", flag: "🇧🇭", pop: 1501635 },
+  { name: "Equatorial Guinea", flag: "🇬🇶", pop: 1454789 },
+  { name: "Estonia", flag: "🇪🇪", pop: 1365884 },
+  { name: "Timor-Leste", flag: "🇹🇱", pop: 1340513 },
+  { name: "Cyprus", flag: "🇨🇾", pop: 1251488 },
+  { name: "Fiji", flag: "🇫🇯", pop: 929998 },
+  { name: "Comoros", flag: "🇰🇲", pop: 882000 },
+  { name: "Bhutan", flag: "🇧🇹", pop: 763092 },
+  { name: "Guyana", flag: "🇬🇾", pop: 804567 },
+  { name: "Solomon Islands", flag: "🇸🇧", pop: 707851 },
+  { name: "Macau", flag: "🇲🇴", pop: 672800 },
+  { name: "Luxembourg", flag: "🇱🇺", pop: 660809 },
+  { name: "Suriname", flag: "🇸🇷", pop: 618040 },
+  { name: "Montenegro", flag: "🇲🇪", pop: 621306 },
+  { name: "Cape Verde", flag: "🇨🇻", pop: 593149 },
+  { name: "Malta", flag: "🇲🇹", pop: 519562 },
+  { name: "Belize", flag: "🇧🇿", pop: 441471 },
+  { name: "Bahamas", flag: "🇧🇸", pop: 412623 },
+  { name: "Maldives", flag: "🇲🇻", pop: 521021 },
+  { name: "Iceland", flag: "🇮🇸", pop: 370000 },
+  { name: "Vanuatu", flag: "🇻🇺", pop: 332212 },
+  { name: "Barbados", flag: "🇧🇧", pop: 281995 },
+  { name: "São Tomé and Príncipe", flag: "🇸🇹", pop: 223107 },
+  { name: "Samoa", flag: "🇼🇸", pop: 222382 },
+  { name: "Saint Lucia", flag: "🇱🇨", pop: 184100 },
+  { name: "Kiribati", flag: "🇰🇮", pop: 119940 },
+  { name: "Micronesia", flag: "🇫🇲", pop: 115023 },
+  { name: "Tonga", flag: "🇹🇴", pop: 100651 },
+  { name: "Saint Vincent & Grenadines", flag: "🇻🇨", pop: 110589 },
+  { name: "Grenada", flag: "🇬🇩", pop: 112519 },
+  { name: "Antigua and Barbuda", flag: "🇦🇬", pop: 93763 },
+  { name: "Seychelles", flag: "🇸🇨", pop: 98908 },
+  { name: "Andorra", flag: "🇦🇩", pop: 79535 },
+  { name: "Dominica", flag: "🇩🇲", pop: 72737 },
+  { name: "Marshall Islands", flag: "🇲🇭", pop: 41569 },
+  { name: "Saint Kitts and Nevis", flag: "🇰🇳", pop: 47606 },
+  { name: "Liechtenstein", flag: "🇱🇮", pop: 38747 },
+  { name: "Monaco", flag: "🇲🇨", pop: 36686 },
+  { name: "San Marino", flag: "🇸🇲", pop: 33860 },
+  { name: "Palau", flag: "🇵🇼", pop: 18100 },
+  { name: "Tuvalu", flag: "🇹🇻", pop: 11312 },
+  { name: "Nauru", flag: "🇳🇷", pop: 10834 },
+  { name: "Vatican City", flag: "🇻🇦", pop: 764 }
+];
+
+// ─── SUPABASE ────────────────────────────────────────────────
+const SUPABASE_URL = 'https://rytjvdptbjnlhayclcvu.supabase.co';
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJ5dGp2ZHB0YmpubGhheWNsY3Z1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzUzMzA1MjksImV4cCI6MjA5MDkwNjUyOX0.y6qVpN-tJKafDVY_yUk0K6yQ9xXYy5xfIhFoJvqWf48';
+
+function formatPop(n) {
+  if (n >= 1e9) return (n / 1e9).toFixed(2) + 'B';
+  if (n >= 1e6) return (n / 1e6).toFixed(1) + 'M';
+  if (n >= 1e3) return (n / 1e3).toFixed(0) + 'K';
+  return n.toString();
+}
+
+function medalClass(rank) {
+  if (rank === 1) return 'gold';
+  if (rank === 2) return 'silver';
+  if (rank === 3) return 'bronze';
+  return '';
+}
+
+function medalEmoji(rank) {
+  if (rank === 1) return '🥇';
+  if (rank === 2) return '🥈';
+  if (rank === 3) return '🥉';
+  return `#${rank}`;
+}
+
+async function loadData() {
+  let flameCounts = {};
+  try {
+    const res = await fetch(
+      `${SUPABASE_URL}/rest/v1/candles?payment_confirmed=eq.true&select=location_name`,
+      { headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}` } }
+    );
+    const candles = await res.json();
+    candles.forEach(c => {
+      if (!c.location_name) return;
+      // Match country from location_name (last word after comma, or full name)
+      const loc = c.location_name;
+      WORLD_COUNTRIES.forEach(wc => {
+        if (loc.includes(wc.name)) {
+          flameCounts[wc.name] = (flameCounts[wc.name] || 0) + 1;
+        }
+      });
+    });
+  } catch(e) {
+    // Proceed with zero counts — table still renders
+  }
+
+  buildPodium(flameCounts);
+  buildTable(flameCounts);
+}
+
+function buildPodium(flameCounts) {
+  // Sort countries that have flames, take top 8
+  const ranked = WORLD_COUNTRIES
+    .map(c => ({ ...c, flames: flameCounts[c.name] || 0 }))
+    .filter(c => c.flames > 0)
+    .sort((a, b) => b.flames - a.flames)
+    .slice(0, 8);
+
+  // If fewer than 8 have flames, pad with seed countries
+  if (ranked.length < 8) {
+    const seedCountries = ['Romania', 'United Kingdom', 'India', 'China', 'United States', 'Brazil', 'France', 'Germany'];
+    seedCountries.forEach(name => {
+      if (ranked.length >= 8) return;
+      if (!ranked.find(r => r.name === name)) {
+        const wc = WORLD_COUNTRIES.find(c => c.name === name);
+        if (wc) ranked.push({ ...wc, flames: 0 });
+      }
+    });
+  }
+
+  const maxFlames = Math.max(...ranked.map(r => r.flames), 1);
+  const grid = document.getElementById('podiumGrid');
+
+  grid.innerHTML = ranked.map((c, i) => {
+    const rank = i + 1;
+    const pct = Math.max((c.flames / maxFlames) * 100, 3);
+    return `
+      <div class="podium-card ${medalClass(rank)}">
+        <div style="display:flex;align-items:center;justify-content:space-between;">
+          <span class="podium-medal">${medalEmoji(rank)}</span>
+          <span class="podium-rank">Rank ${rank}</span>
+        </div>
+        <div class="podium-flag">${c.flag}</div>
+        <div class="podium-country">${c.name}</div>
+        <div class="podium-flames">${c.flames > 0 ? c.flames.toLocaleString() : '—'} <span style="font-size:14px;color:var(--text-muted);">flames</span></div>
+        <div class="podium-pop">${formatPop(c.pop)} population</div>
+        <div class="podium-bar-wrap">
+          <div class="podium-bar" style="width:${pct}%"></div>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+function buildTable(flameCounts) {
+  const tbody = document.getElementById('worldTableBody');
+
+  // Sort by flames desc, then population desc
+  const sorted = WORLD_COUNTRIES
+    .map(c => ({ ...c, flames: flameCounts[c.name] || 0 }))
+    .sort((a, b) => {
+      if (b.flames !== a.flames) return b.flames - a.flames;
+      return b.pop - a.pop;
+    });
+
+  tbody.innerHTML = sorted.map((c, i) => {
+    const hasFlame = c.flames > 0;
+    return `
+      <tr class="${hasFlame ? 'has-flame' : ''}">
+        <td>${i + 1}</td>
+        <td>
+          <div class="country-cell">
+            <span class="country-flag">${c.flag}</span>
+            <span class="country-name">${c.name}</span>
+            ${hasFlame ? '<span class="flame-dot" title="Flames lit"></span>' : ''}
+          </div>
+        </td>
+        <td>${formatPop(c.pop)}</td>
+        <td>${hasFlame ? c.flames.toLocaleString() : '—'}</td>
+      </tr>
+    `;
+  }).join('');
+}
+
+// ─── BURGER NAV ──────────────────────────────────────────────
+function toggleNav() {
+  const btn = document.getElementById('burgerBtn');
+  const drawer = document.getElementById('navDrawer');
+  const overlay = document.getElementById('navOverlay');
+  btn.classList.toggle('open');
+  drawer.classList.toggle('open');
+  overlay.classList.toggle('open');
+  document.body.style.overflow = drawer.classList.contains('open') ? 'hidden' : '';
+}
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
+    const drawer = document.getElementById('navDrawer');
+    if (drawer && drawer.classList.contains('open')) toggleNav();
+  }
+});
+
+// ─── INIT ────────────────────────────────────────────────────
+window.addEventListener('load', () => {
+  loadData();
+});
+</script>
+</body>
+</html>
