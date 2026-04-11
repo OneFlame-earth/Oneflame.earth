@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Charity Receipts & Transparency — One Flame</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="apple-touch-icon" href="favicon.svg">
+<meta name="theme-color" content="#0A0806">
+<meta name="description" content="Full transparency on every charitable donation made by One Flame. Receipts, proof and a personal message from the founder.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #C8963E; --gold-light: #E8B86D; --ember: #E05A1B;
+    --deep: #0A0806; --dark: #13100A; --mid: #1E1810; --smoke: #2A211A;
+    --text: #F0E6D3; --text-muted: #9A8570; --white: #FDFAF5;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--deep); color: var(--text); font-family: 'DM Sans', sans-serif; font-weight: 300; min-height: 100vh; }
+
+  /* HEADER */
+  .page-header { background: rgba(10,8,6,0.96); border-bottom: 1px solid rgba(200,150,62,0.15); padding: 0 24px; height: 52px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 10; }
+  .header-logo { font-family: 'Cormorant Garamond', serif; font-size: 16px; font-weight: 400; color: var(--gold); letter-spacing: 0.15em; text-decoration: none; text-transform: uppercase; }
+  .header-right { display: flex; gap: 10px; align-items: center; }
+  .btn-nav { font-size: 11px; color: var(--text-muted); text-decoration: none; padding: 5px 12px; border: 1px solid rgba(200,150,62,0.2); border-radius: 2px; transition: all 0.2s; }
+  .btn-nav:hover { color: var(--gold); border-color: var(--gold); }
+  .btn-gold { background: var(--gold); color: var(--deep); font-size: 11px; font-weight: 500; text-decoration: none; padding: 6px 14px; border-radius: 2px; transition: all 0.2s; }
+  .btn-gold:hover { background: var(--gold-light); }
+
+  /* HERO STATS */
+  .hero { padding: 60px 24px 48px; text-align: center; background: var(--dark); border-bottom: 1px solid rgba(200,150,62,0.1); }
+  .hero-eyebrow { font-size: 11px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); margin-bottom: 16px; }
+  .hero-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(38px, 6vw, 68px); font-weight: 300; color: var(--white); line-height: 1.05; margin-bottom: 8px; }
+  .hero-title em { font-style: italic; color: var(--gold-light); }
+  .hero-sub { font-size: 15px; color: var(--text-muted); max-width: 520px; margin: 0 auto 48px; line-height: 1.7; }
+
+  .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 2px; max-width: 800px; margin: 0 auto; background: rgba(200,150,62,0.08); }
+  .stat-card { background: var(--dark); padding: 32px 24px; text-align: center; }
+  .stat-num { font-family: 'Cormorant Garamond', serif; font-size: 52px; font-weight: 300; color: var(--gold); line-height: 1; display: block; margin-bottom: 8px; }
+  .stat-label { font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-muted); line-height: 1.4; }
+
+  /* PERSONAL MESSAGE */
+  .message-section { max-width: 780px; margin: 0 auto; padding: 72px 24px 60px; }
+  .message-eyebrow { font-size: 11px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); margin-bottom: 20px; }
+  .message-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(30px, 5vw, 48px); font-weight: 300; color: var(--white); line-height: 1.15; margin-bottom: 32px; }
+  .message-title em { font-style: italic; color: var(--gold-light); }
+
+  .message-body { font-size: 16px; color: var(--text-muted); line-height: 1.85; }
+  .message-body p { margin-bottom: 22px; }
+  .message-body strong { color: var(--text); font-weight: 400; }
+
+  .message-signature { margin-top: 40px; padding-top: 32px; border-top: 1px solid rgba(200,150,62,0.1); }
+  .sig-name { font-family: 'Cormorant Garamond', serif; font-size: 28px; font-weight: 300; font-style: italic; color: var(--white); margin-bottom: 4px; }
+  .sig-title { font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-muted); }
+  .sig-date { font-size: 12px; color: var(--text-muted); margin-top: 4px; }
+
+  /* MILESTONES */
+  .milestones-section { background: var(--mid); border-top: 1px solid rgba(200,150,62,0.08); border-bottom: 1px solid rgba(200,150,62,0.08); padding: 60px 24px; }
+  .section-inner { max-width: 900px; margin: 0 auto; }
+  .section-eyebrow { font-size: 11px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); margin-bottom: 12px; text-align: center; }
+  .section-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(28px, 4vw, 44px); font-weight: 300; color: var(--white); text-align: center; margin-bottom: 8px; line-height: 1.15; }
+  .section-title em { font-style: italic; color: var(--gold-light); }
+  .section-sub { font-size: 14px; color: var(--text-muted); text-align: center; margin-bottom: 48px; line-height: 1.6; }
+
+  .milestone-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 2px; background: rgba(200,150,62,0.06); }
+  .milestone-card { background: var(--mid); padding: 28px 24px; }
+  .milestone-target { font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 6px; }
+  .milestone-charity { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 400; color: var(--white); margin-bottom: 4px; }
+  .milestone-desc { font-size: 13px; color: var(--text-muted); line-height: 1.5; margin-bottom: 16px; }
+  .milestone-amount { font-size: 20px; font-family: 'Cormorant Garamond', serif; color: var(--gold); font-weight: 300; margin-bottom: 8px; }
+  .milestone-status { display: inline-flex; align-items: center; gap: 6px; font-size: 11px; letter-spacing: 0.08em; padding: 4px 10px; border-radius: 2px; }
+  .status-pending { background: rgba(200,150,62,0.08); color: var(--text-muted); border: 1px solid rgba(200,150,62,0.15); }
+  .status-paid { background: rgba(100,180,100,0.1); color: #8BC98B; border: 1px solid rgba(100,180,100,0.2); }
+  .milestone-progress-wrap { margin-top: 16px; }
+  .milestone-progress-label { display: flex; justify-content: space-between; font-size: 11px; color: var(--text-muted); margin-bottom: 6px; }
+  .milestone-bar { height: 3px; background: rgba(200,150,62,0.1); border-radius: 2px; overflow: hidden; }
+  .milestone-fill { height: 100%; background: linear-gradient(90deg, var(--ember), var(--gold)); border-radius: 2px; transition: width 1s ease; }
+
+  /* RECEIPTS */
+  .receipts-section { max-width: 900px; margin: 0 auto; padding: 60px 24px; }
+  .receipt-empty { text-align: center; padding: 48px 24px; background: var(--smoke); border: 1px solid rgba(200,150,62,0.1); border-radius: 4px; }
+  .receipt-empty-icon { font-size: 40px; margin-bottom: 16px; display: block; }
+  .receipt-empty-title { font-family: 'Cormorant Garamond', serif; font-size: 24px; font-weight: 300; color: var(--white); margin-bottom: 8px; }
+  .receipt-empty-sub { font-size: 13px; color: var(--text-muted); line-height: 1.6; max-width: 400px; margin: 0 auto; }
+
+  .receipt-card { background: var(--smoke); border: 1px solid rgba(200,150,62,0.15); border-radius: 4px; padding: 28px; margin-bottom: 16px; display: flex; gap: 24px; align-items: flex-start; flex-wrap: wrap; }
+  .receipt-icon { font-size: 36px; flex-shrink: 0; }
+  .receipt-body { flex: 1; min-width: 200px; }
+  .receipt-charity { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 400; color: var(--white); margin-bottom: 4px; }
+  .receipt-amount { font-size: 28px; font-family: 'Cormorant Garamond', serif; color: var(--gold); font-weight: 300; margin-bottom: 8px; }
+  .receipt-meta { font-size: 12px; color: var(--text-muted); line-height: 1.6; }
+  .receipt-meta span { display: block; }
+  .receipt-badge { display: inline-flex; align-items: center; gap: 5px; background: rgba(100,180,100,0.1); color: #8BC98B; border: 1px solid rgba(100,180,100,0.2); border-radius: 2px; font-size: 11px; padding: 4px 10px; margin-top: 12px; }
+  .receipt-proof { margin-top: 12px; font-size: 12px; }
+  .receipt-proof a { color: var(--gold); text-decoration: underline; }
+
+  /* FOOTER DISCLAIMER */
+  .disclaimer-section { background: var(--mid); border-top: 1px solid rgba(200,150,62,0.08); padding: 40px 24px; }
+  .disclaimer-inner { max-width: 780px; margin: 0 auto; }
+  .disclaimer-title { font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 16px; }
+  .disclaimer-text { font-size: 12px; color: rgba(154,133,112,0.7); line-height: 1.8; }
+  .disclaimer-text p { margin-bottom: 10px; }
+  .disclaimer-text strong { color: var(--text-muted); font-weight: 400; }
+
+  .page-footer { background: var(--deep); border-top: 1px solid rgba(200,150,62,0.06); padding: 24px; text-align: center; }
+  .footer-links { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; margin-bottom: 12px; }
+  .footer-links a { font-size: 12px; color: var(--text-muted); text-decoration: none; transition: color 0.2s; }
+  .footer-links a:hover { color: var(--gold); }
+  .footer-copy { font-size: 11px; color: rgba(154,133,112,0.4); }
+
+  @media (max-width: 600px) {
+    .stats-grid { grid-template-columns: 1fr 1fr; }
+    .receipt-card { flex-direction: column; }
+  }
+  /* BURGER NAV */
+  .burger-nav { position: fixed; top: 60px; left: 16px; z-index: 500; }
+  .burger-btn { background: rgba(10,8,6,0.92); border: 1px solid rgba(200,150,62,0.3); border-radius: 4px; width: 42px; height: 42px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; cursor: pointer; backdrop-filter: blur(8px); transition: all 0.2s; padding: 0; }
+  .burger-btn:hover { border-color: #C8963E; }
+  .burger-btn span { display: block; width: 18px; height: 1.5px; background: #C8963E; border-radius: 1px; transition: all 0.3s; }
+  .burger-btn.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+  .burger-btn.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+  .burger-btn.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+  .nav-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.65); z-index: 490; opacity: 0; pointer-events: none; transition: opacity 0.3s; }
+  .nav-overlay.open { opacity: 1; pointer-events: all; }
+  .nav-drawer { position: fixed; top: 0; left: 0; bottom: 0; width: 280px; background: #13100A; border-right: 1px solid rgba(200,150,62,0.2); z-index: 495; transform: translateX(-100%); transition: transform 0.35s cubic-bezier(0.4,0,0.2,1); display: flex; flex-direction: column; box-shadow: 4px 0 40px rgba(0,0,0,0.6); }
+  .nav-drawer.open { transform: translateX(0); }
+  .nav-drawer-header { display: flex; align-items: center; justify-content: space-between; padding: 20px 20px 16px; border-bottom: 1px solid rgba(200,150,62,0.1); height: 64px; flex-shrink: 0; }
+  .nav-logo-text { font-family: 'Cormorant Garamond', serif; font-size: 16px; font-weight: 400; color: #C8963E; letter-spacing: 0.2em; text-transform: uppercase; }
+  .nav-close { background: none; border: none; color: #9A8570; font-size: 24px; cursor: pointer; padding: 4px 8px; line-height: 1; transition: color 0.2s; }
+  .nav-close:hover { color: #C8963E; }
+  .nav-links { list-style: none; padding: 16px 0; flex: 1; overflow-y: auto; }
+  .nav-link { display: block; padding: 14px 24px; font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 300; color: #9A8570; text-decoration: none; transition: all 0.2s; border-left: 2px solid transparent; }
+  .nav-link:hover { color: #E8B86D; background: rgba(200,150,62,0.06); border-left-color: #C8963E; padding-left: 28px; }
+  .nav-link.active { color: #C8963E; border-left-color: #C8963E; background: rgba(200,150,62,0.05); }
+  .nav-cta-wrap { padding: 16px 20px; border-top: 1px solid rgba(200,150,62,0.1); flex-shrink: 0; }
+  .nav-cta-btn { display: block; width: 100%; background: #C8963E; color: #0A0806; font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 500; padding: 13px 16px; border-radius: 3px; text-decoration: none; text-align: center; letter-spacing: 0.06em; text-transform: uppercase; transition: background 0.2s; }
+  .nav-cta-btn:hover { background: #E8B86D; }
+  .nav-footer-text { padding: 14px 24px; border-top: 1px solid rgba(200,150,62,0.06); flex-shrink: 0; }
+  .nav-footer-text span { display: block; font-size: 11px; color: rgba(154,133,112,0.5); line-height: 1.8; }
+</style>
+</head>
+<body>
+<!-- BURGER MENU -->
+<div class="burger-nav">
+  <button class="burger-btn" id="burgerBtn" onclick="toggleNav()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</div>
+<div class="nav-overlay" id="navOverlay" onclick="toggleNav()"></div>
+<nav class="nav-drawer" id="navDrawer">
+  <div class="nav-drawer-header">
+    <span class="nav-logo-text">ONE FLAME</span>
+    <button class="nav-close" onclick="toggleNav()">×</button>
+  </div>
+  <ul class="nav-links">
+    <li><a href="index.html" class="nav-link">🏠 Home</a></li>
+    <li><a href="map.html" class="nav-link">🗺 The Living Map</a></li>
+    <li><a href="flames.html" class="nav-link">🕯 All Flames</a></li>
+    <li><a href="countries.html" class="nav-link">🌍 Countries</a></li>
+    <li><a href="receipts.html" class="nav-link  active">🏅 Charity Receipts</a></li>
+    <li><a href="accounts.html" class="nav-link">📊 Accounts & Transparency</a></li>
+    <li><a href="cookies.html" class="nav-link">🍪 Cookie Policy</a></li>
+  </ul>
+  <div class="nav-cta-wrap">
+    <a href="map.html" class="nav-cta-btn">🕯 Light My Flame — £0.99</a>
+  </div>
+  <div class="nav-footer-text">
+    <span>oneflame.earth</span>
+    <span>Easter 2026 · World Cup 2026</span>
+  </div>
+</nav>
+
+<header class="page-header">
+  
+  <div class="header-right">
+    <a href="map.html" class="btn-nav">🗺 Live Map</a>
+    <a href="flames.html" class="btn-nav">All Flames</a>
+    <a href="map.html" class="btn-gold">🕯 Light a Flame</a>
+  </div>
+</header>
+
+<!-- STATS HERO -->
+<section class="hero">
+  <div class="hero-eyebrow">Full Transparency · Every Penny Accounted For</div>
+  <h1 class="hero-title">Where Your <em>Money Goes</em></h1>
+  <p class="hero-sub">One Flame exists on a simple promise. Every milestone donation is made publicly, with receipts posted here for anyone to see. No exceptions.</p>
+
+  <div class="stats-grid">
+    <div class="stat-card">
+      <span class="stat-num" id="totalDonated">£0</span>
+      <span class="stat-label">Total donated<br>to charity</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-num" id="charitiesCount">0</span>
+      <span class="stat-label">Charities<br>supported</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-num" id="countriesCount">0</span>
+      <span class="stat-label">Countries<br>reached</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-num" id="flamesCount">0</span>
+      <span class="stat-label">Flames lit<br>worldwide</span>
+    </div>
+  </div>
+</section>
+
+<!-- PERSONAL MESSAGE -->
+<section class="message-section">
+  <div class="message-eyebrow">A Personal Message</div>
+  <h2 class="message-title">From <em>Michael C,</em><br>Founder of One Flame</h2>
+
+  <div class="message-body">
+    <p>I want to start by saying something that I mean with every part of this. <strong>Thank you.</strong> Not in a formal, obligatory way. I mean it genuinely, from one human being to another.</p>
+
+    <p>When I built One Flame, I was not thinking about numbers or revenues or viral growth strategies. I was thinking about the world outside my window. About the news that plays on loop and rarely asks what ordinary people actually feel. About the parents in places I will never visit who want the same things I want. Safety. Quiet. A future for their children.</p>
+
+    <p>One Flame started as a question. <strong>What if we could show the people who make decisions, in a way they could not ignore, that the majority of the world simply wants peace?</strong> Not a petition. Not a protest. Something visible, living, growing in real time.</p>
+
+    <p>Every single person who lit a flame on this map made that possible. You did not just spend 99 pence. You added your voice to something that did not exist before. You stood next to strangers from countries you may never visit, and said the same thing they said. Enough. We want something better.</p>
+
+    <p>The charity donations are not the point of this. They are a promise kept. When I said your flame would help others, I meant it, and the receipts on this page are the proof. <strong>RNLI Cornwall</strong> saves lives on the water. <strong>Team Rubicon</strong> sends veterans to where disaster has struck. Every pound sent to them came from this community. From you.</p>
+
+    <p>I do not know where One Flame goes from here. I know it started at Easter 2026, during a period of real tension in the world, with a map of golden lights growing slowly from nothing. And I know that every one of those lights was a real person, making a real choice to believe that their voice matters.</p>
+
+    <p><strong>It does. You do. Thank you for being part of this.</strong></p>
+  </div>
+
+  <div class="message-signature">
+    <div class="sig-name">Michael C</div>
+    <div class="sig-title">Founder · One Flame · oneflame.earth</div>
+    <div class="sig-date">Easter 2026</div>
+  </div>
+</section>
+
+<!-- MILESTONE TARGETS -->
+<section class="milestones-section">
+  <div class="section-inner">
+    <div class="section-eyebrow">Milestone Commitments</div>
+    <h2 class="section-title">What We <em>Promised</em></h2>
+    <p class="section-sub">These are the commitments made publicly before the first flame was lit. They do not change.</p>
+
+    <div class="milestone-grid">
+      <div class="milestone-card">
+        <div class="milestone-target">Milestone 1 · 1,000 flames</div>
+        <div class="milestone-charity">RNLI Cornwall</div>
+        <div class="milestone-desc">The Royal National Lifeboat Institution saves lives at sea around the coast of Cornwall and beyond. Volunteers. No questions asked.</div>
+        <div class="milestone-amount">£100 donation</div>
+        <div><span class="milestone-status status-pending">⏳ Pending · Building towards target</span></div>
+        <div class="milestone-progress-wrap">
+          <div class="milestone-progress-label">
+            <span id="m1Count">0 flames</span>
+            <span>1,000 target</span>
+          </div>
+          <div class="milestone-bar"><div class="milestone-fill" id="m1Fill" style="width:0%"></div></div>
+        </div>
+      </div>
+
+      <div class="milestone-card">
+        <div class="milestone-target">Milestone 2 · 5,000 flames</div>
+        <div class="milestone-charity">Team Rubicon</div>
+        <div class="milestone-desc">A veteran-led disaster response organisation. When crisis strikes communities around the world, Team Rubicon is there. Rated among the highest for impact and transparency.</div>
+        <div class="milestone-amount">£100 donation</div>
+        <div><span class="milestone-status status-pending">⏳ Pending · Building towards target</span></div>
+        <div class="milestone-progress-wrap">
+          <div class="milestone-progress-label">
+            <span id="m2Count">0 flames</span>
+            <span>5,000 target</span>
+          </div>
+          <div class="milestone-bar"><div class="milestone-fill" id="m2Fill" style="width:0%"></div></div>
+        </div>
+      </div>
+
+      <div class="milestone-card">
+        <div class="milestone-target">Milestone 3 · 20,000,000 flames</div>
+        <div class="milestone-charity">90 Charities Worldwide</div>
+        <div class="milestone-desc">When One Flame reaches 20 million voices, £1,000 will be donated equally to each of the 90 confirmed charities focused on children's health and hospitals around the globe.</div>
+        <div class="milestone-amount">£90,000 total donation</div>
+        <div><span class="milestone-status status-pending">⏳ The dream target · Help us get there</span></div>
+        <div class="milestone-progress-wrap">
+          <div class="milestone-progress-label">
+            <span id="m3Count">0 flames</span>
+            <span>20,000,000 target</span>
+          </div>
+          <div class="milestone-bar"><div class="milestone-fill" id="m3Fill" style="width:0%"></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RECEIPTS -->
+<section class="receipts-section">
+  <div class="section-eyebrow" style="text-align:center">Verified Donations</div>
+  <h2 class="section-title" style="text-align:center;margin-bottom:8px;">The <em>Receipts</em></h2>
+  <p class="section-sub" style="text-align:center;margin-bottom:40px;">Every donation made is posted here with proof within 48 hours of the milestone being reached. No milestone reached yet means no receipt yet. That changes when you light your flame.</p>
+
+  <!-- EMPTY STATE - replace with receipt cards as milestones are hit -->
+  <div class="receipt-empty" id="receiptEmpty">
+    <span class="receipt-empty-icon">🕯</span>
+    <div class="receipt-empty-title">No donations made yet</div>
+    <p class="receipt-empty-sub">We are building towards our first milestone of 10,000 flames. The moment it is reached, £100 goes to RNLI Cornwall and the receipt appears right here. You can help make that happen today.</p>
+    <br>
+    <a href="map.html" class="btn-gold" style="display:inline-block;padding:12px 28px;border-radius:3px;margin-top:8px;">Light a flame now</a>
+  </div>
+
+  <!-- EXAMPLE OF HOW A RECEIPT WILL LOOK - hidden until needed -->
+  <!-- 
+  <div class="receipt-card">
+    <div class="receipt-icon">🏅</div>
+    <div class="receipt-body">
+      <div class="receipt-charity">RNLI Cornwall</div>
+      <div class="receipt-amount">£100.00</div>
+      <div class="receipt-meta">
+        <span>Triggered by: 10,000 flames milestone reached</span>
+        <span>Date paid: [date]</span>
+        <span>Payment method: Bank transfer</span>
+        <span>Charity registered number: 209603</span>
+      </div>
+      <div class="receipt-badge">✓ Verified · Receipt confirmed</div>
+      <div class="receipt-proof"><a href="#">View payment confirmation →</a></div>
+    </div>
+  </div>
+  -->
+</section>
+
+<!-- DISCLAIMER -->
+<section class="disclaimer-section">
+  <div class="disclaimer-inner">
+    <div class="disclaimer-title">Important Notice · Financial Transparency</div>
+    <div class="disclaimer-text">
+      <p>One Flame is an independent digital initiative and is not a registered charity. Milestone donations are made personally by the founder at the time each target is reached and receipts are published publicly on this page.</p>
+      <p><strong>After deductions for services</strong> (including but not limited to payment processing fees, software subscriptions and domain hosting) <strong>and after deductions for applicable costs</strong> (including but not limited to income tax and accountancy fees), <strong>up to 20% of net proceeds may be applied to marketing and promotion costs</strong> to support the growth of the campaign and its reach. This ensures the message of One Flame continues to spread and that future milestones can be reached, benefiting more charities over time.</p>
+      <p>The charitable milestone donations described on this page are voluntary commitments made by the founder and are separate from the above operating costs. They are funded directly and personally at each milestone regardless of operating expenses.</p>
+      <p>By lighting a flame on oneflame.earth you are purchasing a digital product, being a 7-day symbolic candle placement on a live global map. You are not making a charitable donation directly. The milestone donations described here are a voluntary commitment by the founder of One Flame.</p>
+      <p>For questions about this notice please contact <a href="/cdn-cgi/l/email-protection#4129242d2d2e012e2f24272d202c246f2420333529" style="color:var(--gold)"><span class="__cf_email__" data-cfemail="1078757c7c7f507f7e75767c717d753e7571626478">[email&#160;protected]</span></a></p>
+    </div>
+  </div>
+</section>
+
+<footer class="page-footer">
+  <div class="footer-links">
+    <a href="index.html">Home</a>
+    <a href="map.html">Live Map</a>
+    <a href="flames.html">All Flames</a>
+    <a href="cookies.html">Cookie Policy</a>
+    <a href="receipts.html">Charity Receipts</a>
+  </div>
+  <div class="footer-copy">© 2026 One Flame · Michael C · oneflame.earth · All rights reserved.</div>
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+const SUPABASE_URL = 'https://rytjvdptbjnlhayclcvu.supabase.co';
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJ5dGp2ZHB0YmpubGhheWNsY3Z1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzUzMzA1MjksImV4cCI6MjA5MDkwNjUyOX0.y6qVpN-tJKafDVY_yUk0K6yQ9xXYy5xfIhFoJvqWf48';
+
+async function loadStats() {
+  try {
+    const now = new Date().toISOString();
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/candles?payment_confirmed=eq.true&expires_at=gt.${encodeURIComponent(now)}&select=id,location_name`, {
+      headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}` }
+    });
+    const candles = await res.json();
+    const total = candles.length;
+
+    document.getElementById('flamesCount').textContent = total.toLocaleString();
+    document.getElementById('charitiesCount').textContent = '0';
+    document.getElementById('countriesCount').textContent = '0';
+    document.getElementById('totalDonated').textContent = '£0';
+
+    const pct1 = Math.min((total / 1000) * 100, 100);
+    const pct2 = Math.min((total / 5000) * 100, 100);
+    const pct3 = Math.min((total / 20000000) * 100, 100);
+
+    document.getElementById('m1Fill').style.width = pct1 + '%';
+    document.getElementById('m2Fill').style.width = pct2 + '%';
+    document.getElementById('m3Fill').style.width = pct3 + '%';
+
+    document.getElementById('m1Count').textContent = total.toLocaleString() + ' flames';
+    document.getElementById('m2Count').text
