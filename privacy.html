@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Privacy Policy — One Flame</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<meta name="theme-color" content="#0A0806">
+<meta name="description" content="Privacy policy for One Flame — the global peace campaign at oneflame.earth.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #C8963E;
+    --gold-light: #E8B86D;
+    --ember: #E05A1B;
+    --deep: #0A0806;
+    --dark: #13100A;
+    --mid: #1E1810;
+    --smoke: #2A211A;
+    --text: #F0E6D3;
+    --text-muted: #9A8570;
+    --white: #FDFAF5;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--deep); color: var(--text); font-family: 'DM Sans', sans-serif; font-weight: 300; line-height: 1.7; }
+
+  .page-header { background: rgba(10,8,6,0.98); border-bottom: 1px solid rgba(200,150,62,0.15); padding: 0 24px; height: 56px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; }
+  .header-logo { font-family: 'Cormorant Garamond', serif; font-size: 16px; font-weight: 400; color: var(--gold); letter-spacing: 0.15em; text-decoration: none; text-transform: uppercase; }
+  .header-back { font-size: 11px; color: var(--text-muted); text-decoration: none; padding: 5px 12px; border: 1px solid rgba(200,150,62,0.2); border-radius: 2px; transition: all 0.2s; letter-spacing: 0.05em; }
+  .header-back:hover { color: var(--gold); border-color: var(--gold); }
+
+  .burger-nav { position: fixed; top: 68px; left: 16px; z-index: 500; }
+  .burger-btn { background: rgba(10,8,6,0.92); border: 1px solid rgba(200,150,62,0.25); border-radius: 4px; width: 40px; height: 40px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; cursor: pointer; backdrop-filter: blur(8px); transition: all 0.2s; padding: 0; }
+  .burger-btn:hover { border-color: rgba(200,150,62,0.6); }
+  .burger-btn span { display: block; width: 18px; height: 1.5px; background: #C8963E; border-radius: 1px; transition: all 0.3s; }
+  .burger-btn.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+  .burger-btn.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+  .burger-btn.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+  .nav-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 490; opacity: 0; pointer-events: none; transition: opacity 0.3s; }
+  .nav-overlay.open { opacity: 1; pointer-events: all; }
+  .nav-drawer { position: fixed; top: 0; left: 0; bottom: 0; width: 280px; background: #13100A; border-right: 1px solid rgba(200,150,62,0.2); z-index: 495; transform: translateX(-100%); transition: transform 0.35s cubic-bezier(0.4,0,0.2,1); display: flex; flex-direction: column; box-shadow: 4px 0 40px rgba(0,0,0,0.5); }
+  .nav-drawer.open { transform: translateX(0); }
+  .nav-drawer-header { display: flex; align-items: center; justify-content: space-between; padding: 20px 20px 16px; border-bottom: 1px solid rgba(200,150,62,0.1); height: 64px; flex-shrink: 0; }
+  .nav-logo-text { font-family: 'Cormorant Garamond', serif; font-size: 16px; font-weight: 400; color: #C8963E; letter-spacing: 0.2em; text-transform: uppercase; }
+  .nav-close { background: none; border: none; color: #9A8570; font-size: 24px; cursor: pointer; padding: 4px 8px; line-height: 1; transition: color 0.2s; }
+  .nav-close:hover { color: #C8963E; }
+  .nav-links { list-style: none; padding: 16px 0; flex: 1; overflow-y: auto; }
+  .nav-link { display: block; padding: 14px 24px; font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 300; color: #9A8570; text-decoration: none; letter-spacing: 0.03em; transition: all 0.2s; border-left: 2px solid transparent; }
+  .nav-link:hover { color: #E8B86D; background: rgba(200,150,62,0.06); border-left-color: #C8963E; padding-left: 28px; }
+  .nav-link.active { color: #C8963E; border-left-color: #C8963E; background: rgba(200,150,62,0.05); }
+  .nav-cta-wrap { padding: 16px 20px; border-top: 1px solid rgba(200,150,62,0.1); flex-shrink: 0; }
+  .nav-cta-btn { display: block; width: 100%; background: #C8963E; color: #0A0806; font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 500; padding: 13px 16px; border-radius: 3px; text-decoration: none; text-align: center; letter-spacing: 0.06em; text-transform: uppercase; transition: background 0.2s; }
+  .nav-cta-btn:hover { background: #E8B86D; }
+  .nav-footer-text { padding: 14px 24px; border-top: 1px solid rgba(200,150,62,0.06); flex-shrink: 0; }
+  .nav-footer-text span { display: block; font-size: 11px; color: rgba(154,133,112,0.5); letter-spacing: 0.05em; line-height: 1.8; }
+
+  .page-hero { padding: 64px 24px 40px; text-align: center; border-bottom: 1px solid rgba(200,150,62,0.1); }
+  .page-hero-label { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 14px; }
+  .page-hero-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(32px, 6vw, 52px); font-weight: 300; color: var(--white); line-height: 1.15; margin-bottom: 16px; }
+  .page-hero-sub { font-size: 13px; color: var(--text-muted); max-width: 480px; margin: 0 auto; line-height: 1.7; }
+
+  .content-wrap { max-width: 720px; margin: 0 auto; padding: 56px 24px 80px; }
+  .updated-badge { display: inline-block; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-muted); background: rgba(200,150,62,0.08); border: 1px solid rgba(200,150,62,0.15); border-radius: 2px; padding: 4px 10px; margin-bottom: 40px; }
+
+  .section { margin-bottom: 48px; }
+  .section-num { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 8px; }
+  .section h2 { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 400; color: var(--white); margin-bottom: 16px; }
+  .section p { font-size: 14px; color: var(--text-muted); margin-bottom: 12px; line-height: 1.75; }
+  .section p:last-child { margin-bottom: 0; }
+  .section ul { margin: 12px 0 12px 20px; }
+  .section ul li { font-size: 14px; color: var(--text-muted); margin-bottom: 8px; line-height: 1.65; }
+  .divider { border: none; border-top: 1px solid rgba(200,150,62,0.1); margin: 0 0 48px; }
+
+  .highlight-box { background: rgba(200,150,62,0.05); border: 1px solid rgba(200,150,62,0.15); border-radius: 4px; padding: 18px 20px; margin: 16px 0 20px; }
+  .highlight-box p { font-size: 13px; color: var(--text-muted); margin: 0; line-height: 1.7; }
+  .highlight-box strong { color: var(--gold); }
+
+  .data-table { width: 100%; border-collapse: collapse; margin: 16px 0 20px; }
+  .data-table th { font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold); text-align: left; padding: 8px 12px; border-bottom: 1px solid rgba(200,150,62,0.2); font-weight: 400; }
+  .data-table td { font-size: 13px; color: var(--text-muted); padding: 10px 12px; border-bottom: 1px solid rgba(200,150,62,0.07); vertical-align: top; line-height: 1.6; }
+  .data-table tr:last-child td { border-bottom: none; }
+
+  a.inline-link { color: var(--gold); text-decoration: none; border-bottom: 1px solid rgba(200,150,62,0.3); transition: border-color 0.2s; }
+  a.inline-link:hover { border-color: var(--gold); }
+
+  footer { background: var(--dark); border-top: 1px solid rgba(200,150,62,0.1); padding: 40px 24px 32px; text-align: center; }
+  .footer-logo { font-family: 'Cormorant Garamond', serif; font-size: 14px; letter-spacing: 0.2em; color: var(--gold); text-transform: uppercase; margin-bottom: 16px; }
+  .footer-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px 20px; margin-bottom: 20px; }
+  .footer-links a { font-size: 12px; color: var(--text-muted); text-decoration: none; transition: color 0.2s; }
+  .footer-links a:hover { color: var(--gold); }
+  .footer-note { font-size: 11px; color: rgba(154,133,112,0.5); max-width: 520px; margin: 0 auto 10px; line-height: 1.7; }
+</style>
+</head>
+<body>
+
+<header class="page-header">
+  <a href="index.html" class="header-logo">One Flame</a>
+  <a href="index.html" class="header-back">← Home</a>
+</header>
+
+<!-- BURGER NAV -->
+<div class="burger-nav">
+  <button class="burger-btn" id="burgerBtn" onclick="toggleNav()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</div>
+<div class="nav-overlay" id="navOverlay" onclick="toggleNav()"></div>
+<nav class="nav-drawer" id="navDrawer">
+  <div class="nav-drawer-header">
+    <span class="nav-logo-text">ONE FLAME</span>
+    <button class="nav-close" onclick="toggleNav()">×</button>
+  </div>
+    <ul class="nav-links">
+    <li><a href="index.html" class="nav-link">🏠 Home</a></li>
+    <li><a href="map.html" class="nav-link">🗺 The Living Map</a></li>
+    <li><a href="flames.html" class="nav-link">🕯 All Flames</a></li>
+    <li><a href="countries.html" class="nav-link">🌍 Countries</a></li>
+    <li><a href="receipts.html" class="nav-link">🏅 Charity Receipts</a></li>
+    <li><a href="accounts.html" class="nav-link">📊 Accounts &amp; Transparency</a></li>
+    <li><a href="cookies.html" class="nav-link">🍪 Cookie Policy</a></li>
+    <li><a href="terms.html" class="nav-link">📄 Terms of Use</a></li>
+    <li><a href="privacy.html" class="nav-link active">🔒 Privacy Policy</a></li>
+  </ul>
+  <div class="nav-cta-wrap">
+    <a href="map.html" class="nav-cta-btn">🕯 Light My Flame — £0.49</a>
+  </div>
+  <div class="nav-footer-text">
+    <span>oneflame.earth</span>
+    <span>Easter 2026 · World Cup 2026</span>
+  </div>
+</nav>
+
+<div class="page-hero">
+  <div class="page-hero-label">Legal</div>
+  <h1 class="page-hero-title">Privacy Policy</h1>
+  <p class="page-hero-sub">We keep this simple. Here is exactly what data we collect, why we collect it and how long we keep it.</p>
+</div>
+
+<div class="content-wrap">
+  <div class="updated-badge">Last updated: April 2026</div>
+
+  <div class="section">
+    <div class="section-num">01</div>
+    <h2>Who we are</h2>
+    <p>One Flame is operated by Michael C, a British national. For the purposes of UK and EU data protection law, Michael C is the data controller for personal data collected through this site.</p>
+    <p>Contact: <a href="mailto:hello@oneflame.earth">hello@oneflame.earth</a></p>
+    <div class="highlight-box">
+      <p><strong>Our approach in plain English:</strong> We collect only what we need. We do not sell your data. We do not share it with third parties except the services that power this site. Your candle data is deleted automatically after 7 days.</p>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <div class="section">
+    <div class="section-num">02</div>
+    <h2>What data we collect</h2>
+    <p>When you place a candle, we store the following in our database:</p>
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Data</th>
+          <th>Why we collect it</th>
+          <th>Retention</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Your country and home town</td>
+          <td>To place your candle in the right location on the map</td>
+          <td>7 days</td>
+        </tr>
+        <tr>
+          <td>Your nickname (optional)</td>
+          <td>To display on the map and public ledger if you choose to share one</td>
+          <td>7 days</td>
+        </tr>
+        <tr>
+          <td>Your intention (optional)</td>
+          <td>To attach meaning to your flame</td>
+          <td>7 days</td>
+        </tr>
+        <tr>
+          <td>Your flame code</td>
+          <td>To link your candle to your payment and identify your flame</td>
+          <td>7 days</td>
+        </tr>
+        <tr>
+          <td>Stripe session ID</td>
+          <td>To confirm payment was received</td>
+          <td>7 days</td>
+        </tr>
+        <tr>
+          <td>Approximate coordinates</td>
+          <td>To render your dot on the world map</td>
+          <td>7 days</td>
+        </tr>
+      </tbody>
+    </table>
+    <p>We do not collect your name, email address or any payment details directly. Your email and payment card are handled entirely by Stripe.</p>
+  </div>
+
+  <hr class="divider">
+
+  <div class="section">
+    <div class="section-num">03</div>
+    <h2>Payments and Stripe</h2>
+    <p>All payments are processed by Stripe Payments Europe Ltd, an authorised payment institution regulated in Ireland. Stripe handles your card details, email address and billing information.</p>
+    <p>When you pay, Stripe may send you a receipt to the email you provide at checkout. That email is held by Stripe under their own privacy policy. We do not receive or store your payment card details at any point.</p>
+    <p>You can read Stripe's privacy policy at <a href="https://stripe.com/gb/privacy" class="inline-link" target="_blank" rel="noopener">stripe.com/gb/privacy</a>.</p>
+  </div>
+
+  <hr class="divider">
+
+  <div class="section">
+    <div class="section-num">04</div>
+    <h2>Data storage and security</h2>
+    <p>Your candle data is stored in Supabase, a PostgreSQL database hosted on AWS infrastructure in the EU. Row Level Security is enabled, meaning public visitors can only read confirmed, non-expired candles. Nobody can read unconfirmed or expired records.</p>
+    <p>This site is hosted on GitHub Pages over HTTPS. All data transmitted between your browser and our services is encrypted in transit.</p>
+    <p>Your candle record is automatically deleted 7 days after your payment is confirmed. We do not archive, back up or retain expired candle data beyond that point.</p>
+  </div>
+
+  <hr class="divider">
+
+  <div class="section">
+    <div class="section-num">05</div>
+    <h2>Public data</h2>
+    <p>The following information is publicly visible on this site to all visitors:</p>
+    <ul>
+      <li>Your flame code</li>
+      <li>Your nickname (if you provided one)</li>
+      <li>Your country and home town</li>
+      <li>Your intention (if you provided one)</li>
+      <li>The approximate position of your candle on the map</li>
+    </ul>
+    <p>Do not enter your full name, address or any other personal information in the nickname or hometown fields if you do not wish it to be publicly visible.</p>
+  </div>
+
+  <hr class="divider">
+
+  <div class="section">
+    <div class="section-num">06</div>
+    <h2>Cookies and analytics</h2>
+    <p>We use essential cookies to support basic site functionality. We also use analytics cookies to understand how people find and use this site. No personal data is sold or shared with advertisers.</p>
+    <p>You can control your cookie preferences at any time. See our full <a href="cookies.html" class="inline-link">Cookie Policy</a> for details.</p>
+  </div>
+
+  <hr class="divider">
+
+  <div class="section">
+    <div class="section-num">07</div>
+    <h2>Your rights under UK GDPR</h2>
+    <p>If you are based in the UK or EU, you have the following rights regarding any personal data we hold about you:</p>
+    <ul>
+      <li><strong style="color:var(--text);">Right of access</strong> — you can ask what data we hold about you</li>
+      <li><strong style="color:var(--text);">Right to erasure</strong> — you can ask us to delete your candle record before the 7-day expiry</li>
+      <li><strong style="color:var(--text);">Right to rectification</strong> — you can ask us to correct inaccurate data</li>
+      <li><strong style="color:var(--text);">Right to object</strong> — you can object to processing in certain circumstances</li>
+    </ul>
+    <p>To exercise any of these rights, email us at <a href="mailto:hello@oneflame.earth">hello@oneflame.earth</a> with your flame code. We will respond within 30 days.</p>
+    <p>If you are unhappy with how we handle your data, you have the right to complain to the UK Information Commissioner's Office (ICO) at <a href="https://ico.org.uk" class="inline-link" target="_blank" rel="noopener">ico.org.uk</a>.</p>
+  </div>
+
+  <hr class="divider">
+
+  <div class="section">
+    <div class="section-num">08</div>
+    <h2>Children</h2>
+    <p>This site is not directed at children under 13. We do not knowingly collect personal data from anyone under 13. If you believe a child has provided us with personal data, please contact us at <a href="mailto:hello@oneflame.earth">hello@oneflame.earth</a> and we will delete it promptly.</p>
+  </div>
+
+  <hr class="divider">
+
+  <div class="section">
+    <div class="section-num">09</div>
+    <h2>Changes to this policy</h2>
+    <p>We may update this policy from time to time. The date at the top of this page will reflect the most recent revision. We will not make any changes that reduce your rights without clear notice.</p>
+  </div>
+
+  <hr class="divider">
+
+  <div class="section">
+    <div class="section-num">10</div>
+    <h2>Contact</h2>
+    <p>For any privacy questions or to exercise your rights, write to us at <a href="mailto:hello@oneflame.earth">hello@oneflame.earth</a>.</p>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-logo">ONE FLAME · ONEFLAME.EARTH</div>
+  <div class="footer-links">
+    <a href="receipts.html">Charity Receipts</a>
+    <a href="countries.html">Countries</a>
+    <a href="privacy.html">Privacy</a>
+    <a href="terms.html">Terms</a>
+    <a href="cookies.html">Cookie Policy</a>
+    <a href="mailto:hello@oneflame.earth">hello@oneflame.earth</a>
+  </div>
+  <p class="footer-note">One Flame is an independent peace initiative. Charity donations are made personally by the founder at each milestone and receipts are published here publicly. One Flame is not a registered charity.</p>
+  <p style="font-size:10px;color:rgba(154,133,112,0.4);margin-top:12px;">© 2026 One Flame · Michael C · oneflame.earth · All rights reserved.</p>
+</footer>
+
+<script>
+function toggleNav() {
+  const btn = document.getElementById('burgerBtn');
+  const drawer = document.getElementById('navDrawer');
+  const overlay = document.getElementById('navOverlay');
+  btn.classList.toggle('open');
+  drawer.classList.toggle('open');
+  overlay.classList.toggle('open');
+  document.body.style.overflow = drawer.classList.contains('open') ? 'hidden' : '';
+}
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
+    const drawer = document.getElementById('navDrawer');
+    if (drawer && drawer.classList.contains('open')) toggleNav();
+  }
+});
+</script>
+</body>
+</html>
