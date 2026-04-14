@@ -1,0 +1,2506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>One Flame — Light a Flame for Peace</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="apple-touch-icon" href="favicon.svg">
+<meta name="theme-color" content="#0A0806">
+<meta name="description" content="One flame. One world. Light your flame for peace this Easter. A global movement of ordinary people speaking with one voice.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="One Flame">
+<meta property="og:title" content="One Flame — Light a Flame for Peace">
+<meta property="og:description" content="Add your flame to the global peace map. £0.49. Burns for 7 days. One world. One voice.">
+<meta property="og:image" content="https://oneflame.earth/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:alt" content="One Flame — Light your flame for peace. oneflame.earth">
+<meta property="og:url" content="https://oneflame.earth">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="One Flame — Light a Flame for Peace">
+<meta name="twitter:description" content="Add your flame to the global peace map. £0.49. Burns for 7 days.">
+<meta name="twitter:image" content="https://oneflame.earth/og-image.png">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-DE073YZBKL"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-DE073YZBKL');
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #C8963E;
+    --gold-light: #E8B86D;
+    --gold-pale: #F5DFA8;
+    --ember: #E05A1B;
+    --deep: #0A0806;
+    --dark: #13100A;
+    --mid: #1E1810;
+    --smoke: #2A211A;
+    --text: #F0E6D3;
+    --text-muted: #9A8570;
+    --white: #FDFAF5;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; overflow-x: clip; }
+
+  /* Anchor offset — prevents sticky burger nav covering section headers */
+  section[id] { scroll-margin-top: 72px; }
+
+  body {
+    background: var(--deep);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+    cursor: default;
+  }
+
+  /* NEWS TICKER */
+  .ticker-bar {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 101;
+    background: var(--gold);
+    height: 28px;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+  }
+
+  .ticker-track {
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+    animation: tickerScroll 45s linear infinite;
+  }
+
+  .ticker-track:hover { animation-play-state: paused; }
+
+  @keyframes tickerScroll {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  .ticker-item {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--deep);
+    padding: 0 28px;
+    letter-spacing: 0.02em;
+  }
+
+  .ticker-sep {
+    color: var(--ember);
+    font-size: 14px;
+    flex-shrink: 0;
+  }
+
+  /* LANGUAGE BAR */
+  .lang-bar {
+    position: fixed;
+    top: 28px; left: 0; right: 0;
+    z-index: 100;
+    background: rgba(10,8,6,0.96);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(200,150,62,0.15);
+    padding: 6px 16px 6px 66px;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .lang-bar::-webkit-scrollbar { display: none; }
+
+  .lang-bar-inner {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-width: max-content;
+  }
+
+  .lang-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 13px;
+    font-weight: 400;
+    letter-spacing: 0.15em;
+    color: var(--gold);
+    text-transform: uppercase;
+    flex-shrink: 0;
+    padding-right: 10px;
+    border-right: 1px solid rgba(200,150,62,0.25);
+  }
+
+  .lang-links {
+    display: flex;
+    gap: 4px;
+    align-items: center;
+    flex-wrap: nowrap;
+  }
+
+  .lang-btn {
+    background: rgba(200,150,62,0.05);
+    border: 1px solid rgba(200,150,62,0.2);
+    color: var(--text-muted);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    padding: 3px 6px;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: all 0.2s;
+    min-width: 30px;
+    text-align: center;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .lang-btn:hover, .lang-btn.active {
+    border-color: var(--gold);
+    color: var(--gold);
+    background: rgba(200,150,62,0.12);
+  }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 130px 24px 60px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 60% 70% at 50% 80%, rgba(200,90,27,0.18) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 40% at 50% 60%, rgba(200,150,62,0.12) 0%, transparent 60%),
+      radial-gradient(ellipse 100% 50% at 50% 100%, rgba(200,150,62,0.06) 0%, transparent 70%);
+  }
+
+  .hero-bg::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: url("data:image/svg+xml,%3Csvg width='400' height='400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+    opacity: 0.4;
+    pointer-events: none;
+  }
+
+  /* FLAME ANIMATION */
+  .flame-container {
+    position: relative;
+    width: 80px;
+    height: 120px;
+    margin: 0 auto 40px;
+    animation: floatUp 3s ease-in-out infinite;
+  }
+
+  @keyframes floatUp {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+  }
+
+  .flame {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40px;
+    height: 80px;
+    background: radial-gradient(ellipse at 50% 100%, #fff 0%, var(--gold-light) 20%, var(--gold) 40%, var(--ember) 70%, transparent 100%);
+    border-radius: 50% 50% 20% 20% / 60% 60% 40% 40%;
+    filter: blur(1px);
+    animation: flicker 1.8s ease-in-out infinite alternate;
+  }
+
+  .flame::before {
+    content: '';
+    position: absolute;
+    bottom: 5px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 24px;
+    height: 50px;
+    background: radial-gradient(ellipse at 50% 100%, rgba(255,255,255,0.9) 0%, rgba(255,220,100,0.6) 40%, transparent 80%);
+    border-radius: 50% 50% 20% 20% / 60% 60% 40% 40%;
+    animation: flicker 1.2s ease-in-out infinite alternate-reverse;
+  }
+
+  .flame-glow {
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 40px;
+    background: radial-gradient(ellipse, rgba(200,150,62,0.4) 0%, transparent 70%);
+    border-radius: 50%;
+    animation: glowPulse 1.8s ease-in-out infinite alternate;
+  }
+
+  .candle-body {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 14px;
+    height: 30px;
+    background: linear-gradient(180deg, #F0E6D3 0%, #D4C4A8 50%, #B8A882 100%);
+    border-radius: 2px 2px 1px 1px;
+  }
+
+  .candle-wick {
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 2px;
+    height: 8px;
+    background: #2A1A0A;
+    border-radius: 1px;
+  }
+
+  @keyframes flicker {
+    0% { transform: translateX(-50%) scaleX(1) scaleY(1) rotate(-1deg); }
+    100% { transform: translateX(-50%) scaleX(0.92) scaleY(1.05) rotate(1.5deg); }
+  }
+
+  @keyframes glowPulse {
+    0% { opacity: 0.5; transform: translateX(-50%) scale(1); }
+    100% { opacity: 1; transform: translateX(-50%) scale(1.2); }
+  }
+
+  .hero-eyebrow {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 20px;
+    position: relative;
+  }
+
+  .hero-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(52px, 10vw, 110px);
+    font-weight: 300;
+    line-height: 0.92;
+    color: var(--white);
+    margin-bottom: 8px;
+    position: relative;
+    letter-spacing: -0.01em;
+  }
+
+  .hero-title em {
+    font-style: italic;
+    color: var(--gold-light);
+  }
+
+  .hero-subtitle {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(18px, 3vw, 28px);
+    font-weight: 300;
+    font-style: italic;
+    color: var(--text-muted);
+    margin-bottom: 40px;
+    position: relative;
+  }
+
+  .hero-body {
+    font-size: 16px;
+    line-height: 1.7;
+    color: var(--text-muted);
+    max-width: 520px;
+    margin: 0 auto 48px;
+    position: relative;
+  }
+
+  /* CTA BUTTON */
+  .cta-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    background: var(--gold);
+    color: var(--deep);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 18px 40px;
+    border: none;
+    border-radius: 2px;
+    cursor: pointer;
+    text-decoration: none;
+    position: relative;
+    transition: all 0.3s;
+    box-shadow: 0 0 40px rgba(200,150,62,0.3);
+  }
+
+  .cta-primary:hover {
+    background: var(--gold-light);
+    box-shadow: 0 0 60px rgba(200,150,62,0.5);
+    transform: translateY(-2px);
+  }
+
+  .cta-price {
+    font-size: 11px;
+    opacity: 0.7;
+    display: block;
+    margin-top: 12px;
+    letter-spacing: 0.05em;
+    color: var(--text-muted);
+    text-align: center;
+  }
+
+  /* COUNTER SECTION */
+  .counter-section {
+    background: var(--mid);
+    border-top: 1px solid rgba(200,150,62,0.1);
+    border-bottom: 1px solid rgba(200,150,62,0.1);
+    padding: 60px 24px;
+    text-align: center;
+  }
+
+  .counter-label {
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 16px;
+  }
+
+  .counter-number {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(64px, 12vw, 120px);
+    font-weight: 300;
+    color: var(--gold);
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+
+  .counter-sub {
+    font-size: 14px;
+    color: var(--text-muted);
+    margin-top: 8px;
+  }
+
+  /* MILESTONES */
+  .milestones {
+    display: flex;
+    justify-content: center;
+    gap: 0;
+    margin-top: 48px;
+    flex-wrap: wrap;
+  }
+
+  .milestone {
+    flex: 1;
+    min-width: 200px;
+    max-width: 300px;
+    padding: 24px;
+    border: 1px solid rgba(200,150,62,0.12);
+    margin: -1px;
+    text-align: center;
+    position: relative;
+  }
+
+  .milestone.reached {
+    background: rgba(200,150,62,0.05);
+    border-color: rgba(200,150,62,0.3);
+  }
+
+  .milestone-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 32px;
+    font-weight: 300;
+    color: var(--gold);
+    display: block;
+    margin-bottom: 6px;
+  }
+
+  .milestone-charity {
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.4;
+  }
+
+  .milestone-amount {
+    font-size: 11px;
+    color: var(--gold-light);
+    margin-top: 4px;
+    display: block;
+    letter-spacing: 0.05em;
+  }
+
+  .milestone-progress {
+    width: 100%;
+    height: 2px;
+    background: rgba(200,150,62,0.1);
+    margin-top: 16px;
+    border-radius: 1px;
+    overflow: hidden;
+  }
+
+  .milestone-progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--ember), var(--gold));
+    border-radius: 1px;
+    transition: width 1s ease;
+  }
+
+  /* WORLD MAP SECTION */
+  .map-section {
+    padding: 80px 24px;
+    text-align: center;
+    background: var(--dark);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(36px, 6vw, 64px);
+    font-weight: 300;
+    color: var(--white);
+    margin-bottom: 16px;
+    line-height: 1.1;
+  }
+
+  .section-title em {
+    font-style: italic;
+    color: var(--gold-light);
+  }
+
+  .section-body {
+    font-size: 15px;
+    color: var(--text-muted);
+    max-width: 480px;
+    margin: 0 auto 48px;
+    line-height: 1.7;
+  }
+
+  /* SIMULATED MAP */
+  .map-visual {
+    position: relative;
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+    height: 380px;
+    background: rgba(200,150,62,0.02);
+    border: 1px solid rgba(200,150,62,0.1);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .world-outline {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.9;
+  }
+
+  .map-dots-container {
+    position: absolute;
+    inset: 0;
+  }
+
+  .map-dot {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--gold);
+    box-shadow: 0 0 8px var(--gold-light);
+    animation: dotPulse var(--dur, 2s) ease-in-out infinite;
+    opacity: 0;
+    animation-delay: var(--delay, 0s);
+  }
+
+  @keyframes dotPulse {
+    0% { opacity: 0; transform: scale(0.5); }
+    20% { opacity: 0.9; transform: scale(1); }
+    80% { opacity: 0.7; transform: scale(1); }
+    100% { opacity: 0; transform: scale(0.8); }
+  }
+
+  .map-label {
+    position: absolute;
+    bottom: 16px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    white-space: nowrap;
+  }
+
+  .map-view-btn {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    background: rgba(200,150,62,0.15);
+    border: 1px solid rgba(200,150,62,0.4);
+    color: var(--gold);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    padding: 8px 16px;
+    border-radius: 20px;
+    text-decoration: none;
+    letter-spacing: 0.05em;
+    transition: all 0.2s;
+    backdrop-filter: blur(8px);
+  }
+
+  .map-view-btn:hover {
+    background: rgba(200,150,62,0.25);
+    border-color: var(--gold);
+  }
+
+  /* HOW IT WORKS */
+  .how-section {
+    padding: 80px 24px;
+    background: var(--mid);
+  }
+
+  .how-inner {
+    max-width: 900px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 2px;
+    margin-top: 48px;
+    background: rgba(200,150,62,0.08);
+  }
+
+  .step {
+    background: var(--mid);
+    padding: 40px 24px;
+    text-align: left;
+  }
+
+  .step-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 64px;
+    font-weight: 300;
+    color: rgba(200,150,62,0.2);
+    line-height: 1;
+    margin-bottom: 16px;
+  }
+
+  .step-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 400;
+    color: var(--white);
+    margin-bottom: 10px;
+  }
+
+  .step-body {
+    font-size: 14px;
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+
+  /* PAYMENT SECTION */
+  .payment-section {
+    padding: 80px 24px;
+    background: var(--dark);
+    text-align: center;
+  }
+
+  .payment-card {
+    max-width: 420px;
+    margin: 48px auto 0;
+    background: var(--smoke);
+    border: 1px solid rgba(200,150,62,0.2);
+    border-radius: 4px;
+    padding: 40px 32px;
+  }
+
+  .payment-flame-mini {
+    font-size: 48px;
+    margin-bottom: 20px;
+  }
+
+  .payment-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px;
+    font-weight: 300;
+    color: var(--white);
+    margin-bottom: 8px;
+  }
+
+  .payment-price {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 56px;
+    font-weight: 300;
+    color: var(--gold);
+    line-height: 1;
+    margin: 16px 0;
+  }
+
+  .payment-desc {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-bottom: 32px;
+    line-height: 1.5;
+  }
+
+  .apple-pay-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    background: #000;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 16px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    margin-bottom: 12px;
+    transition: all 0.2s;
+    font-family: -apple-system, sans-serif;
+  }
+
+  .apple-pay-btn:hover { background: #1a1a1a; }
+
+  .apple-pay-btn svg { flex-shrink: 0; }
+
+  .card-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    background: none;
+    color: var(--text-muted);
+    border: 1px solid rgba(200,150,62,0.2);
+    border-radius: 6px;
+    padding: 14px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: 'DM Sans', sans-serif;
+  }
+
+  .card-btn:hover { border-color: var(--gold); color: var(--gold); }
+
+  .payment-note {
+    font-size: 11px;
+    color: rgba(154,133,112,0.6);
+    margin-top: 16px;
+    line-height: 1.5;
+  }
+
+  /* MISSION SECTION */
+  .mission-section {
+    padding: 100px 24px;
+    text-align: center;
+    background: var(--deep);
+    position: relative;
+  }
+
+  .mission-quote {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(24px, 4vw, 44px);
+    font-weight: 300;
+    font-style: italic;
+    color: var(--text);
+    max-width: 700px;
+    margin: 0 auto 32px;
+    line-height: 1.4;
+  }
+
+  .mission-quote strong {
+    color: var(--gold-light);
+    font-style: normal;
+    font-weight: 400;
+  }
+
+  .mission-body {
+    font-size: 15px;
+    color: var(--text-muted);
+    max-width: 560px;
+    margin: 0 auto;
+    line-height: 1.8;
+  }
+
+  /* SHARE SECTION */
+  .share-section {
+    padding: 60px 24px;
+    background: var(--mid);
+    text-align: center;
+    border-top: 1px solid rgba(200,150,62,0.1);
+  }
+
+  .share-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px;
+    font-weight: 300;
+    margin-bottom: 24px;
+    color: var(--white);
+  }
+
+  .share-buttons {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .share-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 14px 24px;
+    min-height: 44px;
+    border: 1px solid rgba(200,150,62,0.25);
+    border-radius: 2px;
+    background: none;
+    color: var(--text-muted);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-decoration: none;
+  }
+
+  .share-btn:hover { border-color: var(--gold); color: var(--gold); }
+
+  /* FOOTER */
+  footer {
+    padding: 40px 24px;
+    background: var(--deep);
+    border-top: 1px solid rgba(200,150,62,0.08);
+    text-align: center;
+  }
+
+  .footer-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px;
+    color: var(--gold);
+    letter-spacing: 0.15em;
+    margin-bottom: 16px;
+  }
+
+  .footer-links {
+    display: flex;
+    gap: 24px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+  }
+
+  .footer-links a {
+    font-size: 12px;
+    color: var(--text-muted);
+    text-decoration: none;
+    letter-spacing: 0.05em;
+    transition: color 0.2s;
+  }
+
+  .footer-links a:hover { color: var(--gold); }
+
+  .footer-note {
+    font-size: 11px;
+    color: rgba(154,133,112,0.5);
+    max-width: 480px;
+    margin: 0 auto;
+    line-height: 1.6;
+  }
+
+  /* TRANSLATIONS OVERLAY */
+  .translations {
+    display: none;
+  }
+
+  /* MODAL */
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(10,8,6,0.92);
+    z-index: 200;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s;
+  }
+
+  .modal-overlay.open {
+    opacity: 1;
+    pointer-events: all;
+  }
+
+  .modal {
+    background: var(--smoke);
+    border: 1px solid rgba(200,150,62,0.25);
+    border-radius: 4px;
+    padding: 40px 32px;
+    max-width: 480px;
+    width: 100%;
+    text-align: center;
+    position: relative;
+  }
+
+  .modal-close {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    font-size: 20px;
+    cursor: pointer;
+    line-height: 1;
+  }
+
+  .modal-flame {
+    font-size: 56px;
+    margin-bottom: 16px;
+    display: block;
+  }
+
+  .modal h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 32px;
+    font-weight: 300;
+    color: var(--white);
+    margin-bottom: 8px;
+  }
+
+  .modal p {
+    font-size: 14px;
+    color: var(--text-muted);
+    margin-bottom: 28px;
+    line-height: 1.6;
+  }
+
+  .intent-label {
+    display: block;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+    text-align: left;
+  }
+
+  .intent-input {
+    width: 100%;
+    background: rgba(200,150,62,0.05);
+    border: 1px solid rgba(200,150,62,0.2);
+    border-radius: 2px;
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    padding: 12px 16px;
+    margin-bottom: 20px;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .intent-input:focus { border-color: var(--gold); }
+
+  .intent-options {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 24px;
+  }
+
+  .intent-tag {
+    padding: 6px 14px;
+    border: 1px solid rgba(200,150,62,0.2);
+    border-radius: 20px;
+    font-size: 12px;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: all 0.2s;
+    background: none;
+    font-family: 'DM Sans', sans-serif;
+  }
+
+  .intent-tag:hover, .intent-tag.selected {
+    border-color: var(--gold);
+    color: var(--gold);
+    background: rgba(200,150,62,0.08);
+  }
+
+  /* SCROLL ANIMATION */
+  .fade-in {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 600px) {
+    .milestones { flex-direction: column; align-items: center; }
+    .milestone { width: 100%; max-width: 100%; }
+    .steps { grid-template-columns: 1fr; }
+    .lang-links { gap: 4px; }
+    .lang-btn { font-size: 10px; padding: 2px 6px; }
+  }
+
+  /* Floating flames particle effect */
+  .particles {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+  }
+
+  .particle {
+    position: absolute;
+    width: 3px;
+    height: 3px;
+    border-radius: 50%;
+    background: var(--gold);
+    opacity: 0;
+    animation: rise var(--rise-dur, 8s) linear infinite;
+    animation-delay: var(--rise-delay, 0s);
+    bottom: 0;
+    left: var(--rise-x, 50%);
+  }
+
+  @keyframes rise {
+    0% { bottom: -10px; opacity: 0; transform: scale(0.5) translateX(0); }
+    10% { opacity: 0.6; }
+    90% { opacity: 0.2; }
+    100% { bottom: 100vh; opacity: 0; transform: scale(0.2) translateX(20px); }
+  }
+  /* COOKIE BANNER */
+  .cookie-banner {
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    z-index: 300;
+    background: var(--smoke);
+    border-top: 1px solid rgba(200,150,62,0.25);
+    padding: 16px 24px;
+    transform: translateY(100%);
+    transition: transform 0.4s ease;
+    box-shadow: 0 -4px 40px rgba(0,0,0,0.4);
+  }
+
+  .cookie-banner.visible {
+    transform: translateY(0);
+  }
+
+  .cookie-inner {
+    max-width: 900px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+
+  .cookie-text {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    flex: 1;
+    min-width: 260px;
+  }
+
+  .cookie-icon {
+    font-size: 24px;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .cookie-text strong {
+    display: block;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 17px;
+    font-weight: 400;
+    color: var(--white);
+    margin-bottom: 4px;
+  }
+
+  .cookie-text p {
+    font-size: 12px;
+    color: var(--text-muted);
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  .cookie-link {
+    color: var(--gold);
+    text-decoration: underline;
+  }
+
+  .cookie-actions {
+    display: flex;
+    gap: 10px;
+    flex-shrink: 0;
+  }
+
+  .cookie-decline {
+    background: none;
+    border: 1px solid rgba(200,150,62,0.3);
+    color: var(--text-muted);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    padding: 10px 18px;
+    border-radius: 2px;
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+
+  .cookie-decline:hover {
+    border-color: var(--gold);
+    color: var(--gold);
+  }
+
+  .cookie-accept {
+    background: var(--gold);
+    border: none;
+    color: var(--deep);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    padding: 10px 20px;
+    border-radius: 2px;
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+
+  .cookie-accept:hover {
+    background: var(--gold-light);
+  }
+
+  @media (max-width: 600px) {
+    .cookie-inner { flex-direction: column; gap: 16px; }
+    .cookie-actions { width: 100%; justify-content: stretch; }
+    .cookie-decline, .cookie-accept { flex: 1; text-align: center; }
+  }
+  /* WORLD CUP COUNTDOWN */
+  .countdown-wrap {
+    margin-top: 32px;
+    text-align: center;
+    position: relative;
+  }
+
+  .countdown-label {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 12px;
+  }
+
+  .countdown-timer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+
+  .countdown-unit {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    background: rgba(200,150,62,0.08);
+    border: 1px solid rgba(200,150,62,0.2);
+    border-radius: 4px;
+    padding: 12px 16px;
+    min-width: 64px;
+  }
+
+  .countdown-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 36px;
+    font-weight: 300;
+    color: var(--gold);
+    line-height: 1;
+    letter-spacing: 0.05em;
+  }
+
+  .countdown-unit-label {
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+
+  .countdown-sep {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px;
+    color: var(--gold);
+    opacity: 0.4;
+    margin-bottom: 16px;
+  }
+
+  .countdown-sub {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-top: 12px;
+    font-style: italic;
+    letter-spacing: 0.03em;
+  }
+
+  @media (max-width: 600px) {
+    .countdown-unit { min-width: 52px; padding: 10px 10px; }
+    .countdown-num { font-size: 28px; }
+    .countdown-sep { font-size: 22px; }
+  }
+
+  /* BURGER NAVIGATION */
+  .burger-nav { position: fixed; top: 36px; left: 16px; z-index: 500; }
+  .burger-btn { background: rgba(10,8,6,0.92); border: 1px solid rgba(200,150,62,0.25); border-radius: 4px; width: 40px; height: 40px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; cursor: pointer; backdrop-filter: blur(8px); transition: all 0.2s; padding: 0; }
+  .burger-btn:hover { border-color: rgba(200,150,62,0.6); }
+  .burger-btn span { display: block; width: 18px; height: 1.5px; background: #C8963E; border-radius: 1px; transition: all 0.3s; }
+  .burger-btn.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+  .burger-btn.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+  .burger-btn.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+  .nav-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 490; opacity: 0; pointer-events: none; transition: opacity 0.3s; backdrop-filter: blur(2px); }
+  .nav-overlay.open { opacity: 1; pointer-events: all; }
+  .nav-drawer { position: fixed; top: 0; left: 0; bottom: 0; width: 280px; background: #13100A; border-right: 1px solid rgba(200,150,62,0.2); z-index: 495; transform: translateX(-100%); transition: transform 0.35s cubic-bezier(0.4,0,0.2,1); display: flex; flex-direction: column; box-shadow: 4px 0 40px rgba(0,0,0,0.5); }
+  .nav-drawer.open { transform: translateX(0); }
+  .nav-drawer-header { display: flex; align-items: center; justify-content: space-between; padding: 20px 20px 16px; border-bottom: 1px solid rgba(200,150,62,0.1); height: 64px; flex-shrink: 0; }
+  .nav-logo-text { font-family: 'Cormorant Garamond', serif; font-size: 16px; font-weight: 400; color: #C8963E; letter-spacing: 0.2em; text-transform: uppercase; }
+  .nav-close { background: none; border: none; color: #9A8570; font-size: 24px; cursor: pointer; padding: 4px 8px; line-height: 1; transition: color 0.2s; }
+  .nav-close:hover { color: #C8963E; }
+  .nav-links { list-style: none; padding: 16px 0; flex: 1; overflow-y: auto; }
+  .nav-link { display: block; padding: 14px 24px; font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 300; color: #9A8570; text-decoration: none; letter-spacing: 0.03em; transition: all 0.2s; border-left: 2px solid transparent; }
+  .nav-link:hover { color: #E8B86D; background: rgba(200,150,62,0.06); border-left-color: #C8963E; padding-left: 28px; }
+  .nav-link.active { color: #C8963E; border-left-color: #C8963E; background: rgba(200,150,62,0.05); }
+  .nav-cta-wrap { padding: 16px 20px; border-top: 1px solid rgba(200,150,62,0.1); flex-shrink: 0; }
+  .nav-cta-btn { display: block; width: 100%; background: #C8963E; color: #0A0806; font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 500; padding: 13px 16px; border-radius: 3px; text-decoration: none; text-align: center; letter-spacing: 0.06em; text-transform: uppercase; transition: background 0.2s; }
+  .nav-cta-btn:hover { background: #E8B86D; }
+  .nav-footer-text { padding: 14px 24px; border-top: 1px solid rgba(200,150,62,0.06); flex-shrink: 0; }
+  .nav-footer-text span { display: block; font-size: 11px; color: rgba(154,133,112,0.5); letter-spacing: 0.05em; line-height: 1.8; }
+  /* BURGER NAV */
+  .burger-nav { position: fixed; top: 36px; left: 16px; z-index: 500; }
+  .burger-btn { background: rgba(10,8,6,0.92); border: 1px solid rgba(200,150,62,0.3); border-radius: 4px; width: 42px; height: 42px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; cursor: pointer; backdrop-filter: blur(8px); transition: all 0.2s; padding: 0; }
+  .burger-btn:hover { border-color: #C8963E; }
+  .burger-btn span { display: block; width: 18px; height: 1.5px; background: #C8963E; border-radius: 1px; transition: all 0.3s; }
+  .burger-btn.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+  .burger-btn.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+  .burger-btn.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+  .nav-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.65); z-index: 490; opacity: 0; pointer-events: none; transition: opacity 0.3s; }
+  .nav-overlay.open { opacity: 1; pointer-events: all; }
+  .nav-drawer { position: fixed; top: 0; left: 0; bottom: 0; width: 280px; background: #13100A; border-right: 1px solid rgba(200,150,62,0.2); z-index: 495; transform: translateX(-100%); transition: transform 0.35s cubic-bezier(0.4,0,0.2,1); display: flex; flex-direction: column; box-shadow: 4px 0 40px rgba(0,0,0,0.6); }
+  .nav-drawer.open { transform: translateX(0); }
+  .nav-drawer-header { display: flex; align-items: center; justify-content: space-between; padding: 20px 20px 16px; border-bottom: 1px solid rgba(200,150,62,0.1); height: 64px; flex-shrink: 0; }
+  .nav-logo-text { font-family: 'Cormorant Garamond', serif; font-size: 16px; font-weight: 400; color: #C8963E; letter-spacing: 0.2em; text-transform: uppercase; }
+  .nav-close { background: none; border: none; color: #9A8570; font-size: 24px; cursor: pointer; padding: 4px 8px; line-height: 1; transition: color 0.2s; }
+  .nav-close:hover { color: #C8963E; }
+  .nav-links { list-style: none; padding: 16px 0; flex: 1; overflow-y: auto; }
+  .nav-link { display: block; padding: 14px 24px; font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 300; color: #9A8570; text-decoration: none; transition: all 0.2s; border-left: 2px solid transparent; }
+  .nav-link:hover { color: #E8B86D; background: rgba(200,150,62,0.06); border-left-color: #C8963E; padding-left: 28px; }
+  .nav-link.active { color: #C8963E; border-left-color: #C8963E; background: rgba(200,150,62,0.05); }
+  .nav-cta-wrap { padding: 16px 20px; border-top: 1px solid rgba(200,150,62,0.1); flex-shrink: 0; }
+  .nav-cta-btn { display: block; width: 100%; background: #C8963E; color: #0A0806; font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 500; padding: 13px 16px; border-radius: 3px; text-decoration: none; text-align: center; letter-spacing: 0.06em; text-transform: uppercase; transition: background 0.2s; }
+  .nav-cta-btn:hover { background: #E8B86D; }
+  .nav-footer-text { padding: 14px 24px; border-top: 1px solid rgba(200,150,62,0.06); flex-shrink: 0; }
+  .nav-footer-text span { display: block; font-size: 11px; color: rgba(154,133,112,0.5); line-height: 1.8; }
+
+  /* ALWAYS YOURS SECTION */
+  .always-section {
+    padding: 80px 24px;
+    background: var(--dark);
+    text-align: center;
+  }
+
+  .always-inner {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .always-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 2px;
+    margin-top: 48px;
+    background: rgba(200,150,62,0.08);
+  }
+
+  .always-item {
+    background: var(--dark);
+    padding: 40px 28px;
+    text-align: left;
+  }
+
+  .always-icon {
+    font-size: 28px;
+    margin-bottom: 16px;
+  }
+
+  .always-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 400;
+    color: var(--white);
+    margin-bottom: 10px;
+  }
+
+  .always-body {
+    font-size: 14px;
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+
+  .always-note {
+    margin-top: 48px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(17px, 3vw, 22px);
+    font-style: italic;
+    font-weight: 300;
+    color: var(--gold-light);
+    max-width: 640px;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.6;
+  }
+</style>
+</head>
+<body>
+<!-- BURGER MENU -->
+<div class="burger-nav">
+  <button class="burger-btn" id="burgerBtn" onclick="toggleNav()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</div>
+<div class="nav-overlay" id="navOverlay" onclick="toggleNav()"></div>
+<nav class="nav-drawer" id="navDrawer">
+  <div class="nav-drawer-header">
+    <span class="nav-logo-text">ONE FLAME</span>
+    <button class="nav-close" onclick="toggleNav()">×</button>
+  </div>
+    <ul class="nav-links">
+    <li><a href="index.html" class="nav-link active">🏠 Home</a></li>
+    <li><a href="map.html" class="nav-link">🗺 The Living Map</a></li>
+    <li><a href="flames.html" class="nav-link">🕯 All Flames</a></li>
+    <li><a href="countries.html" class="nav-link">🌍 Countries</a></li>
+    <li><a href="receipts.html" class="nav-link">🏅 Charity Receipts</a></li>
+    <li><a href="accounts.html" class="nav-link">📊 Accounts &amp; Transparency</a></li>
+    <li><a href="cookies.html" class="nav-link">🍪 Cookie Policy</a></li>
+    <li><a href="terms.html" class="nav-link">📄 Terms of Use</a></li>
+    <li><a href="privacy.html" class="nav-link">🔒 Privacy Policy</a></li>
+  </ul>
+  <div class="nav-cta-wrap">
+    <a href="map.html" class="nav-cta-btn">🕯 Light Your Candle — £0.49</a>
+  </div>
+  <div class="nav-footer-text">
+    <span>oneflame.earth</span>
+    <span>Easter 2026 · World Cup 2026</span>
+  </div>
+</nav>
+
+<!-- NEWS TICKER -->
+<div class="ticker-bar">
+  <div class="ticker-track">
+    <span class="ticker-item">🚀 American lunar mission passes halfway — humanity reaches further than ever before</span>
+
+    <span class="ticker-sep"> · </span>
+    <span class="ticker-item">🌊 Strait of Hormuz set to reopen — global stability on the horizon</span>
+    <span class="ticker-sep"> · </span>
+    <span class="ticker-item">🕊 Millions of people are choosing peace this Easter 2026</span>
+    <span class="ticker-sep"> · </span>
+    <span class="ticker-item">🌍 One Flame — giving the world a voice · oneflame.earth</span>
+    <span class="ticker-sep"> · </span>
+    <span class="ticker-item">🏆 FIFA World Cup 2026 — nations unite through sport</span>
+    <span class="ticker-sep"> · </span>
+    <span class="ticker-item">🚀 American lunar mission passes halfway — humanity reaches further than ever before</span>
+    <span class="ticker-sep"> · </span>
+    <span class="ticker-item">🌊 Strait of Hormuz set to reopen — global stability on the horizon</span>
+    <span class="ticker-sep"> · </span>
+    <span class="ticker-item">🕊 Millions of people are choosing peace this Easter 2026</span>
+    <span class="ticker-sep"> · </span>
+    <span class="ticker-item">🌍 One Flame — giving the world a voice · oneflame.earth</span>
+    <span class="ticker-sep"> · </span>
+    <span class="ticker-item">🏆 FIFA World Cup 2026 — nations unite through sport</span>
+    <span class="ticker-sep"> · </span>
+  </div>
+</div>
+
+<!-- Floating particles -->
+<div class="particles" id="particles"></div>
+
+<!-- LANGUAGE BAR -->
+<nav class="lang-bar">
+  <div class="lang-bar-inner">
+  
+  <div class="lang-links">
+    <button class="lang-btn active" onclick="setLang('en')">EN</button>
+    <button class="lang-btn" onclick="setLang('fr')">FR</button>
+    <button class="lang-btn" onclick="setLang('de')">DE</button>
+    <button class="lang-btn" onclick="setLang('at')">AT</button>
+    <button class="lang-btn" onclick="setLang('no')">NO</button>
+    <button class="lang-btn" onclick="setLang('sv')">SV</button>
+    <button class="lang-btn" onclick="setLang('tr')">TR</button>
+    <button class="lang-btn" onclick="setLang('ro')">RO</button>
+    <button class="lang-btn" onclick="setLang('el')">GR</button>
+    <button class="lang-btn" onclick="setLang('hu')">HU</button>
+    <button class="lang-btn" onclick="setLang('sr')">SR</button>
+    <button class="lang-btn" onclick="setLang('bg')">BG</button>
+    <button class="lang-btn" onclick="setLang('sq')">AL</button>
+    <button class="lang-btn" onclick="setLang('uk')">UA</button>
+    <button class="lang-btn" onclick="setLang('ka')">GE</button>
+    <button class="lang-btn" onclick="setLang('es')">ES</button>
+    <button class="lang-btn" onclick="setLang('es_mx')">MX</button>
+    <button class="lang-btn" onclick="setLang('es_ar')">ARG</button>
+    <button class="lang-btn" onclick="setLang('pt')">PT</button>
+    <button class="lang-btn" onclick="setLang('ar')">AR</button>
+    <button class="lang-btn" onclick="setLang('ar_sa')">SA</button>
+    <button class="lang-btn" onclick="setLang('ar_qa')">QA</button>
+    <button class="lang-btn" onclick="setLang('ar_ae')">UAE</button>
+    <button class="lang-btn" onclick="setLang('ar_iq')">IQ</button>
+    <button class="lang-btn" onclick="setLang('ar_eg')">EG</button>
+    <button class="lang-btn" onclick="setLang('he')">IL</button>
+    <button class="lang-btn" onclick="setLang('fr_ci')">CI</button>
+    <button class="lang-btn" onclick="setLang('hi')">HI</button>
+    <button class="lang-btn" onclick="setLang('zh')">ZH</button>
+    <button class="lang-btn" onclick="setLang('ko')">KO</button>
+    <button class="lang-btn" onclick="setLang('th')">TH</button>
+    <button class="lang-btn" onclick="setLang('tl')">PH</button>
+  </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+
+  <div class="flame-container">
+    <div class="flame-glow"></div>
+    <div class="candle-body"></div>
+    <div class="candle-wick"></div>
+    <div class="flame"></div>
+  </div>
+
+  <p class="hero-eyebrow" data-key="eyebrow">Easter 2026 · World Cup 2026</p>
+  <h1 class="hero-title">One <em>Flame.</em><br>One World.</h1>
+  <p class="hero-subtitle" data-key="subtitle">Light your candle. Make your wish. Join the world.</p>
+  <p class="hero-body" data-key="body">
+    Millions of people want peace. Most have no voice. For the price of a cup of tea, your flame joins theirs on a living map that leaders cannot ignore.
+  </p>
+
+  <a href="map.html" class="cta-primary" data-key="cta">
+    🕯 Light Your Candle. Make Your Wish — £0.49
+  </a>
+  <span class="cta-price" data-key="ctasub">Your candle is yours. Always. Make your wish. Every flame counts.</span>
+
+  <!-- WORLD CUP COUNTDOWN -->
+  <div class="countdown-wrap">
+    <div class="countdown-label">🏆 FIFA World Cup 2026 Final — Time remaining</div>
+    <div class="countdown-timer">
+      <div class="countdown-unit">
+        <span class="countdown-num" id="cd-days">00</span>
+        <span class="countdown-unit-label">Days</span>
+      </div>
+      <div class="countdown-sep">:</div>
+      <div class="countdown-unit">
+        <span class="countdown-num" id="cd-hours">00</span>
+        <span class="countdown-unit-label">Hours</span>
+      </div>
+      <div class="countdown-sep">:</div>
+      <div class="countdown-unit">
+        <span class="countdown-num" id="cd-mins">00</span>
+        <span class="countdown-unit-label">Minutes</span>
+      </div>
+      <div class="countdown-sep">:</div>
+      <div class="countdown-unit">
+        <span class="countdown-num" id="cd-secs">00</span>
+        <span class="countdown-unit-label">Seconds</span>
+      </div>
+    </div>
+    <div class="countdown-sub">Your candle is your statement. It burns for 7 days. Relight it whenever it matters. It is yours, always.</div>
+  </div>
+</section>
+
+<!-- COUNTER -->
+<section class="counter-section">
+  <p class="counter-label" data-key="counter_label">Total flames lit since Easter 2026</p>
+  <div class="counter-number" id="counter">0</div>
+  <p class="counter-sub" data-key="counter_sub">and growing</p>
+
+  <div class="milestones">
+    <div class="milestone">
+      <span class="milestone-num">1,000</span>
+      <div class="milestone-charity" data-key="m1">RNLI Cornwall<br>Saving lives at sea</div>
+      <span class="milestone-amount">£100 donated when reached</span>
+      <div class="milestone-progress">
+        <div class="milestone-progress-fill" id="progress1" style="width:0%"></div>
+      </div>
+    </div>
+    <div class="milestone">
+      <span class="milestone-num">5,000</span>
+      <div class="milestone-charity" data-key="m2">Team Rubicon<br>Veterans serving communities</div>
+      <span class="milestone-amount">£100 donated when reached</span>
+      <div class="milestone-progress">
+        <div class="milestone-progress-fill" id="progress2" style="width:0%"></div>
+      </div>
+    </div>
+    <div class="milestone">
+      <span class="milestone-num">20,000,000</span>
+      <div class="milestone-charity" data-key="m3">100 charities worldwide<br>Selected by the community</div>
+      <span class="milestone-amount">£1,000 each donated when reached</span>
+      <div class="milestone-progress">
+        <div class="milestone-progress-fill" id="progress3" style="width:0%"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MAP -->
+<section class="map-section fade-in">
+  <h2 class="section-title">The <em>Living Map</em><br>of Human Hope</h2>
+  <p class="section-body" data-key="map_body">
+    Every flame you light appears here in real time. Watch the world speak with one voice.
+  </p>
+  <div class="map-visual">
+    <!-- World map outline SVG -->
+    <svg class="world-outline" viewBox="0 0 800 420" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
+      <!-- North America -->
+      <path d="M 80 80 L 95 70 L 120 68 L 145 72 L 160 85 L 170 100 L 165 120 L 150 140 L 140 160 L 130 180 L 115 195 L 100 200 L 90 190 L 75 175 L 65 155 L 60 135 L 62 110 L 70 95 Z" fill="rgba(200,150,62,0.06)" stroke="rgba(200,150,62,0.18)" stroke-width="1"/>
+      <!-- Greenland -->
+      <path d="M 155 45 L 175 38 L 195 42 L 200 55 L 190 65 L 170 68 L 155 60 Z" fill="rgba(200,150,62,0.04)" stroke="rgba(200,150,62,0.12)" stroke-width="0.8"/>
+      <!-- Central America -->
+      <path d="M 115 195 L 125 205 L 118 218 L 108 215 L 100 200 Z" fill="rgba(200,150,62,0.06)" stroke="rgba(200,150,62,0.15)" stroke-width="0.8"/>
+      <!-- South America -->
+      <path d="M 155 215 L 175 205 L 195 210 L 210 225 L 215 250 L 210 280 L 200 305 L 185 325 L 168 335 L 155 325 L 142 305 L 135 280 L 133 255 L 138 230 Z" fill="rgba(200,150,62,0.06)" stroke="rgba(200,150,62,0.18)" stroke-width="1"/>
+      <!-- Europe -->
+      <path d="M 355 75 L 375 68 L 395 70 L 405 80 L 410 95 L 400 108 L 385 115 L 368 112 L 355 100 L 350 88 Z" fill="rgba(200,150,62,0.06)" stroke="rgba(200,150,62,0.18)" stroke-width="1"/>
+      <!-- Scandinavia -->
+      <path d="M 375 50 L 390 42 L 405 48 L 408 62 L 395 70 L 378 68 Z" fill="rgba(200,150,62,0.05)" stroke="rgba(200,150,62,0.15)" stroke-width="0.8"/>
+      <!-- Africa -->
+      <path d="M 355 130 L 380 122 L 405 125 L 420 140 L 425 165 L 422 195 L 415 225 L 405 255 L 390 278 L 372 285 L 355 278 L 340 255 L 332 225 L 330 195 L 335 165 L 342 142 Z" fill="rgba(200,150,62,0.06)" stroke="rgba(200,150,62,0.18)" stroke-width="1"/>
+      <!-- Middle East -->
+      <path d="M 420 115 L 445 108 L 465 115 L 468 132 L 455 145 L 435 148 L 420 138 Z" fill="rgba(200,150,62,0.05)" stroke="rgba(200,150,62,0.15)" stroke-width="0.8"/>
+      <!-- Russia / Central Asia -->
+      <path d="M 410 55 L 460 45 L 530 48 L 575 58 L 590 72 L 580 88 L 545 95 L 500 98 L 460 92 L 425 85 L 410 72 Z" fill="rgba(200,150,62,0.05)" stroke="rgba(200,150,62,0.15)" stroke-width="0.8"/>
+      <!-- India -->
+      <path d="M 490 130 L 510 122 L 528 128 L 532 148 L 525 170 L 512 182 L 498 175 L 488 155 L 486 138 Z" fill="rgba(200,150,62,0.06)" stroke="rgba(200,150,62,0.15)" stroke-width="0.8"/>
+      <!-- China / East Asia -->
+      <path d="M 545 75 L 590 68 L 625 72 L 638 88 L 635 108 L 618 120 L 590 125 L 562 118 L 545 102 L 540 88 Z" fill="rgba(200,150,62,0.06)" stroke="rgba(200,150,62,0.18)" stroke-width="1"/>
+      <!-- Southeast Asia -->
+      <path d="M 595 128 L 618 122 L 635 130 L 638 148 L 625 158 L 608 155 L 595 142 Z" fill="rgba(200,150,62,0.05)" stroke="rgba(200,150,62,0.15)" stroke-width="0.8"/>
+      <!-- Japan -->
+      <path d="M 648 88 L 658 82 L 668 88 L 665 102 L 652 105 L 645 98 Z" fill="rgba(200,150,62,0.05)" stroke="rgba(200,150,62,0.15)" stroke-width="0.8"/>
+      <!-- Australia -->
+      <path d="M 618 255 L 650 242 L 682 248 L 698 268 L 695 295 L 678 312 L 652 318 L 628 308 L 612 288 L 610 268 Z" fill="rgba(200,150,62,0.06)" stroke="rgba(200,150,62,0.18)" stroke-width="1"/>
+      <!-- New Zealand -->
+      <path d="M 715 295 L 722 285 L 730 290 L 728 305 L 718 308 Z" fill="rgba(200,150,62,0.04)" stroke="rgba(200,150,62,0.12)" stroke-width="0.7"/>
+    </svg>
+    <div class="map-dots-container" id="mapDots"></div>
+    <div class="map-label" data-key="map_label">Live · Flames updating every minute</div>
+    <a href="map.html" class="map-view-btn">View the live map →</a>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how-section fade-in">
+  <div class="how-inner">
+    <h2 class="section-title">How It <em>Works</em></h2>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">01</div>
+        <div class="step-title" data-key="s1t">Choose your intention</div>
+        <p class="step-body" data-key="s1b">Peace in a region. Hope for a team. Love for someone you know. Or simply: enough.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">02</div>
+        <div class="step-title" data-key="s2t">Pay with one tap</div>
+        <p class="step-body" data-key="s2b">Apple Pay or card. £0.49. Face ID confirms. Your candle goes on the global map. Burns for 7 days. Yours to relight, always.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">03</div>
+        <div class="step-title" data-key="s3t">Share your flame</div>
+        <p class="step-body" data-key="s3b">Your personal flame link goes to TikTok, WhatsApp, anywhere. Others see the map. Others light theirs.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">04</div>
+        <div class="step-title" data-key="s4t">Watch milestones fall</div>
+        <p class="step-body" data-key="s4b">Every milestone reached triggers a real donation to a real charity. Publicly verified. Receipt posted here.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- YOUR CANDLE, ALWAYS YOURS -->
+<section class="always-section fade-in">
+  <div class="always-inner">
+    <h2 class="section-title">Your Candle. <em>Always Yours.</em></h2>
+    <p class="section-body">You made a statement for peace. That does not expire.</p>
+    <div class="always-grid">
+      <div class="always-item">
+        <div class="always-icon">🕯</div>
+        <div class="always-title">It burns for 7 days</div>
+        <p class="always-body">Your candle appears on the global map for 7 days. People in over 80 countries see it. Your wish joins theirs.</p>
+      </div>
+      <div class="always-item">
+        <div class="always-icon">🌍</div>
+        <div class="always-title">Your choice stays on record</div>
+        <p class="always-body">You chose Peace. Hope. Love. Health. A safer world for all. That is a permanent statement. Not a 7-day dot.</p>
+      </div>
+      <div class="always-item">
+        <div class="always-icon">♾</div>
+        <div class="always-title">Relight it whenever it matters</div>
+        <p class="always-body">Your candle is yours to keep. Come back when the world needs it again. Relight it for someone you love. 49p. And it is always there.</p>
+      </div>
+    </div>
+    <p class="always-note">This is not a subscription. It is your place in a living reflection on what humanity chooses.</p>
+  </div>
+</section>
+
+<!-- PAYMENT -->
+<section class="payment-section fade-in" id="light">
+  <h2 class="section-title">Light Your <em>Flame</em></h2>
+  <p class="section-body" data-key="pay_body">One tap. One voice. One world.</p>
+
+  <div class="payment-card">
+    <div class="payment-flame-mini">🕯</div>
+    <div class="payment-title" data-key="pay_title">Your Golden Flame</div>
+    <div class="payment-price">£0.49</div>
+    <p class="payment-desc" data-key="pay_desc">Burns for 7 days. Then yours to relight whenever it matters. Your choice for peace stays on record.</p>
+
+    <button class="apple-pay-btn" onclick="handlePayment('apple')">
+      <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+        <path d="M14.5 3.5C14.5 3.5 15.8 2 17.5 2C17.7 3.9 16.4 5.4 14.9 5.4C13.4 5.4 12.3 4.1 14.5 3.5Z" fill="white"/>
+        <path d="M11 7C9.5 7 8.5 5.5 6.5 5.5C4.3 5.5 2 7.5 2 11.5C2 15.5 4.8 20 7 20C8 20 8.8 19.3 10 19.3C11.2 19.3 11.8 20 13 20C15.2 20 17 16 17 16C15.5 15.2 14.5 13.8 14.5 12C14.5 10.2 15.6 8.7 17 8C16 6.8 14.5 6 13 6C12 6 11.5 7 11 7Z" fill="white"/>
+      </svg>
+      Pay with Apple Pay
+    </button>
+    <button class="card-btn" onclick="handlePayment('card')" data-key="cardbtn">
+      Pay by card instead
+    </button>
+    <p class="payment-note" data-key="pay_note">
+      Secure payment via Stripe. Your candle appears on the global map within 30 seconds. It is yours to relight whenever it matters. A portion of every pound goes to milestone charities when targets are hit.
+    </p>
+  </div>
+</section>
+
+<!-- MISSION -->
+<section class="mission-section fade-in" id="about">
+  <p class="mission-quote" data-key="quote">
+    "The media tells you what <strong>leaders</strong> think. This tells leaders what <strong>people</strong> think."
+  </p>
+  <p class="mission-body" data-key="mission_body">
+    One Flame is not a charity. It is a signal. A decentralised, uncensorable count of ordinary people who want something different. No algorithm decides who sees it. No editor decides what it means. The number speaks for itself.
+  </p>
+</section>
+
+<!-- SHARE -->
+<section class="share-section fade-in">
+  <h3 class="share-title" data-key="share_title">Pass the Flame</h3>
+  <div class="share-buttons">
+    <button class="share-btn" data-key="share_tiktok" onclick="shareTikTok()">
+      🎵 Share on TikTok
+    </button>
+    <a href="https://wa.me/?text=I%20just%20lit%20a%20flame%20for%20peace%20on%20oneflame.earth%20%F0%9F%95%AF%20It%20burns%20for%207%20days.%20Add%20yours." target="_blank" rel="noopener noreferrer" class="share-btn">
+      💬 WhatsApp
+    </a>
+    <a href="https://twitter.com/intent/tweet?text=I%20lit%20a%20flame%20for%20peace.%20%F0%9F%95%AF%20Join%20the%20movement%20at%20oneflame.earth" target="_blank" rel="noopener noreferrer" class="share-btn">
+      𝕏 Twitter / X
+    </a>
+    <button class="share-btn" onclick="copyLink()" data-key="share_copy">
+      🔗 Copy Link
+    </button>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">ONE FLAME · ONEFLAME.EARTH</div>
+  <div class="footer-links">
+    <a href="#about" data-key="f_about">About</a>
+    <a href="receipts.html" data-key="f_charities">Charity Receipts</a>
+    <a href="countries.html" data-key="f_countries">Countries</a>
+    <a href="privacy.html" data-key="f_privacy">Privacy</a>
+    <a href="terms.html" data-key="f_terms">Terms</a>
+    <a href="cookies.html" data-key="f_cookies">Cookie Policy</a>
+    <a href="mailto:hello@oneflame.earth" data-key="f_contact">Contact</a>
+  </div>
+  <p class="footer-note" data-key="footer_note">
+    One Flame is an independent peace initiative. Charity donations are made personally by the founder at each milestone and receipts are published here publicly. One Flame is not a registered charity.
+  </p>
+  <p style="font-size:10px;color:rgba(154,133,112,0.4);margin-top:12px;">
+    © 2026 One Flame · Michael C · oneflame.earth · All rights reserved.
+  </p>
+</footer>
+
+<!-- COOKIE BANNER -->
+<div class="cookie-banner" id="cookieBanner">
+  <div class="cookie-inner">
+    <div class="cookie-text">
+      <span class="cookie-icon">🕯</span>
+      <div>
+        <strong>We use cookies</strong>
+        <p>We use essential cookies to keep this site running and analytics cookies to understand how people find us. No personal data is sold. Ever. <a href="cookies.html" class="cookie-link">Read our Cookie Policy</a></p>
+      </div>
+    </div>
+    <div class="cookie-actions">
+      <button class="cookie-decline" onclick="declineCookies()">Essential only</button>
+      <button class="cookie-accept" onclick="acceptCookies()">Accept all</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()">×</button>
+    <span class="modal-flame">🕯</span>
+    <h2 data-key="modal_title">What is your flame for?</h2>
+    <p data-key="modal_desc">Choose a cause or write your own. Your intention is private. Only the flame appears on the map.</p>
+
+    <div class="intent-options">
+      <button class="intent-tag" onclick="selectTag(this)" data-key="tag_peace">Peace in Ukraine</button>
+      <button class="intent-tag" onclick="selectTag(this)" data-key="tag_gaza">Peace in Gaza</button>
+      <button class="intent-tag" onclick="selectTag(this)" data-key="tag_earth">Our Planet</button>
+      <button class="intent-tag" onclick="selectTag(this)" data-key="tag_children">For the Children</button>
+      <button class="intent-tag" onclick="selectTag(this)" data-key="tag_sport">My Team</button>
+      <button class="intent-tag" onclick="selectTag(this)" data-key="tag_love">Just Love</button>
+    </div>
+
+    <label class="intent-label" data-key="intent_label">Or write your own</label>
+    <input class="intent-input" type="text" placeholder="Your intention..." id="intentInput" maxlength="80">
+
+    <button class="apple-pay-btn" onclick="handlePayment('apple')">
+      <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+        <path d="M14.5 3.5C14.5 3.5 15.8 2 17.5 2C17.7 3.9 16.4 5.4 14.9 5.4C13.4 5.4 12.3 4.1 14.5 3.5Z" fill="white"/>
+        <path d="M11 7C9.5 7 8.5 5.5 6.5 5.5C4.3 5.5 2 7.5 2 11.5C2 15.5 4.8 20 7 20C8 20 8.8 19.3 10 19.3C11.2 19.3 11.8 20 13 20C15.2 20 17 16 17 16C15.5 15.2 14.5 13.8 14.5 12C14.5 10.2 15.6 8.7 17 8C16 6.8 14.5 6 13 6C12 6 11.5 7 11 7Z" fill="white"/>
+      </svg>
+      Light Your Candle. Make Your Wish — £0.49
+    </button>
+    <button class="card-btn" onclick="handlePayment('card')" data-key="modal_card">Pay by card instead</button>
+  </div>
+</div>
+
+<script>
+// ─── TRANSLATIONS ───────────────────────────────────────────
+const T = {
+  en: {
+    eyebrow: "Easter 2026 · World Cup 2026",
+    subtitle: "Light your candle. Make your wish. Join the world.",
+    body: "Millions of people want peace. Most have no voice. For the price of a cup of tea, your candle joins theirs on a living map that leaders cannot ignore.",
+    cta: "🕯 Light Your Candle. Make Your Wish — £0.49",
+    ctasub: "Your candle is yours. Always. Make your wish. Every flame counts.",
+    counter_label: "Flames lit across the world",
+    counter_sub: "and growing",
+    m1: "RNLI Cornwall<br>Saving lives at sea",
+    m2: "Team Rubicon<br>Veterans serving communities",
+    m3: "100 charities worldwide<br>Selected by the community",
+    map_body: "Every flame you light appears here in real time. Watch the world speak with one voice.",
+    map_label: "Live · Flames updating every minute",
+    s1t: "Choose your intention", s1b: "Peace in a region. Hope for a team. Love for someone you know. Or simply: enough.",
+    s2t: "Pay with one tap", s2b: "Apple Pay or card. £0.49. Face ID confirms. Your candle goes on the global map. Burns for 7 days. Yours to relight, always.",
+    s3t: "Share your flame", s3b: "Your personal flame link goes to TikTok, WhatsApp, anywhere. Others see the map. Others light theirs.",
+    s4t: "Watch milestones fall", s4b: "Every milestone reached triggers a real donation to a real charity. Publicly verified. Receipt posted here.",
+    pay_body: "One tap. One voice. One world.",
+    pay_title: "Your Golden Flame",
+    pay_desc: "Burns for 7 days. Then yours to relight whenever it matters. Your choice for peace stays on record.",
+    cardbtn: "Pay by card instead",
+    pay_note: "Secure payment via Stripe. Your candle appears on the global map within 30 seconds. Yours to relight whenever it matters.",
+    quote: '"The media tells you what <strong>leaders</strong> think. This tells leaders what <strong>people</strong> think."',
+    mission_body: "One Flame is not a charity. It is a signal. A decentralised, uncensorable count of ordinary people who want something different.",
+    share_title: "Pass the Flame",
+    share_tiktok: "🎵 Share on TikTok",
+    share_copy: "🔗 Copy Link",
+    f_about: "About", f_charities: "Charity Receipts", f_privacy: "Privacy", f_terms: "Terms", f_contact: "Contact",
+    footer_note: "One Flame is an independent peace initiative. Charity donations are made personally by the founder at each milestone and receipts are published here publicly.",
+    modal_title: "What is your flame for?",
+    modal_desc: "Choose a cause or write your own. Your intention is private. Only the flame appears on the map.",
+    tag_peace: "Peace in Ukraine", tag_gaza: "Peace in Gaza", tag_earth: "Our Planet", tag_children: "For the Children", tag_sport: "My Team", tag_love: "Just Love",
+    intent_label: "Or write your own",
+    modal_card: "Pay by card instead"
+  },
+  fr: {
+    eyebrow: "Pâques 2025 · Coupe du Monde 2026",
+    subtitle: "Allumez votre flamme pour la paix.",
+    body: "Des millions de personnes veulent la paix. La plupart n'ont pas de voix. Pour le prix d'un café, votre flamme rejoint les leurs sur une carte vivante.",
+    cta: "🕯 Allumer ma flamme — 0,49 £",
+    ctasub: "Votre flamme est la vôtre. Toujours. Faites votre vœu. Chaque flamme compte.",
+    counter_label: "Flammes allumées dans le monde",
+    counter_sub: "et en croissance",
+    map_label: "En direct · Flammes mises à jour chaque minute",
+    share_title: "Passez la flamme",
+    modal_title: "Pour quoi est votre flamme?",
+    modal_desc: "Choisissez une cause ou écrivez la vôtre. Votre intention est privée.",
+    tag_peace: "Paix en Ukraine", tag_gaza: "Paix à Gaza", tag_earth: "Notre planète", tag_children: "Pour les enfants", tag_sport: "Mon équipe", tag_love: "Juste l'amour",
+    intent_label: "Ou écrivez la vôtre"
+  },
+  de: {
+    eyebrow: "Ostern 2025 · Weltmeisterschaft 2026",
+    subtitle: "Zünden Sie Ihre Flamme für den Frieden an.",
+    body: "Millionen Menschen wollen Frieden. Die meisten haben keine Stimme. Für den Preis eines Kaffees schließt sich Ihre Flamme den anderen an.",
+    cta: "🕯 Meine Flamme anzünden — 0,49 £",
+    ctasub: "Ihre Flamme gehört Ihnen. Für immer. Machen Sie Ihren Wunsch. Jede Flamme zählt.",
+    counter_label: "Flammen auf der ganzen Welt",
+    counter_sub: "und wächst",
+    map_label: "Live · Flammen werden jede Minute aktualisiert",
+    share_title: "Reiche die Flamme weiter",
+    modal_title: "Wofür brennt Ihre Flamme?",
+    modal_desc: "Wählen Sie einen Grund oder schreiben Sie Ihren eigenen.",
+    tag_peace: "Frieden in der Ukraine", tag_gaza: "Frieden in Gaza", tag_earth: "Unsere Erde", tag_children: "Für die Kinder", tag_sport: "Mein Team", tag_love: "Einfach Liebe",
+    intent_label: "Oder schreiben Sie Ihren eigenen"
+  },
+  hi: {
+    eyebrow: "ईस्टर 2025 · विश्व कप 2026",
+    subtitle: "शांति के लिए अपनी लौ जलाएं।",
+    body: "लाखों लोग शांति चाहते हैं। अधिकांश की कोई आवाज़ नहीं है। एक चाय की कीमत पर, आपकी लौ उनके साथ जुड़ती है।",
+    cta: "🕯 मेरी लौ जलाएं — £0.49",
+    ctasub: "आपकी लौ हमेशा आपकी है। अपनी इच्छा करें। हर लौ मायने रखती है।",
+    counter_label: "दुनिया भर में जलाई गई लौ",
+    counter_sub: "और बढ़ रही है",
+    map_label: "लाइव · हर मिनट अपडेट होती लौ",
+    share_title: "लौ आगे बढ़ाएं",
+    modal_title: "आपकी लौ किसके लिए है?",
+    modal_desc: "कोई कारण चुनें या अपना लिखें।",
+    tag_peace: "यूक्रेन में शांति", tag_gaza: "गाजा में शांति", tag_earth: "हमारी पृथ्वी", tag_children: "बच्चों के लिए", tag_sport: "मेरी टीम", tag_love: "बस प्यार",
+    intent_label: "या अपना लिखें"
+  },
+  ar: {
+    eyebrow: "عيد الفصح 2025 · كأس العالم 2026",
+    subtitle: "أضئ شعلتك من أجل السلام.",
+    body: "الملايين يريدون السلام. معظمهم لا صوت لهم. بثمن كوب شاي، تنضم شعلتك إلى شعلتهم.",
+    cta: "🕯 أضئ شعلتي — £0.49",
+    ctasub: "شعلتك لك دائماً. تمنَّ أمنيتك. كل شعلة مهمة.",
+    counter_label: "الشعل المضاءة حول العالم",
+    counter_sub: "وتتزايد",
+    map_label: "مباشر · تحديث كل دقيقة",
+    share_title: "مرر الشعلة",
+    modal_title: "من أجل ماذا شعلتك؟",
+    modal_desc: "اختر قضية أو اكتب قضيتك الخاصة.",
+    tag_peace: "السلام في أوكرانيا", tag_gaza: "السلام في غزة", tag_earth: "كوكبنا", tag_children: "من أجل الأطفال", tag_sport: "فريقي", tag_love: "فقط الحب",
+    intent_label: "أو اكتب قضيتك"
+  },
+  es: {
+    eyebrow: "Pascua 2025 · Copa del Mundo 2026",
+    subtitle: "Enciende tu llama por la paz.",
+    body: "Millones de personas quieren paz. La mayoría no tiene voz. Por el precio de un café, tu llama se une a las demás.",
+    cta: "🕯 Encender mi llama — £0.49",
+    ctasub: "Tu llama es tuya. Siempre. Pide tu deseo. Cada llama cuenta.",
+    counter_label: "Llamas encendidas en el mundo",
+    counter_sub: "y creciendo",
+    map_label: "En vivo · Llamas actualizadas cada minuto",
+    share_title: "Pasa la llama",
+    modal_title: "¿Para qué es tu llama?",
+    modal_desc: "Elige una causa o escribe la tuya propia.",
+    tag_peace: "Paz en Ucrania", tag_gaza: "Paz en Gaza", tag_earth: "Nuestro planeta", tag_children: "Por los niños", tag_sport: "Mi equipo", tag_love: "Solo amor",
+    intent_label: "O escribe la tuya"
+  },
+  pt: {
+    eyebrow: "Páscoa 2025 · Copa do Mundo 2026",
+    subtitle: "Acenda sua chama pela paz.",
+    body: "Milhões de pessoas querem paz. A maioria não tem voz. Pelo preço de um café, sua chama se junta às delas.",
+    cta: "🕯 Acender minha chama — £0.49",
+    ctasub: "Sua chama é sua. Para sempre. Faça seu desejo. Cada chama conta.",
+    counter_label: "Chamas acesas no mundo",
+    counter_sub: "e crescendo",
+    map_label: "Ao vivo · Chamas atualizadas a cada minuto",
+    share_title: "Passe a chama",
+    modal_title: "Para que é a sua chama?",
+    modal_desc: "Escolha uma causa ou escreva a sua.",
+    tag_peace: "Paz na Ucrânia", tag_gaza: "Paz em Gaza", tag_earth: "Nosso planeta", tag_children: "Pelas crianças", tag_sport: "Meu time", tag_love: "Só amor",
+    intent_label: "Ou escreva a sua"
+  },
+  zh: {
+    eyebrow: "复活节 2026 · 世界杯 2026",
+    subtitle: "为和平点亮你的火焰。",
+    body: "数百万人渴望和平。大多数人没有发声的机会。用一杯茶的价格，让你的火焰与他们汇聚。",
+    cta: "🕯 点燃我的火焰 — £0.49",
+    ctasub: "你的烛火永远属于你。许下你的心愿。每一道火焰都重要。",
+    counter_label: "全球点燃的火焰数",
+    counter_sub: "持续增长",
+    map_label: "实时 · 每分钟更新",
+    share_title: "传递火焰",
+    modal_title: "你的火焰为谁而燃？",
+    modal_desc: "选择一个事业，或写下你自己的。",
+    tag_peace: "乌克兰和平", tag_gaza: "加沙和平", tag_earth: "我们的星球", tag_children: "为了孩子们", tag_sport: "我的队伍", tag_love: "只是爱",
+    intent_label: "或写下你自己的"
+  },
+  ro: {
+    eyebrow: "Paști 2026 · Cupa Mondială 2026",
+    subtitle: "Aprinde flacăra ta pentru pace.",
+    body: "Milioane de oameni vor pace. Cei mai mulți nu au voce. Pentru prețul unei cafele, flacăra ta li se alătură pe o hartă vie.",
+    cta: "🕯 Aprinde flacăra mea — £0.49",
+    ctasub: "Flacăra ta este a ta. Mereu. Exprimă-ți dorința. Fiecare flacără contează.",
+    counter_label: "Flăcări aprinse în lume",
+    counter_sub: "și în creștere",
+    map_label: "Live · Flăcări actualizate în fiecare minut",
+    share_title: "Treci flacăra mai departe",
+    modal_title: "Pentru ce este flacăra ta?",
+    modal_desc: "Alege o cauză sau scrie-o pe a ta.",
+    tag_peace: "Pace în Ucraina", tag_gaza: "Pace în Gaza", tag_earth: "Planeta noastră", tag_children: "Pentru copii", tag_sport: "Echipa mea", tag_love: "Doar dragoste",
+    intent_label: "Sau scrie-o pe a ta"
+  },
+  el: {
+    eyebrow: "Πάσχα 2026 · Παγκόσμιο Κύπελλο 2026",
+    subtitle: "Άναψε τη φλόγα σου για την ειρήνη.",
+    body: "Εκατομμύρια άνθρωποι θέλουν ειρήνη. Οι περισσότεροι δεν έχουν φωνή. Για την τιμή ενός καφέ, η φλόγα σου ενώνεται με τους άλλους.",
+    cta: "🕯 Άναψε τη φλόγα μου — £0.49",
+    ctasub: "Η φλόγα σου είναι δική σου. Πάντα. Κάνε την ευχή σου. Κάθε φλόγα μετράει.",
+    counter_label: "Φλόγες που άναψαν σε όλο τον κόσμο",
+    counter_sub: "και αυξάνονται",
+    map_label: "Ζωντανά · Φλόγες που ενημερώνονται κάθε λεπτό",
+    share_title: "Πέρασε τη φλόγα",
+    modal_title: "Για τι είναι η φλόγα σου;",
+    modal_desc: "Επίλεξε μια αιτία ή γράψε τη δική σου.",
+    tag_peace: "Ειρήνη στην Ουκρανία", tag_gaza: "Ειρήνη στη Γάζα", tag_earth: "Ο πλανήτης μας", tag_children: "Για τα παιδιά", tag_sport: "Η ομάδα μου", tag_love: "Απλά αγάπη",
+    intent_label: "Ή γράψε τη δική σου"
+  },
+  es_mx: {
+    eyebrow: "Semana Santa 2026 · Copa del Mundo 2026",
+    subtitle: "Enciende tu llama por la paz.",
+    body: "Millones de personas quieren paz. La mayoría no tiene voz. Por el precio de un café, tu llama se une a las demás en un mapa vivo.",
+    cta: "🕯 Encender mi llama — £0.49",
+    ctasub: "Tu llama es tuya. Siempre. Pide tu deseo. Cada llama cuenta.",
+    counter_label: "Llamas encendidas en el mundo",
+    counter_sub: "y creciendo",
+    map_label: "En vivo · Llamas actualizadas cada minuto",
+    share_title: "Pasa la llama",
+    modal_title: "¿Para qué es tu llama?",
+    modal_desc: "Elige una causa o escribe la tuya.",
+    tag_peace: "Paz en Ucrania", tag_gaza: "Paz en Gaza", tag_earth: "Nuestro planeta", tag_children: "Por los niños", tag_sport: "Mi equipo", tag_love: "Solo amor",
+    intent_label: "O escribe la tuya"
+  },
+  es_ar: {
+    eyebrow: "Semana Santa 2026 · Copa del Mundo 2026",
+    subtitle: "Encendé tu llama por la paz.",
+    body: "Millones de personas quieren paz. La mayoría no tiene voz. Por el precio de un café, tu llama se suma a las demás en un mapa vivo.",
+    cta: "🕯 Encender mi llama — £0.49",
+    ctasub: "Tu llama es tuya. Siempre. Pide tu deseo. Cada llama importa.",
+    counter_label: "Llamas encendidas en el mundo",
+    counter_sub: "y creciendo",
+    map_label: "En vivo · Llamas actualizadas cada minuto",
+    share_title: "Pasá la llama",
+    modal_title: "¿Para qué es tu llama?",
+    modal_desc: "Elegí una causa o escribí la tuya.",
+    tag_peace: "Paz en Ucrania", tag_gaza: "Paz en Gaza", tag_earth: "Nuestro planeta", tag_children: "Por los chicos", tag_sport: "Mi equipo", tag_love: "Solo amor",
+    intent_label: "O escribí la tuya"
+  },
+  ar_sa: {
+    eyebrow: "عيد الفصح 2026 · كأس العالم 2026",
+    subtitle: "أضئ شعلتك من أجل السلام.",
+    body: "الملايين يريدون السلام. معظمهم لا صوت لهم. بثمن كوب قهوة، تنضم شعلتك إلى شعلتهم على خريطة حية.",
+    cta: "🕯 أضئ شعلتي — £0.49",
+    ctasub: "شعلتك لك دائماً. تمنَّ أمنيتك. كل شعلة مهمة.",
+    counter_label: "الشعل المضاءة حول العالم",
+    counter_sub: "وتتزايد",
+    map_label: "مباشر · تحديث كل دقيقة",
+    share_title: "مرر الشعلة",
+    modal_title: "من أجل ماذا شعلتك؟",
+    modal_desc: "اختر قضية أو اكتب قضيتك الخاصة.",
+    tag_peace: "السلام في أوكرانيا", tag_gaza: "السلام في غزة", tag_earth: "كوكبنا", tag_children: "من أجل الأطفال", tag_sport: "فريقي", tag_love: "فقط الحب",
+    intent_label: "أو اكتب قضيتك"
+  },
+  ko: {
+    eyebrow: "부활절 2026 · 월드컵 2026",
+    subtitle: "평화를 위해 불꽃을 밝히세요.",
+    body: "수백만 명이 평화를 원합니다. 대부분은 목소리가 없습니다. 커피 한 잔 가격으로, 당신의 불꽃이 살아있는 지도에서 그들과 합류합니다.",
+    cta: "🕯 내 불꽃 밝히기 — £0.49",
+    ctasub: "당신의 불꽃은 언제나 당신의 것입니다. 소원을 빌어보세요. 모든 불꽃이 중요합니다.",
+    counter_label: "전 세계에서 밝혀진 불꽃",
+    counter_sub: "계속 증가 중",
+    map_label: "실시간 · 매분 업데이트",
+    share_title: "불꽃을 전달하세요",
+    modal_title: "당신의 불꽃은 무엇을 위한 것인가요?",
+    modal_desc: "원인을 선택하거나 직접 작성하세요.",
+    tag_peace: "우크라이나 평화", tag_gaza: "가자 평화", tag_earth: "우리 지구", tag_children: "아이들을 위해", tag_sport: "우리 팀", tag_love: "그냥 사랑",
+    intent_label: "또는 직접 작성하세요"
+  },
+  th: {
+    eyebrow: "อีสเตอร์ 2026 · ฟุตบอลโลก 2026",
+    subtitle: "จุดประกายเพื่อสันติภาพ",
+    body: "ผู้คนหลายล้านต้องการสันติภาพ แต่ส่วนใหญ่ไม่มีเสียง ในราคาแก้วกาแฟ เปลวไฟของคุณจะเข้าร่วมกับพวกเขาบนแผนที่ที่มีชีวิต",
+    cta: "🕯 จุดเปลวไฟของฉัน — £0.49",
+    ctasub: "เปลวไฟของคุณเป็นของคุณเสมอ จงอธิษฐาน ทุกเปลวไฟมีความหมาย",
+    counter_label: "เปลวไฟที่จุดขึ้นทั่วโลก",
+    counter_sub: "และเพิ่มขึ้นเรื่อยๆ",
+    map_label: "สด · อัปเดตทุกนาที",
+    share_title: "ส่งต่อเปลวไฟ",
+    modal_title: "เปลวไฟของคุณเพื่ออะไร?",
+    modal_desc: "เลือกสาเหตุหรือเขียนของคุณเอง",
+    tag_peace: "สันติภาพในยูเครน", tag_gaza: "สันติภาพในกาซา", tag_earth: "โลกของเรา", tag_children: "เพื่อเด็กๆ", tag_sport: "ทีมของฉัน", tag_love: "แค่ความรัก",
+    intent_label: "หรือเขียนของคุณเอง"
+  },
+  tl: {
+    eyebrow: "Pasko ng Pagkabuhay 2026 · World Cup 2026",
+    subtitle: "Sindihan ang iyong apoy para sa kapayapaan.",
+    body: "Milyun-milyon ang nagnanais ng kapayapaan. Karamihan ay walang boses. Sa presyo ng isang kape, ang iyong apoy ay sumasali sa kanila sa isang mapa.",
+    cta: "🕯 Sindihan ang aking apoy — £0.49",
+    ctasub: "Ang iyong apoy ay sa iyo. Palagi. Gawin ang iyong kahilingan. Bawat apoy ay mahalaga.",
+    counter_label: "Mga apoy na sinindihan sa buong mundo",
+    counter_sub: "at patuloy na lumalaki",
+    map_label: "Live · Ina-update bawat minuto",
+    share_title: "Ipasa ang apoy",
+    modal_title: "Para saan ang iyong apoy?",
+    modal_desc: "Pumili ng dahilan o isulat ang iyong sarili.",
+    tag_peace: "Kapayapaan sa Ukraine", tag_gaza: "Kapayapaan sa Gaza", tag_earth: "Ang ating planeta", tag_children: "Para sa mga bata", tag_sport: "Ang aking koponan", tag_love: "Pag-ibig lamang",
+    intent_label: "O isulat ang iyong sarili"
+  },
+  tr: {
+    eyebrow: "Paskalya 2026 · Dünya Kupası 2026",
+    subtitle: "Barış için ateşini yak.",
+    body: "Milyonlarca insan barış istiyor. Çoğunun sesi yok. Bir fincan kahve fiyatına, senin alevin onlarınkine bir harita üzerinde katılıyor.",
+    cta: "🕯 Alevimi yak — £0.49",
+    ctasub: "Alevin sana aittir. Her zaman. Dileğini dile. Her alev önemlidir.",
+    counter_label: "Dünya genelinde yakılan alevler",
+    counter_sub: "ve büyüyor",
+    map_label: "Canlı · Her dakika güncelleniyor",
+    share_title: "Alevi geçir",
+    modal_title: "Alevin ne için?",
+    modal_desc: "Bir neden seç ya da kendin yaz.",
+    tag_peace: "Ukrayna'da barış", tag_gaza: "Gazze'de barış", tag_earth: "Gezegenimiz", tag_children: "Çocuklar için", tag_sport: "Benim takımım", tag_love: "Sadece sevgi",
+    intent_label: "Ya da kendin yaz"
+  },
+  no: {
+    eyebrow: "Påske 2026 · VM 2026",
+    subtitle: "Tenn din flamme for fred.",
+    body: "Millioner av mennesker vil ha fred. De fleste har ingen stemme. For prisen av en kaffe slutter flammen din seg til deres på et levende kart.",
+    cta: "🕯 Tenn min flamme — £0.49",
+    ctasub: "Flammen din er din. Alltid. Legg frem ønsket ditt. Hver flamme teller.",
+    counter_label: "Flammer tent over hele verden",
+    counter_sub: "og vokser",
+    map_label: "Direkte · Oppdateres hvert minutt",
+    share_title: "Send flammen videre",
+    modal_title: "Hva er flammen din for?",
+    modal_desc: "Velg en sak eller skriv din egen.",
+    tag_peace: "Fred i Ukraina", tag_gaza: "Fred i Gaza", tag_earth: "Planeten vår", tag_children: "For barna", tag_sport: "Mitt lag", tag_love: "Bare kjærlighet",
+    intent_label: "Eller skriv din egen"
+  },
+  sv: {
+    eyebrow: "Påsk 2026 · VM 2026",
+    subtitle: "Tänd din låga för fred.",
+    body: "Miljoner människor vill ha fred. De flesta har ingen röst. För priset av ett kaffe ansluter sig din låga till deras på en levande karta.",
+    cta: "🕯 Tänd min låga — £0.49",
+    ctasub: "Din låga är din. Alltid. Framför din önskan. Varje låga räknas.",
+    counter_label: "Lågor tända runt om i världen",
+    counter_sub: "och ökar",
+    map_label: "Live · Uppdateras varje minut",
+    share_title: "Skicka lågan vidare",
+    modal_title: "Vad är din låga för?",
+    modal_desc: "Välj en sak eller skriv din egen.",
+    tag_peace: "Fred i Ukraina", tag_gaza: "Fred i Gaza", tag_earth: "Vår planet", tag_children: "För barnen", tag_sport: "Mitt lag", tag_love: "Bara kärlek",
+    intent_label: "Eller skriv din egen"
+  },
+  at: {
+    eyebrow: "Ostern 2026 · Weltmeisterschaft 2026",
+    subtitle: "Zünde deine Flamme für den Frieden an.",
+    body: "Millionen Menschen wollen Frieden. Die meisten haben keine Stimme. Für den Preis eines Kaffees schließt sich deine Flamme den anderen auf einer lebendigen Karte an.",
+    cta: "🕯 Meine Flamme anzünden — £0.49",
+    ctasub: "Deine Flamme gehört dir. Für immer. Wünsch dir etwas. Jede Flamme zählt.",
+    counter_label: "Flammen auf der ganzen Welt",
+    counter_sub: "und wächst",
+    map_label: "Live · Jede Minute aktualisiert",
+    share_title: "Gib die Flamme weiter",
+    modal_title: "Wofür brennt deine Flamme?",
+    modal_desc: "Wähle einen Grund oder schreib deinen eigenen.",
+    tag_peace: "Frieden in der Ukraine", tag_gaza: "Frieden in Gaza", tag_earth: "Unsere Erde", tag_children: "Für die Kinder", tag_sport: "Mein Team", tag_love: "Einfach Liebe",
+    intent_label: "Oder schreib deinen eigenen"
+  },
+  hu: {
+    eyebrow: "Húsvét 2026 · Világbajnokság 2026",
+    subtitle: "Gyújtsd meg lángod a békéért.",
+    body: "Millió ember akar békét. A legtöbbüknek nincs hangja. Egy kávé áráért a lángod csatlakozik az övékhez egy élő térképen.",
+    cta: "🕯 Gyújtsd meg lángom — £0.49",
+    ctasub: "A lángod mindig a tiéd. Kívánj egyet. Minden láng számít.",
+    counter_label: "Meggyújtott lángok a világon",
+    counter_sub: "és növekszik",
+    map_label: "Élő · Percenként frissítve",
+    share_title: "Add tovább a lángot",
+    modal_title: "Mire szól a lángod?",
+    modal_desc: "Válassz egy ügyet, vagy írd meg a sajátod.",
+    tag_peace: "Béke Ukrajnában", tag_gaza: "Béke Gázában", tag_earth: "A bolygónk", tag_children: "A gyerekekért", tag_sport: "A csapatom", tag_love: "Csak szeretet",
+    intent_label: "Vagy írd meg a sajátod"
+  },
+  sr: {
+    eyebrow: "Ускрс 2026 · Светско првенство 2026",
+    subtitle: "Запали свој пламен за мир.",
+    body: "Милиони људи желе мир. Већина нема глас. За цену кафе, твој пламен се придружује њиховима на живој мапи.",
+    cta: "🕯 Запали мој пламен — £0.49",
+    ctasub: "Твој пламен је твој. Заувек. Пожели жељу. Сваки пламен се рачуна.",
+    counter_label: "Пламени упаљени широм света",
+    counter_sub: "и расте",
+    map_label: "Уживо · Ажурира се сваки минут",
+    share_title: "Пренеси пламен",
+    modal_title: "За шта је твој пламен?",
+    modal_desc: "Изабери узрок или напиши свој.",
+    tag_peace: "Мир у Украјини", tag_gaza: "Мир у Гази", tag_earth: "Наша планета", tag_children: "За децу", tag_sport: "Мој тим", tag_love: "Само љубав",
+    intent_label: "Или напиши свој"
+  },
+  bg: {
+    eyebrow: "Великден 2026 · Световно първенство 2026",
+    subtitle: "Запали своя пламък за мир.",
+    body: "Милиони хора искат мир. Повечето нямат глас. За цената на кафе, твоят пламък се присъединява към техния на жива карта.",
+    cta: "🕯 Запали моя пламък — £0.49",
+    ctasub: "Твоят пламък е твой. Завинаги. Направи желание. Всеки пламък има значение.",
+    counter_label: "Пламъци, запалени по целия свят",
+    counter_sub: "и расте",
+    map_label: "На живо · Актуализира се всяка минута",
+    share_title: "Предай пламъка",
+    modal_title: "За какво е твоят пламък?",
+    modal_desc: "Избери кауза или напиши своя.",
+    tag_peace: "Мир в Украйна", tag_gaza: "Мир в Газа", tag_earth: "Нашата планета", tag_children: "За децата", tag_sport: "Моят отбор", tag_love: "Просто любов",
+    intent_label: "Или напиши своя"
+  },
+  sq: {
+    eyebrow: "Pashkët 2026 · Kupa e Botës 2026",
+    subtitle: "Ndiz flakën tënde për paqen.",
+    body: "Miliona njerëz duan paqe. Shumica nuk kanë zë. Me çmimin e një kafeje, flaka jote bashkohet me të tyret në një hartë të gjallë.",
+    cta: "🕯 Ndiz flakën time — £0.49",
+    ctasub: "Flaka jote është jotja. Gjithmonë. Bëj dëshirën tënde. Çdo flakë ka rëndësi.",
+    counter_label: "Flakë të ndezura në mbarë botën",
+    counter_sub: "dhe në rritje",
+    map_label: "Drejtpërdrejt · Përditësohet çdo minutë",
+    share_title: "Kalo flakën",
+    modal_title: "Për çfarë është flaka jote?",
+    modal_desc: "Zgjidhni një kauzë ose shkruani tuajën.",
+    tag_peace: "Paqe në Ukrainë", tag_gaza: "Paqe në Gaza", tag_earth: "Planeti ynë", tag_children: "Për fëmijët", tag_sport: "Ekipi im", tag_love: "Vetëm dashuri",
+    intent_label: "Ose shkruani tuajën"
+  },
+  uk: {
+    eyebrow: "Великдень 2026 · Чемпіонат світу 2026",
+    subtitle: "Запали свій вогонь заради миру.",
+    body: "Мільйони людей хочуть миру. Більшість не мають голосу. За ціною чашки кави твій вогонь приєднується до їхніх на живій карті.",
+    cta: "🕯 Запалити мій вогонь — £0.49",
+    ctasub: "Твій вогонь — завжди твій. Загадай бажання. Кожен вогонь важливий.",
+    counter_label: "Вогні, запалені по всьому світу",
+    counter_sub: "і зростає",
+    map_label: "Наживо · Оновлюється щохвилини",
+    share_title: "Передай вогонь",
+    modal_title: "Для чого твій вогонь?",
+    modal_desc: "Обери причину або напиши свою.",
+    tag_peace: "Мир в Україні", tag_gaza: "Мир у Газі", tag_earth: "Наша планета", tag_children: "Для дітей", tag_sport: "Моя команда", tag_love: "Просто любов",
+    intent_label: "Або напиши свою"
+  },
+  ka: {
+    eyebrow: "აღდგომა 2026 · მსოფლიო ჩემპიონატი 2026",
+    subtitle: "აანთე შენი ალი მშვიდობისთვის.",
+    body: "მილიონობით ადამიანს მშვიდობა სურს. მათ უმეტესობას ხმა არ აქვს. ერთი ყავის ფასად შენი ალი მათ ალს ცოცხალ რუკაზე უერთდება.",
+    cta: "🕯 ჩემი ალის ანთება — £0.49",
+    ctasub: "შენი ალი შენია. ყოველთვის. გამოთქვი სურვილი. ყოველი ალი მნიშვნელოვანია.",
+    counter_label: "მთელ მსოფლიოში ანთებული ალები",
+    counter_sub: "და იზრდება",
+    map_label: "პირდაპირ · ყოველ წუთს განახლდება",
+    share_title: "გადასცი ალი",
+    modal_title: "რისთვისაა შენი ალი?",
+    modal_desc: "აირჩიე მიზეზი ან დაწერე საკუთარი.",
+    tag_peace: "მშვიდობა უკრაინაში", tag_gaza: "მშვიდობა გაზაში", tag_earth: "ჩვენი პლანეტა", tag_children: "ბავშვებისთვის", tag_sport: "ჩემი გუნდი", tag_love: "უბრალოდ სიყვარული",
+    intent_label: "ან დაწერე საკუთარი"
+  },
+  ar_iq: {
+    eyebrow: "عيد الفصح 2026 · كأس العالم 2026",
+    subtitle: "أضئ شعلتك من أجل السلام.",
+    body: "الملايين في العراق والعالم يريدون السلام. بثمن فنجان شاي، تنضم شعلتك إليهم على خريطة حية.",
+    cta: "🕯 أضئ شعلتي — £0.49",
+    ctasub: "شعلتك لك دائماً. تمنَّ أمنيتك. كل شعلة مهمة.",
+    counter_label: "الشعل المضاءة حول العالم",
+    counter_sub: "وتتزايد",
+    map_label: "مباشر · تحديث كل دقيقة",
+    share_title: "مرر الشعلة",
+    modal_title: "من أجل ماذا شعلتك؟",
+    modal_desc: "اختر قضية أو اكتب قضيتك.",
+    tag_peace: "السلام في أوكرانيا", tag_gaza: "السلام في غزة", tag_earth: "كوكبنا", tag_children: "من أجل الأطفال", tag_sport: "فريقي", tag_love: "فقط الحب",
+    intent_label: "أو اكتب قضيتك"
+  },
+  ar_eg: {
+    eyebrow: "عيد الفصح 2026 · كأس العالم 2026",
+    subtitle: "اشعل شعلتك من أجل السلام.",
+    body: "الملايين في مصر والعالم عايزين سلام. معظمهم ملهومش صوت. بثمن كوباية شاي، شعلتك بتنضم ليهم على خريطة حية.",
+    cta: "🕯 اشعل شعلتي — £0.49",
+    ctasub: "شعلتك دايماً شعلتك. تمنّى أمنيتك. كل شعلة بتفرق.",
+    counter_label: "الشعل اللي اتشعلت حوالين العالم",
+    counter_sub: "وبتزيد",
+    map_label: "مباشر · بيتحدث كل دقيقة",
+    share_title: "عدّي الشعلة",
+    modal_title: "شعلتك ليه؟",
+    modal_desc: "اختار قضية أو اكتب قضيتك.",
+    tag_peace: "السلام في أوكرانيا", tag_gaza: "السلام في غزة", tag_earth: "كوكبنا", tag_children: "عشان الأطفال", tag_sport: "فريقي", tag_love: "بس الحب",
+    intent_label: "أو اكتب قضيتك"
+  },
+  ar_qa: {
+    eyebrow: "عيد الفصح 2026 · كأس العالم 2026",
+    subtitle: "أضئ شعلتك من أجل السلام.",
+    body: "الملايين حول العالم يريدون السلام. بثمن كوب قهوة، تنضم شعلتك إليهم على خريطة حية تجمع أصوات البشر.",
+    cta: "🕯 أضئ شعلتي — £0.49",
+    ctasub: "شعلتك لك دائماً. تمنَّ أمنيتك. كل شعلة تُحدث فرقاً.",
+    counter_label: "الشعل المضاءة حول العالم",
+    counter_sub: "وتتزايد",
+    map_label: "مباشر · تحديث كل دقيقة",
+    share_title: "مرر الشعلة",
+    modal_title: "من أجل ماذا شعلتك؟",
+    modal_desc: "اختر قضية أو اكتب قضيتك الخاصة.",
+    tag_peace: "السلام في أوكرانيا", tag_gaza: "السلام في غزة", tag_earth: "كوكبنا", tag_children: "من أجل الأطفال", tag_sport: "فريقي", tag_love: "فقط الحب",
+    intent_label: "أو اكتب قضيتك"
+  },
+  ar_ae: {
+    eyebrow: "عيد الفصح 2026 · كأس العالم 2026",
+    subtitle: "أضئ شعلتك من أجل السلام.",
+    body: "الإمارات والعالم يريدان السلام. ملايين الأصوات بلا صدى. بثمن كوب قهوة، شعلتك تنضم إليهم على خريطة حية.",
+    cta: "🕯 أضئ شعلتي — £0.49",
+    ctasub: "شعلتك لك دائماً. تمنَّ أمنيتك. كل شعلة تعني الكثير.",
+    counter_label: "الشعل المضاءة حول العالم",
+    counter_sub: "وتتزايد",
+    map_label: "مباشر · تحديث كل دقيقة",
+    share_title: "مرر الشعلة",
+    modal_title: "من أجل ماذا شعلتك؟",
+    modal_desc: "اختر قضية أو اكتب قضيتك.",
+    tag_peace: "السلام في أوكرانيا", tag_gaza: "السلام في غزة", tag_earth: "كوكبنا", tag_children: "من أجل الأطفال", tag_sport: "فريقي", tag_love: "فقط الحب",
+    intent_label: "أو اكتب قضيتك"
+  },
+  he: {
+    eyebrow: "פסחא 2026 · גביע העולם 2026",
+    subtitle: "הדלק את הלהבה שלך למען השלום.",
+    body: "מיליונים רוצים שלום. לרובם אין קול. במחיר כוס קפה, הלהבה שלך מצטרפת לשלהם על מפה חיה.",
+    cta: "🕯 הדלק את הלהבה שלי — £0.49",
+    ctasub: "הלהבה שלך היא שלך. תמיד. בקש את משאלתך. כל להבה חשובה.",
+    counter_label: "להבות שהודלקו ברחבי העולם",
+    counter_sub: "וגדל",
+    map_label: "חי · מתעדכן כל דקה",
+    share_title: "העבר את הלהבה",
+    modal_title: "למה הלהבה שלך?",
+    modal_desc: "בחר סיבה או כתוב את שלך.",
+    tag_peace: "שלום באוקראינה", tag_gaza: "שלום בעזה", tag_earth: "הכוכב שלנו", tag_children: "למען הילדים", tag_sport: "הקבוצה שלי", tag_love: "פשוט אהבה",
+    intent_label: "או כתוב את שלך"
+  },
+  fr_ci: {
+    eyebrow: "Pâques 2026 · Coupe du Monde 2026",
+    subtitle: "Allume ta flamme pour la paix.",
+    body: "Des millions de personnes veulent la paix. La plupart n'ont pas de voix. Pour le prix d'un café, ta flamme rejoint les leurs sur une carte vivante.",
+    cta: "🕯 Allumer ma flamme — £0.49",
+    ctasub: "Ta flamme est la tienne. Toujours. Fais ton vœu. Chaque flamme compte.",
+    counter_label: "Flammes allumées dans le monde",
+    counter_sub: "et en croissance",
+    map_label: "En direct · Flammes mises à jour chaque minute",
+    share_title: "Passe la flamme",
+    modal_title: "Pour quoi est ta flamme?",
+    modal_desc: "Choisis une cause ou écris la tienne.",
+    tag_peace: "Paix en Ukraine", tag_gaza: "Paix à Gaza", tag_earth: "Notre planète", tag_children: "Pour les enfants", tag_sport: "Mon équipe", tag_love: "Juste l'amour",
+    intent_label: "Ou écris la tienne"
+  }
+};
+
+let currentLang = 'en';
+
+function setLang(lang) {
+  currentLang = lang;
+  document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+  event.target.classList.add('active');
+
+  const t = { ...T.en, ...(T[lang] || {}) };
+
+  document.querySelectorAll('[data-key]').forEach(el => {
+    const key = el.dataset.key;
+    if (t[key]) el.innerHTML = t[key];
+  });
+
+  if (lang === 'ar') {
+    document.body.style.direction = 'rtl';
+  } else {
+    document.body.style.direction = 'ltr';
+  }
+}
+
+// ─── COUNTER ─────────────────────────────────────────────────
+const SUPABASE_URL = 'https://rytjvdptbjnlhayclcvu.supabase.co';
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJ5dGp2ZHB0YmpubGhheWNsY3Z1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzUzMzA1MjksImV4cCI6MjA5MDkwNjUyOX0.y6qVpN-tJKafDVY_yUk0K6yQ9xXYy5xfIhFoJvqWf48';
+
+// FLOOR_COUNT is the minimum displayed until the real Supabase count exceeds it.
+// Once the real count passes FLOOR_THRESHOLD the floor is dropped entirely
+// and the live Supabase number drives the counter directly.
+const FLOOR_COUNT     = 1247;
+const FLOOR_THRESHOLD = 1240;
+
+let displayedCount = 0;
+
+async function fetchAllTimeTotal() {
+  try {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/candles?payment_confirmed=eq.true&select=id`, {
+      headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}`, 'Prefer': 'count=exact', 'Range': '0-0' }
+    });
+    const countHeader = res.headers.get('content-range');
+    if (countHeader) {
+      const total = parseInt(countHeader.split('/')[1]);
+      return isNaN(total) ? 0 : total;
+    }
+    const data = await res.json();
+    return Array.isArray(data) ? data.length : 0;
+  } catch(e) {
+    return 0;
+  }
+}
+
+function animateCounterTo(target) {
+  const el = document.getElementById('counter');
+  const start = displayedCount;
+  const duration = 2000;
+  const startTime = performance.now();
+
+  function update(time) {
+    const elapsed = time - startTime;
+    const progress = Math.min(elapsed / duration, 1);
+    const eased = 1 - Math.pow(1 - progress, 3);
+    displayedCount = Math.floor(start + (target - start) * eased);
+    el.textContent = displayedCount.toLocaleString();
+
+    document.getElementById('progress1').style.width = Math.min((displayedCount / 1000) * 100, 100) + '%';
+    document.getElementById('progress2').style.width = Math.min((displayedCount / 5000) * 100, 100) + '%';
+    document.getElementById('progress3').style.width = Math.min((displayedCount / 20000000) * 100, 100) + '%';
+
+    if (progress < 1) requestAnimationFrame(update);
+  }
+  requestAnimationFrame(update);
+}
+
+async function initCounter() {
+  const realTotal = await fetchAllTimeTotal();
+  // If real count has grown past the threshold, use it directly.
+  // Otherwise use the floor so the counter never shows a number below what
+  // was seeded at launch.
+  const displayTotal = realTotal > FLOOR_THRESHOLD ? realTotal : Math.max(realTotal, FLOOR_COUNT);
+  animateCounterTo(displayTotal);
+
+  // Refresh every 60 seconds
+  setInterval(async () => {
+    const updated = await fetchAllTimeTotal();
+    const updatedDisplay = updated > FLOOR_THRESHOLD ? updated : Math.max(updated, FLOOR_COUNT);
+    if (updatedDisplay > displayedCount) {
+      animateCounterTo(updatedDisplay);
+    }
+  }, 60000);
+}
+
+// ─── MAP DOTS ────────────────────────────────────────────────
+const flameDots = [
+  {x:15,y:30},{x:20,y:28},{x:22,y:35},{x:18,y:40},
+  {x:48,y:22},{x:52,y:25},{x:50,y:30},{x:55,y:27},
+  {x:58,y:32},{x:60,y:28},{x:62,y:35},
+  {x:72,y:30},{x:75,y:35},{x:78,y:28},
+  {x:82,y:45},{x:85,y:50},{x:80,y:55},
+  {x:30,y:55},{x:32,y:60},{x:28,y:58},
+  {x:45,y:48},{x:48,y:52},{x:50,y:45},
+  {x:65,y:55},{x:68,y:60},{x:63,y:58},
+  {x:25,y:42},{x:38,y:35},{x:42,y:40},
+  {x:70,y:42},{x:73,y:48},{x:55,y:62},
+  {x:90,y:38},{x:88,y:45},{x:92,y:42},
+  {x:10,y:50},{x:12,y:45},{x:8,y:55}
+];
+
+function buildMap() {
+  const container = document.getElementById('mapDots');
+  flameDots.forEach((dot, i) => {
+    const el = document.createElement('div');
+    el.className = 'map-dot';
+    el.style.left = dot.x + '%';
+    el.style.top = dot.y + '%';
+    el.style.setProperty('--dur', (2 + Math.random() * 3) + 's');
+    el.style.setProperty('--delay', (Math.random() * 4) + 's');
+    container.appendChild(el);
+  });
+}
+
+// ─── PARTICLES ───────────────────────────────────────────────
+function buildParticles() {
+  const container = document.getElementById('particles');
+  for (let i = 0; i < 20; i++) {
+    const p = document.createElement('div');
+    p.className = 'particle';
+    p.style.setProperty('--rise-dur', (6 + Math.random() * 10) + 's');
+    p.style.setProperty('--rise-delay', (Math.random() * 10) + 's');
+    p.style.setProperty('--rise-x', (Math.random() * 100) + '%');
+    container.appendChild(p);
+  }
+}
+
+// ─── SCROLL ANIMATIONS ───────────────────────────────────────
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) e.target.classList.add('visible');
+  });
+}, { threshold: 0.15 });
+
+document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+// ─── MODAL ───────────────────────────────────────────────────
+function openModal(e) {
+  e.preventDefault();
+  document.getElementById('modal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+  document.getElementById('modal').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+document.getElementById('modal').addEventListener('click', function(e) {
+  if (e.target === this) closeModal();
+});
+
+function selectTag(btn) {
+  document.querySelectorAll('.intent-tag').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+  document.getElementById('intentInput').value = btn.textContent;
+}
+
+// ─── PAYMENT ─────────────────────────────────────────────────
+const STRIPE_LINK = 'https://buy.stripe.com/7sY6oIgzr7zaavDaE1eME00';
+
+function handlePayment(method) {
+  closeModal();
+  window.open(STRIPE_LINK, '_blank');
+}
+
+// ─── SHARE ───────────────────────────────────────────────────
+function copyLink() {
+  navigator.clipboard.writeText('https://oneflame.earth').then(() => {
+    alert('Link copied! Share your flame.');
+  });
+}
+
+function shareTikTok() {
+  const url = 'https://oneflame.earth';
+  const text = 'I lit a flame for peace 🕯 Join the movement at oneflame.earth';
+  if (navigator.share) {
+    navigator.share({ title: 'One Flame', text, url }).catch(() => {});
+  } else {
+    // TikTok has no web share intent — copy the link instead
+    navigator.clipboard.writeText(url).then(() => {
+      alert('Link copied — paste it into your TikTok post.');
+    });
+  }
+}
+
+// ─── COOKIES ─────────────────────────────────────────────────
+function initCookieBanner() {
+  const consent = localStorage.getItem('oneflame_cookie_consent');
+  if (!consent) {
+    setTimeout(() => {
+      document.getElementById('cookieBanner').classList.add('visible');
+    }, 1500);
+  }
+}
+
+function acceptCookies() {
+  localStorage.setItem('oneflame_cookie_consent', 'all');
+  hideCookieBanner();
+}
+
+function declineCookies() {
+  localStorage.setItem('oneflame_cookie_consent', 'essential');
+  hideCookieBanner();
+}
+
+function hideCookieBanner() {
+  const banner = document.getElementById('cookieBanner');
+  banner.style.transform = 'translateY(100%)';
+  setTimeout(() => banner.remove(), 400);
+}
+
+// ─── BURGER NAV ──────────────────────────────────────────────
+function toggleNav() {
+  const btn = document.getElementById('burgerBtn');
+  const drawer = document.getElementById('navDrawer');
+  const overlay = document.getElementById('navOverlay');
+  btn.classList.toggle('open');
+  drawer.classList.toggle('open');
+  overlay.classList.toggle('open');
+  document.body.style.overflow = drawer.classList.contains('open') ? 'hidden' : '';
+}
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
+    const drawer = document.getElementById('navDrawer');
+    if (drawer.classList.contains('open')) toggleNav();
+  }
+});
+
+// ─── WORLD CUP COUNTDOWN ─────────────────────────────────────
+// FIFA World Cup 2026 Final - Sunday 19 July 2026 at MetLife Stadium, New Jersey
+const WORLD_CUP_FINAL = new Date('2026-07-19T20:00:00-04:00').getTime();
+
+function updateCountdown() {
+  const now = new Date().getTime();
+  const diff = WORLD_CUP_FINAL - now;
+
+  if (diff <= 0) {
+    document.getElementById('cd-days').textContent = '00';
+    document.getElementById('cd-hours').textContent = '00';
+    document.getElementById('cd-mins').textContent = '00';
+    document.getElementById('cd-secs').textContent = '00';
+    return;
+  }
+
+  const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+  const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+  const secs = Math.floor((diff % (1000 * 60)) / 1000);
+
+  document.getElementById('cd-days').textContent = String(days).padStart(2, '0');
+  document.getElementById('cd-hours').textContent = String(hours).padStart(2, '0');
+  document.getElementById('cd-mins').textContent = String(mins).padStart(2, '0');
+  document.getElementById('cd-secs').textContent = String(secs).padStart(2, '0');
+}
+
+// ─── INIT ────────────────────────────────────────────────────
+window.addEventListener('load', () => {
+  buildMap();
+  buildParticles();
+  setTimeout(initCounter, 600);
+  initCookieBanner();
+  updateCountdown();
+  setInterval(updateCountdown, 1000);
+});
+</script>
+
+<script>
+function toggleNav() {
+  const btn = document.getElementById('burgerBtn');
+  const drawer = document.getElementById('navDrawer');
+  const overlay = document.getElementById('navOverlay');
+  btn.classList.toggle('open');
+  drawer.classList.toggle('open');
+  overlay.classList.toggle('open');
+  document.body.style.overflow = drawer.classList.contains('open') ? 'hidden' : '';
+}
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
+    const drawer = document.getElementById('navDrawer');
+    if (drawer && drawer.classList.contains('open')) toggleNav();
+  }
+});
+</script>
+</body>
+</html>
