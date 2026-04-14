@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>One Flame — Certificate of Peace</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<meta name="theme-color" content="#0A0806">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #C8963E;
+    --gold-light: #E8B86D;
+    --gold-pale: #F5DFA8;
+    --deep: #0A0806;
+    --dark: #13100A;
+    --mid: #1E1810;
+    --smoke: #2A211A;
+    --text: #F0E6D3;
+    --text-muted: #9A8570;
+    --white: #FDFAF5;
+    /* Certificate colours */
+    --cert-bg: #FBF7F0;
+    --cert-dark: #1C1208;
+    --cert-mid: #3A2A15;
+    --cert-muted: #7A6040;
+    --cert-gold: #B07B28;
+    --cert-gold-light: #D4A855;
+    --cert-border: #C8963E;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--dark);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    min-height: 100vh;
+  }
+
+  /* ─── PAGE CHROME ─── */
+  .page-header {
+    background: var(--deep);
+    border-bottom: 1px solid rgba(200,150,62,0.15);
+    padding: 14px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .page-header-left {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .page-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 15px;
+    font-weight: 400;
+    color: var(--gold);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    text-decoration: none;
+  }
+
+  .page-title {
+    font-size: 11px;
+    color: var(--text-muted);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .btn-download {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--gold);
+    color: var(--deep);
+    border: none;
+    border-radius: 3px;
+    padding: 10px 20px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.2s;
+    text-decoration: none;
+  }
+
+  .btn-download:hover { background: var(--gold-light); }
+
+  .btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: none;
+    color: var(--text-muted);
+    border: 1px solid rgba(200,150,62,0.2);
+    border-radius: 3px;
+    padding: 9px 16px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-decoration: none;
+  }
+
+  .btn-secondary:hover { color: var(--gold); border-color: var(--gold); }
+
+  .cert-outer {
+    padding: 40px 24px 60px;
+    display: flex;
+    justify-content: center;
+  }
+
+  /* ─── LOADING / ERROR ─── */
+  .state-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 60vh;
+    text-align: center;
+    padding: 40px;
+  }
+
+  .state-icon { font-size: 48px; margin-bottom: 16px; }
+  .state-title { font-family: 'Cormorant Garamond', serif; font-size: 26px; font-weight: 300; color: var(--white); margin-bottom: 8px; }
+  .state-body { font-size: 13px; color: var(--text-muted); line-height: 1.6; max-width: 360px; }
+
+  /* ─── THE CERTIFICATE ─── */
+  .cert-wrap {
+    width: 100%;
+    max-width: 720px;
+    background: var(--cert-bg);
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 24px 80px rgba(0,0,0,0.6);
+  }
+
+  /* WATERMARK — diagonal ONE FLAME text */
+  .cert-watermark {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+  }
+
+  .cert-watermark-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 110px;
+    font-weight: 600;
+    letter-spacing: 0.28em;
+    color: rgba(184, 130, 40, 0.055);
+    text-transform: uppercase;
+    transform: rotate(-35deg);
+    white-space: nowrap;
+    user-select: none;
+  }
+
+  /* OUTER BORDER */
+  .cert-border-outer {
+    position: absolute;
+    inset: 16px;
+    border: 2px solid var(--cert-gold);
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  /* INNER BORDER */
+  .cert-border-inner {
+    position: absolute;
+    inset: 24px;
+    border: 1px solid rgba(184,130,40,0.35);
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  /* CORNER ORNAMENTS */
+  .cert-corner {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    z-index: 2;
+    pointer-events: none;
+  }
+
+  .cert-corner-tl { top: 10px; left: 10px; }
+  .cert-corner-tr { top: 10px; right: 10px; transform: scaleX(-1); }
+  .cert-corner-bl { bottom: 10px; left: 10px; transform: scaleY(-1); }
+  .cert-corner-br { bottom: 10px; right: 10px; transform: scale(-1,-1); }
+
+  /* CONTENT */
+  .cert-content {
+    position: relative;
+    z-index: 2;
+    padding: 52px 72px 52px;
+    text-align: center;
+  }
+
+  .cert-eyebrow {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.45em;
+    text-transform: uppercase;
+    color: var(--cert-gold);
+    margin-bottom: 8px;
+  }
+
+  .cert-flame-svg {
+    margin: 0 auto 10px;
+    display: block;
+  }
+
+  .cert-brand {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 38px;
+    font-weight: 300;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--cert-dark);
+    margin-bottom: 4px;
+  }
+
+  .cert-subtitle {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 13px;
+    font-weight: 400;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--cert-gold);
+    margin-bottom: 20px;
+  }
+
+  .cert-rule {
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--cert-gold), transparent);
+    margin: 0 auto 20px;
+    border: none;
+  }
+
+  .cert-rule-sm {
+    width: 60%;
+    height: 1px;
+    background: linear-gradient(to right, transparent, rgba(184,130,40,0.4), transparent);
+    margin: 16px auto;
+    border: none;
+  }
+
+  .cert-certifies {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 14px;
+    font-weight: 400;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--cert-muted);
+    margin-bottom: 10px;
+  }
+
+  .cert-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 52px;
+    font-weight: 300;
+    font-style: italic;
+    color: var(--cert-dark);
+    line-height: 1.1;
+    margin-bottom: 12px;
+  }
+
+  .cert-intention-line {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 17px;
+    font-weight: 400;
+    color: var(--cert-mid);
+    margin-bottom: 4px;
+  }
+
+  .cert-intention-word {
+    color: var(--cert-gold);
+    font-style: italic;
+  }
+
+  .cert-location-line {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 14px;
+    font-weight: 300;
+    color: var(--cert-muted);
+    letter-spacing: 0.05em;
+    margin-bottom: 18px;
+  }
+
+  .cert-statement {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 15px;
+    font-weight: 300;
+    font-style: italic;
+    color: var(--cert-mid);
+    line-height: 1.7;
+    max-width: 480px;
+    margin: 0 auto 14px;
+  }
+
+  .cert-values {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 14px;
+    font-weight: 400;
+    letter-spacing: 0.2em;
+    color: var(--cert-gold);
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+
+  .cert-code-label {
+    font-size: 9px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--cert-muted);
+    margin-bottom: 6px;
+  }
+
+  .cert-code {
+    font-family: monospace;
+    font-size: 28px;
+    font-weight: 700;
+    letter-spacing: 0.35em;
+    color: var(--cert-gold);
+    background: rgba(184,130,40,0.07);
+    border: 1px solid rgba(184,130,40,0.25);
+    display: inline-block;
+    padding: 8px 24px;
+    border-radius: 2px;
+    margin-bottom: 18px;
+  }
+
+  .cert-promise {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 13px;
+    font-weight: 300;
+    font-style: italic;
+    color: var(--cert-muted);
+    line-height: 1.7;
+    max-width: 420px;
+    margin: 0 auto 20px;
+  }
+
+  .cert-footer {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--cert-muted);
+    opacity: 0.7;
+  }
+
+  /* ─── PRINT ─── */
+  @media print {
+    body { background: white !important; }
+    .page-header, .cert-outer-btns { display: none !important; }
+    .cert-outer { padding: 0 !important; }
+    .cert-wrap { box-shadow: none !important; max-width: 100% !important; }
+    @page { margin: 10mm; size: A4 portrait; }
+  }
+</style>
+</head>
+<body>
+
+<header class="page-header">
+  <div class="page-header-left">
+    <a href="index.html" class="page-logo">One Flame</a>
+    <span class="page-title">Certificate of Peace</span>
+  </div>
+  <div style="display:flex;gap:10px;align-items:center;">
+    <a href="map.html" class="btn-secondary">← Back to Map</a>
+    <button class="btn-download" onclick="window.print()">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1v8M3.5 5.5L7 9l3.5-3.5M2 11h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Download PDF
+    </button>
+  </div>
+</header>
+
+<!-- Loading state -->
+<div class="state-wrap" id="loadingState">
+  <div class="state-icon">🕯</div>
+  <div class="state-title">Finding your candle…</div>
+  <div class="state-body">One moment while we retrieve your certificate.</div>
+</div>
+
+<!-- Error state -->
+<div class="state-wrap" id="errorState" style="display:none;">
+  <div class="state-icon">🔍</div>
+  <div class="state-title">Candle not found</div>
+  <div class="state-body">
+    We could not find a confirmed candle with that code.<br><br>
+    <a href="map.html" style="color:var(--gold-light);">Return to the map →</a>
+  </div>
+</div>
+
+<!-- The certificate (hidden until data loads) -->
+<div class="cert-outer" id="certOuter" style="display:none;">
+  <div class="cert-wrap" id="certWrap">
+
+    <!-- Watermark -->
+    <div class="cert-watermark">
+      <div class="cert-watermark-text">ONE FLAME</div>
+    </div>
+
+    <!-- Borders -->
+    <div class="cert-border-outer"></div>
+    <div class="cert-border-inner"></div>
+
+    <!-- Corner ornaments (SVG flourishes) -->
+    <svg class="cert-corner cert-corner-tl" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 4 L4 20 Q4 4 20 4 Z" fill="none" stroke="#C8963E" stroke-width="1.2"/>
+      <path d="M4 4 L16 4" stroke="#C8963E" stroke-width="1.2" stroke-linecap="round"/>
+      <path d="M4 4 L4 16" stroke="#C8963E" stroke-width="1.2" stroke-linecap="round"/>
+      <circle cx="4" cy="4" r="2.5" fill="#C8963E"/>
+      <circle cx="20" cy="4" r="1.2" fill="none" stroke="#C8963E" stroke-width="1"/>
+      <circle cx="4" cy="20" r="1.2" fill="none" stroke="#C8963E" stroke-width="1"/>
+      <path d="M10 4 Q12 8 16 10" fill="none" stroke="rgba(200,150,62,0.4)" stroke-width="0.8"/>
+      <path d="M4 10 Q8 12 10 16" fill="none" stroke="rgba(200,150,62,0.4)" stroke-width="0.8"/>
+    </svg>
+    <svg class="cert-corner cert-corner-tr" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 4 L4 20 Q4 4 20 4 Z" fill="none" stroke="#C8963E" stroke-width="1.2"/>
+      <path d="M4 4 L16 4" stroke="#C8963E" stroke-width="1.2" stroke-linecap="round"/>
+      <path d="M4 4 L4 16" stroke="#C8963E" stroke-width="1.2" stroke-linecap="round"/>
+      <circle cx="4" cy="4" r="2.5" fill="#C8963E"/>
+      <circle cx="20" cy="4" r="1.2" fill="none" stroke="#C8963E" stroke-width="1"/>
+      <circle cx="4" cy="20" r="1.2" fill="none" stroke="#C8963E" stroke-width="1"/>
+      <path d="M10 4 Q12 8 16 10" fill="none" stroke="rgba(200,150,62,0.4)" stroke-width="0.8"/>
+      <path d="M4 10 Q8 12 10 16" fill="none" stroke="rgba(200,150,62,0.4)" stroke-width="0.8"/>
+    </svg>
+    <svg class="cert-corner cert-corner-bl" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 4 L4 20 Q4 4 20 4 Z" fill="none" stroke="#C8963E" stroke-width="1.2"/>
+      <path d="M4 4 L16 4" stroke="#C8963E" stroke-width="1.2" stroke-linecap="round"/>
+      <path d="M4 4 L4 16" stroke="#C8963E" stroke-width="1.2" stroke-linecap="round"/>
+      <circle cx="4" cy="4" r="2.5" fill="#C8963E"/>
+      <circle cx="20" cy="4" r="1.2" fill="none" stroke="#C8963E" stroke-width="1"/>
+      <circle cx="4" cy="20" r="1.2" fill="none" stroke="#C8963E" stroke-width="1"/>
+      <path d="M10 4 Q12 8 16 10" fill="none" stroke="rgba(200,150,62,0.4)" stroke-width="0.8"/>
+      <path d="M4 10 Q8 12 10 16" fill="none" stroke="rgba(200,150,62,0.4)" stroke-width="0.8"/>
+    </svg>
+    <svg class="cert-corner cert-corner-br" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 4 L4 20 Q4 4 20 4 Z" fill="none" stroke="#C8963E" stroke-width="1.2"/>
+      <path d="M4 4 L16 4" stroke="#C8963E" stroke-width="1.2" stroke-linecap="round"/>
+      <path d="M4 4 L4 16" stroke="#C8963E" stroke-width="1.2" stroke-linecap="round"/>
+      <circle cx="4" cy="4" r="2.5" fill="#C8963E"/>
+      <circle cx="20" cy="4" r="1.2" fill="none" stroke="#C8963E" stroke-width="1"/>
+      <circle cx="4" cy="20" r="1.2" fill="none" stroke="#C8963E" stroke-width="1"/>
+      <path d="M10 4 Q12 8 16 10" fill="none" stroke="rgba(200,150,62,0.4)" stroke-width="0.8"/>
+      <path d="M4 10 Q8 12 10 16" fill="none" stroke="rgba(200,150,62,0.4)" stroke-width="0.8"/>
+    </svg>
+
+    <!-- Certificate content -->
+    <div class="cert-content">
+
+      <div class="cert-eyebrow">One Flame · oneflame.earth</div>
+
+      <!-- Candle flame SVG -->
+      <svg class="cert-flame-svg" width="40" height="60" viewBox="0 0 40 60" xmlns="http://www.w3.org/2000/svg">
+        <!-- Candle body -->
+        <rect x="14" y="44" width="12" height="12" rx="1" fill="#D4A855" opacity="0.5"/>
+        <rect x="15" y="45" width="10" height="10" rx="1" fill="#C8963E" opacity="0.4"/>
+        <!-- Wick -->
+        <line x1="20" y1="44" x2="20" y2="40" stroke="#6B4A1A" stroke-width="1.5" stroke-linecap="round"/>
+        <!-- Flame outer -->
+        <path d="M20 4 C26 10 30 18 28 28 C26 35 23 38 20 40 C17 38 14 35 12 28 C10 18 14 10 20 4 Z"
+              fill="url(#flameGrad)" opacity="0.9"/>
+        <!-- Flame inner -->
+        <path d="M20 14 C23 18 24 24 23 30 C22 34 21 36 20 38 C19 36 18 34 17 30 C16 24 17 18 20 14 Z"
+              fill="url(#flameInner)" opacity="0.8"/>
+        <defs>
+          <radialGradient id="flameGrad" cx="50%" cy="75%" r="55%">
+            <stop offset="0%" stop-color="#F5DFA8"/>
+            <stop offset="40%" stop-color="#E8B86D"/>
+            <stop offset="80%" stop-color="#C8963E"/>
+            <stop offset="100%" stop-color="#E05A1B" stop-opacity="0.6"/>
+          </radialGradient>
+          <radialGradient id="flameInner" cx="50%" cy="80%" r="50%">
+            <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.9"/>
+            <stop offset="50%" stop-color="#F5DFA8" stop-opacity="0.7"/>
+            <stop offset="100%" stop-color="#E8B86D" stop-opacity="0.2"/>
+          </radialGradient>
+        </defs>
+      </svg>
+
+      <div class="cert-brand">One Flame</div>
+      <div class="cert-subtitle">Certificate of Peace</div>
+
+      <hr class="cert-rule">
+
+      <div class="cert-certifies">This certifies that</div>
+
+      <div class="cert-name" id="certName">—</div>
+
+      <div class="cert-intention-line">
+        lit a candle for <span class="cert-intention-word" id="certIntention">Peace</span>
+      </div>
+      <div class="cert-location-line" id="certLocation"></div>
+
+      <hr class="cert-rule-sm">
+
+      <p class="cert-statement">
+        Joining <strong id="certCount">thousands of</strong> flames across the world in a living movement of ordinary people who chose to stand for something.
+      </p>
+
+      <div class="cert-values">Peace &nbsp;·&nbsp; Hope &nbsp;·&nbsp; Love &nbsp;·&nbsp; Health</div>
+
+      <hr class="cert-rule">
+
+      <div class="cert-code-label">Candle Code</div>
+      <div class="cert-code" id="certCode">------</div>
+
+      <p class="cert-promise">
+        This candle is yours. Always. Return to relight it whenever it matters to you.<br>
+        Your choice for a safer world does not expire.
+      </p>
+
+      <hr class="cert-rule-sm">
+
+      <div class="cert-footer">
+        oneflame.earth &nbsp;·&nbsp; Easter 2026 &nbsp;·&nbsp; FIFA World Cup 2026
+      </div>
+
+    </div><!-- /cert-content -->
+  </div><!-- /cert-wrap -->
+</div><!-- /cert-outer -->
+
+<script>
+const SUPABASE_URL = 'https://rytjvdptbjnlhayclcvu.supabase.co';
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJ5dGp2ZHB0YmpubGhheWNsY3Z1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzUzMzA1MjksImV4cCI6MjA5MDkwNjUyOX0.y6qVpN-tJKafDVY_yUk0K6yQ9xXYy5xfIhFoJvqWf48';
+
+function formatDate(iso) {
+  if (!iso) return '';
+  const d = new Date(iso);
+  return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+}
+
+async function loadCertificate() {
+  const params = new URLSearchParams(window.location.search);
+  const code = (params.get('code') || '').trim().toUpperCase();
+
+  if (!code) {
+    document.getElementById('loadingState').style.display = 'none';
+    document.getElementById('errorState').style.display = 'flex';
+    return;
+  }
+
+  try {
+    // Fetch candle data
+    const res = await fetch(
+      `${SUPABASE_URL}/rest/v1/candles?code=eq.${encodeURIComponent(code)}&payment_confirmed=eq.true&select=code,nickname,location_name,intention,created_at`,
+      { headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}` } }
+    );
+
+    if (!res.ok) throw new Error('fetch failed');
+    const rows = await res.json();
+
+    if (!rows || rows.length === 0) {
+      document.getElementById('loadingState').style.display = 'none';
+      document.getElementById('errorState').style.display = 'flex';
+      return;
+    }
+
+    const c = rows[0];
+
+    // Populate certificate
+    document.getElementById('certName').textContent  = c.nickname || 'A Friend of Peace';
+    document.getElementById('certIntention').textContent = c.intention || 'Peace';
+    document.getElementById('certCode').textContent  = c.code;
+
+    const dateLine = formatDate(c.created_at);
+    const locLine  = [c.location_name, dateLine].filter(Boolean).join(' · ');
+    document.getElementById('certLocation').textContent = locLine;
+
+    // Fetch live count for the statement line
+    try {
+      const cRes = await fetch(
+        `${SUPABASE_URL}/rest/v1/candles?payment_confirmed=eq.true&select=code`,
+        { headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}`, 'Prefer': 'count=exact', 'Range': '0-0' } }
+      );
+      const countHeader = cRes.headers.get('content-range');
+      if (countHeader) {
+        const total = parseInt(countHeader.split('/')[1], 10);
+        if (!isNaN(total) && total > 0) {
+          document.getElementById('certCount').textContent = total.toLocaleString();
+        }
+      }
+    } catch(_) { /* leave default text */ }
+
+    // Update page title
+    document.title = `One Flame · Certificate · ${c.nickname || c.code}`;
+
+    // Show certificate
+    document.getElementById('loadingState').style.display = 'none';
+    document.getElementById('certOuter').style.display    = 'flex';
+
+  } catch(e) {
+    console.error('Certificate error:', e);
+    document.getElementById('loadingState').style.display = 'none';
+    document.getElementById('errorState').style.display = 'flex';
+  }
+}
+
+loadCertificate();
+</script>
+</body>
+</html>
