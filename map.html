@@ -1398,85 +1398,58 @@ function checkUrlCandle() {
     return;
   }
 
-  // Arriving via "View on map" from flames.html — zoom and highlight that candle
-  // Candles may not be loaded yet so poll until found or timeout
-  let findAttempts = 0;
-  const findCandle = setInterval(() => {
-    findAttempts++;
-    const c = candles.find(x => x.code === code);
-    if (c) {
-      clearInterval(findCandle);
-
-      // Zoom in first
+  // Arriving via "View on map" from flames.html
+  // Fetch directly from Supabase so timing of local array does not matter
+  async function fetchAndZoomToCandle() {
+    try {
+      let c = candles.find(x => x.code === code);
+      if (!c) {
+        const res = await fetch(
+          `${SUPABASE_URL}/rest/v1/candles?code=eq.${encodeURIComponent(code)}&payment_confirmed=eq.true&select=*&limit=1`,
+          { headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}` } }
+        );
+        const rows = await res.json();
+        if (rows && rows.length > 0) c = rows[0];
+      }
+      if (!c) { console.log('[OneFlame] candle not found:', code); return; }
       const pos = latLngToSvg(c.latitude, c.longitude);
       zoomToCandle(pos.x, pos.y);
-
-      // After zoom settles add ring, label and detail popup
       setTimeout(() => {
         highlightOwnCandle(c);
-
-        // Label: nickname on top line, code below
         const svgEl = document.getElementById('mapSvg');
         const mapG = mapGroupEl || svgEl;
-        const ls = 1 / getViewScale();
-
-        // Remove any previous own-candle labels
         svgEl.querySelectorAll('.own-candle-label').forEach(el => el.remove());
-
+        const ls = 1 / getViewScale();
+        const lW = 100*ls, lH = 30*ls, lOff = 44*ls;
         const labelG = document.createElementNS('http://www.w3.org/2000/svg','g');
         labelG.setAttribute('class','own-candle own-candle-label');
-
-        const lW = 100 * ls;
-        const lH = 30 * ls;
-        const lOff = 44 * ls;
-
         const bg = document.createElementNS('http://www.w3.org/2000/svg','rect');
-        bg.setAttribute('x', pos.x - lW / 2);
-        bg.setAttribute('y', pos.y - lOff - lH);
-        bg.setAttribute('width', lW);
-        bg.setAttribute('height', lH);
-        bg.setAttribute('rx', 3 * ls);
-        bg.setAttribute('fill','rgba(10,8,6,0.92)');
-        bg.setAttribute('stroke','rgba(200,150,62,0.55)');
-        bg.setAttribute('stroke-width', 0.8 * ls);
-
-        // Nickname line
+        bg.setAttribute('x', pos.x-lW/2); bg.setAttribute('y', pos.y-lOff-lH);
+        bg.setAttribute('width', lW); bg.setAttribute('height', lH);
+        bg.setAttribute('rx', 3*ls); bg.setAttribute('fill','rgba(10,8,6,0.92)');
+        bg.setAttribute('stroke','rgba(200,150,62,0.55)'); bg.setAttribute('stroke-width', 0.8*ls);
         const nick = document.createElementNS('http://www.w3.org/2000/svg','text');
-        nick.setAttribute('x', pos.x);
-        nick.setAttribute('y', pos.y - lOff - lH * 0.52);
-        nick.setAttribute('text-anchor','middle');
-        nick.setAttribute('font-family','DM Sans, sans-serif');
-        nick.setAttribute('font-size', 7 * ls);
-        nick.setAttribute('font-weight','500');
+        nick.setAttribute('x', pos.x); nick.setAttribute('y', pos.y-lOff-lH*0.52);
+        nick.setAttribute('text-anchor','middle'); nick.setAttribute('font-family','DM Sans,sans-serif');
+        nick.setAttribute('font-size', 7*ls); nick.setAttribute('font-weight','500');
         nick.setAttribute('fill','#F0E6D3');
         nick.textContent = c.nickname || 'Anonymous';
-
-        // Code line
         const codeT = document.createElementNS('http://www.w3.org/2000/svg','text');
-        codeT.setAttribute('x', pos.x);
-        codeT.setAttribute('y', pos.y - lOff - lH * 0.15);
-        codeT.setAttribute('text-anchor','middle');
-        codeT.setAttribute('font-family','monospace');
-        codeT.setAttribute('font-size', 6.5 * ls);
-        codeT.setAttribute('font-weight','700');
-        codeT.setAttribute('fill','#E8B86D');
-        codeT.setAttribute('letter-spacing', 0.12 * ls);
+        codeT.setAttribute('x', pos.x); codeT.setAttribute('y', pos.y-lOff-lH*0.15);
+        codeT.setAttribute('text-anchor','middle'); codeT.setAttribute('font-family','monospace');
+        codeT.setAttribute('font-size', 6.5*ls); codeT.setAttribute('font-weight','700');
+        codeT.setAttribute('fill','#E8B86D'); codeT.setAttribute('letter-spacing', 0.12*ls);
         codeT.textContent = c.code;
-
-        labelG.appendChild(bg);
-        labelG.appendChild(nick);
-        labelG.appendChild(codeT);
+        labelG.appendChild(bg); labelG.appendChild(nick); labelG.appendChild(codeT);
         mapG.appendChild(labelG);
-
-        // Show detail popup centred on screen
-        showCandleDetail(c, window.innerWidth / 2, window.innerHeight / 2);
-
+        showCandleDetail(c, window.innerWidth/2, window.innerHeight/2);
       }, 900);
-
-    } else if (findAttempts >= 20) {
-      // Candles not found after 10 seconds - give up silently
-      clearInterval(findCandle);
-    }
+    } catch(e) { console.error('[OneFlame] zoom error:', e); }
+  }
+  let _w = 0;
+  const _wt = setInterval(() => {
+    _w++;
+    if (mapGroupEl || _w >= 10) { clearInterval(_wt); fetchAndZoomToCandle(); }
   }, 500);
 }
 
