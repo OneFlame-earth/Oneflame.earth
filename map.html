@@ -1405,34 +1405,45 @@ function checkUrlCandle() {
   const c = candles.find(x => x.code === code);
   if (c) {
     setTimeout(() => {
-      highlightOwnCandle(c);
-      const svg = document.getElementById('mapSvg');
       const pos = latLngToSvg(c.latitude, c.longitude);
-      const label = document.createElementNS('http://www.w3.org/2000/svg','g');
-      label.setAttribute('class','own-candle');
-      // Scale label dimensions to current viewBox so it reads at consistent screen size
-      const ls = 1 / getViewScale();
-      const lW = 84 * ls, lH = 22 * ls;
-      const lFS = 9 * ls, lOff = 38 * ls, lTOff = 23 * ls;
-      const rect = document.createElementNS('http://www.w3.org/2000/svg','rect');
-      rect.setAttribute('x', pos.x - lW / 2); rect.setAttribute('y', pos.y - lOff);
-      rect.setAttribute('width', lW); rect.setAttribute('height', lH);
-      rect.setAttribute('rx', 3 * ls);
-      rect.setAttribute('fill','rgba(10,8,6,0.88)');
-      rect.setAttribute('stroke','rgba(200,150,62,0.5)');
-      rect.setAttribute('stroke-width', ls);
-      const txt = document.createElementNS('http://www.w3.org/2000/svg','text');
-      txt.setAttribute('x', pos.x); txt.setAttribute('y', pos.y - lTOff);
-      txt.setAttribute('text-anchor','middle');
-      txt.setAttribute('font-family','DM Sans, sans-serif');
-      txt.setAttribute('font-size', lFS); txt.setAttribute('font-weight','600');
-      txt.setAttribute('fill','#E8B86D'); txt.setAttribute('letter-spacing','0.08em');
-      txt.textContent = `${c.code}  ${c.nickname || 'Anonymous'}`;
-      label.appendChild(rect); label.appendChild(txt);
-      (mapGroupEl || svg).appendChild(label);
-    }, 500);
+
+      // Zoom in to candle first
+      zoomToCandle(pos.x, pos.y);
+
+      // Then after zoom settles, add highlight ring and label
+      setTimeout(() => {
+        highlightOwnCandle(c);
+        const svg = document.getElementById('mapSvg');
+        const label = document.createElementNS('http://www.w3.org/2000/svg','g');
+        label.setAttribute('class','own-candle');
+        const ls = 1 / getViewScale();
+        const lW = 84 * ls, lH = 22 * ls;
+        const lFS = 9 * ls, lOff = 38 * ls, lTOff = 23 * ls;
+        const rect = document.createElementNS('http://www.w3.org/2000/svg','rect');
+        rect.setAttribute('x', pos.x - lW / 2); rect.setAttribute('y', pos.y - lOff);
+        rect.setAttribute('width', lW); rect.setAttribute('height', lH);
+        rect.setAttribute('rx', 3 * ls);
+        rect.setAttribute('fill','rgba(10,8,6,0.88)');
+        rect.setAttribute('stroke','rgba(200,150,62,0.5)');
+        rect.setAttribute('stroke-width', ls);
+        const txt = document.createElementNS('http://www.w3.org/2000/svg','text');
+        txt.setAttribute('x', pos.x); txt.setAttribute('y', pos.y - lTOff);
+        txt.setAttribute('text-anchor','middle');
+        txt.setAttribute('font-family','DM Sans, sans-serif');
+        txt.setAttribute('font-size', lFS); txt.setAttribute('font-weight','600');
+        txt.setAttribute('fill','#E8B86D'); txt.setAttribute('letter-spacing','0.08em');
+        txt.textContent = `${c.code}  ${c.nickname || 'Anonymous'}`;
+        label.appendChild(rect); label.appendChild(txt);
+        (mapGroupEl || svg).appendChild(label);
+
+        // Show candle detail centred on screen
+        const cx = window.innerWidth / 2;
+        const cy = window.innerHeight / 2;
+        showCandleDetail(c, cx, cy);
+      }, 800);
+
+    }, 600);
   }
-}
 
 function showWaitingBanner(code) {
   const backdrop = document.createElement('div');
