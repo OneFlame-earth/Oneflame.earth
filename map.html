@@ -439,6 +439,7 @@ async function insertCandle(data) {
 }
 
 let candles = [];
+let expiredCandles = [];
 let generatedCode = null;
 let selectedLat = null;
 let selectedLng = null;
@@ -555,40 +556,34 @@ const CITIES = [
 
 // ─── RENDER CITY / TOWN LABELS ────────────────────────────────
 function renderCityLabels() {
-  const cityGroup = document.getElementById('cityGroup') || document.querySelector('#cityGroup');
-  if (!cityGroup) return;
-  // Clear
-  while (cityGroup.firstChild) cityGroup.removeChild(cityGroup.firstChild);
+  // D3 select works reliably for SVG child elements
+  const cg = d3.select('#cityGroup');
+  if (cg.empty()) return;
+  cg.selectAll('*').remove();
 
   const k = currentZoomK;
-  const ns = 'http://www.w3.org/2000/svg';
-  const fSize   = 7 / k;
-  const dotR    = 1.0 / k;
-  const dyOff   = -3.0 / k;
+  const fSize = 7 / k;
+  const dotR  = 1.0 / k;
+  const dyOff = -3.0 / k;
 
   CITIES.forEach(([lat, lng, name, minK]) => {
     if (k < minK) return;
     const pos = latLngToSvg(lat, lng);
 
-    // Small city marker dot
-    const dot = document.createElementNS(ns, 'circle');
-    dot.setAttribute('cx', pos.x); dot.setAttribute('cy', pos.y);
-    dot.setAttribute('r', dotR);
-    dot.setAttribute('fill', 'rgba(200,150,62,0.5)');
-    dot.style.pointerEvents = 'none';
-    cityGroup.appendChild(dot);
+    cg.append('circle')
+      .attr('cx', pos.x).attr('cy', pos.y).attr('r', dotR)
+      .attr('fill','rgba(200,150,62,0.5)')
+      .style('pointer-events','none');
 
-    // Label text
-    const txt = document.createElementNS(ns, 'text');
-    txt.setAttribute('x', pos.x); txt.setAttribute('y', pos.y + dyOff);
-    txt.setAttribute('text-anchor', 'middle');
-    txt.setAttribute('font-family', 'DM Sans, sans-serif');
-    txt.setAttribute('font-size', fSize);
-    txt.setAttribute('font-weight', k >= 7 ? '400' : '300');
-    txt.setAttribute('fill', k >= 7 ? 'rgba(240,230,211,0.80)' : 'rgba(240,230,211,0.55)');
-    txt.style.pointerEvents = 'none';
-    txt.textContent = name;
-    cityGroup.appendChild(txt);
+    cg.append('text')
+      .attr('x', pos.x).attr('y', pos.y + dyOff)
+      .attr('text-anchor','middle')
+      .attr('font-family','DM Sans, sans-serif')
+      .attr('font-size', fSize)
+      .attr('font-weight', k >= 7 ? '400' : '300')
+      .attr('fill', k >= 7 ? 'rgba(240,230,211,0.80)' : 'rgba(240,230,211,0.55)')
+      .style('pointer-events','none')
+      .text(name);
   });
 }
 
@@ -1156,9 +1151,16 @@ function renderCandles(list) {
 function renderExpiredCandles(list) {
   const svg = mapGroupEl || document.getElementById('mapSvg');
   svg.querySelectorAll('.expired-dot').forEach(el => el.remove());
-  const sizes = getDotSize(list.length);
 
-  list.forEach(c => {
+  // Exclude seed candles (codes starting with 'S') and entries without coords
+  const filtered = list.filter(c =>
+    c.latitude != null && c.longitude != null &&
+    !(c.code || '').startsWith('S')
+  );
+
+  const sizes = getDotSize(filtered.length);
+
+  filtered.forEach(c => {
     const pos = latLngToSvg(c.latitude, c.longitude);
     const g = document.createElementNS('http://www.w3.org/2000/svg','g');
     g.setAttribute('class','expired-dot');
@@ -1495,67 +1497,9 @@ function checkUrlCandle() {
   }
 
   // Arriving via "View on map" from flames.html
-  async function fetchAndZoomToCandle() {
-    try {
-      let c = candles.find(x => x.code === code);
-      if (!c) {
-        const res = await fetch(
-          `${SUPABASE_URL}/rest/v1/candles?code=eq.${encodeURIComponent(code)}&payment_confirmed=eq.true&select=*&limit=1`,
-          { headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}` } }
-        );
-        const rows = await res.json();
-        if (rows && rows.length > 0) c = rows[0];
-      }
-      if (!c) { console.log('[OneFlame] candle not found:', code); return; }
-
-      const pos = latLngToSvg(c.latitude, c.longitude);
-
-      // Zoom in to the candle
-      zoomToCandle(pos.x, pos.y);
-
-      // After zoom animation completes (1400ms) add the label and popup
-      setTimeout(() => {
-        // Add pulsing ring via highlightOwnCandle
-        highlightOwnCandle(c);
-
-        // Add nickname + code label in map coordinates (moves with zoom)
-        // Use fixed small sizes since we are now zoomed in at scale 5
-        const ns = 'http://www.w3.org/2000/svg';
-        const mapG = d3.select('#mapGroup');
-        mapG.selectAll('.own-candle-label').remove();
-
-        const labelG = mapG.append('g').attr('class','own-candle own-candle-label');
-        // At scale 5, 1 SVG unit = 5 screen pixels. Use 2 units for label elements.
-        labelG.append('rect')
-          .attr('x', pos.x - 10).attr('y', pos.y - 9)
-          .attr('width', 20).attr('height', 5.5)
-          .attr('rx', 0.6)
-          .attr('fill','rgba(10,8,6,0.92)')
-          .attr('stroke','rgba(200,150,62,0.55)')
-          .attr('stroke-width', 0.15);
-        labelG.append('text')
-          .attr('x', pos.x).attr('y', pos.y - 5.5)
-          .attr('text-anchor','middle')
-          .attr('font-family','DM Sans,sans-serif')
-          .attr('font-size', 1.6)
-          .attr('font-weight','500')
-          .attr('fill','#F0E6D3')
-          .text(c.nickname || 'Anonymous');
-        labelG.append('text')
-          .attr('x', pos.x).attr('y', pos.y - 3.8)
-          .attr('text-anchor','middle')
-          .attr('font-family','monospace')
-          .attr('font-size', 1.4)
-          .attr('font-weight','700')
-          .attr('fill','#E8B86D')
-          .text(c.code);
-
-        // Show detail popup
-        showCandleDetail(c, window.innerWidth/2, window.innerHeight/2);
-      }, 1500);
-    } catch(e) { console.error('[OneFlame] zoom error:', e); }
-  }
-  setTimeout(fetchAndZoomToCandle, 600);
+  // Use the same zoomToFoundCandle function that works in Find My Candle
+  // candles are already loaded by the time checkUrlCandle is called from init()
+  zoomToFoundCandle(code);
 }
 
 function showWaitingBanner(code) {
@@ -1782,13 +1726,14 @@ async function init() {
 
     renderCandles(candles);
     renderCityLabels();
-    checkUrlCandle();
 
-    // Load expired candles as ghost markers for relighting
+    // Load expired candles before checkUrlCandle so zoom works for expired candles too
     try {
-      const expired = await loadExpiredCandles();
-      renderExpiredCandles(expired);
+      expiredCandles = await loadExpiredCandles();
+      renderExpiredCandles(expiredCandles);
     } catch(e) { console.error('expired candles:', e); }
+
+    checkUrlCandle();
   } catch(e) { console.error(e); }
 
   clearTimeout(safetyTimer);
@@ -1798,8 +1743,8 @@ async function init() {
     try {
       candles = await loadCandles();
       renderCandles(candles);
-      const expired = await loadExpiredCandles();
-      renderExpiredCandles(expired);
+      expiredCandles = await loadExpiredCandles();
+      renderExpiredCandles(expiredCandles);
     } catch(e) {}
   }, 30000);
 
@@ -1829,11 +1774,20 @@ function closeFindCandle() {
 }
 
 function zoomToFoundCandle(code) {
-  const c = candles.find(x => x.code === code);
+  // Search live candles first, then expired
+  let c = candles.find(x => x.code === code);
+  const isExpired = !c;
+  if (!c) c = expiredCandles.find(x => x.code === code);
   if (!c) return;
+
   const pos = latLngToSvg(c.latitude, c.longitude);
   zoomToCandle(pos.x, pos.y);
   setTimeout(() => {
+    // For expired candles, show the relight popup
+    if (isExpired) {
+      showRelightPopup(c, window.innerWidth / 2, window.innerHeight / 2);
+      return;
+    }
     highlightOwnCandle(c);
     const svgEl = document.getElementById('mapSvg');
     const mapG = mapGroupEl || svgEl;
@@ -1880,19 +1834,21 @@ async function findMyCandle() {
   btn.disabled = true;
   btn.textContent = 'Searching...';
   document.getElementById('findCandleResults').innerHTML =
-    '<p style="color:var(--text-muted);font-size:12px;text-align:center;">Looking for your candle…</p>';
+    '<p style="color:var(--text-muted);font-size:12px;text-align:center;">Looking for your candle\u2026</p>';
 
   try {
     const filter = isEmail
       ? `email=eq.${encodeURIComponent(searchValue)}`
       : `code=eq.${encodeURIComponent(searchValue)}`;
 
+    // Search ALL candles — confirmed, live or expired
     const res = await fetch(
-      `${SUPABASE_URL}/rest/v1/candles?${filter}&payment_confirmed=eq.true&select=code,nickname,location_name,intention,created_at&order=created_at.desc`,
+      `${SUPABASE_URL}/rest/v1/candles?${filter}&payment_confirmed=eq.true&select=code,nickname,location_name,intention,created_at,expires_at,latitude,longitude&order=created_at.desc`,
       { headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}` } }
     );
     const rows = await res.json();
     const el = document.getElementById('findCandleResults');
+    const now = new Date();
 
     if (!rows || rows.length === 0) {
       const hint = isEmail
@@ -1902,19 +1858,32 @@ async function findMyCandle() {
     } else {
       const label = isEmail
         ? `Found ${rows.length} candle${rows.length > 1 ? 's' : ''} for your email.`
-        : `Found your candle.`;
+        : 'Found your candle.';
       const items = rows.map(c => {
         const date = c.created_at ? new Date(c.created_at).toLocaleDateString('en-GB',{day:'numeric',month:'long',year:'numeric'}) : '';
+        const isExpired = c.expires_at && new Date(c.expires_at) < now;
+        const statusBadge = isExpired
+          ? '<span style="font-size:10px;color:var(--text-muted);background:rgba(154,133,112,0.1);border:1px solid rgba(154,133,112,0.2);border-radius:3px;padding:2px 7px;letter-spacing:0.05em;">Gone out</span>'
+          : '<span style="font-size:10px;color:var(--gold);background:rgba(200,150,62,0.1);border:1px solid rgba(200,150,62,0.2);border-radius:3px;padding:2px 7px;letter-spacing:0.05em;">Burning</span>';
+        const safeCode = (c.code || '').replace(/'/g, "\\'");
+        const viewBtn = `<button onclick="closeFindCandle();zoomToFoundCandle('${safeCode}');" style="font-size:11px;color:var(--gold);background:none;border:1px solid rgba(200,150,62,0.3);border-radius:3px;padding:6px 12px;cursor:pointer;font-family:'DM Sans',sans-serif;">🗺 ${isExpired ? 'Find on map' : 'View on Map'}</button>`;
+        const relightBtn = isExpired
+          ? `<button onclick="closeFindCandle();relightCandle('${safeCode}');" style="font-size:11px;color:var(--deep);background:var(--gold);border:none;border-radius:3px;padding:6px 12px;cursor:pointer;font-family:'DM Sans',sans-serif;font-weight:500;">🕯 Relight — £0.79</button>`
+          : '';
         return `
           <div style="background:rgba(200,150,62,0.06);border:1px solid rgba(200,150,62,0.2);border-radius:4px;padding:16px 18px;margin-bottom:10px;">
-            <div style="font-family:'Cormorant Garamond',serif;font-size:18px;color:var(--white);margin-bottom:2px;">${c.nickname || 'Anonymous'}</div>
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
+              <span style="font-family:'Cormorant Garamond',serif;font-size:18px;color:var(--white);">${c.nickname || 'Anonymous'}</span>
+              ${statusBadge}
+            </div>
             <div style="font-family:monospace;font-size:16px;color:var(--gold);letter-spacing:0.2em;font-weight:700;margin-bottom:6px;">${c.code}</div>
             <div style="font-size:11px;color:var(--text-muted);margin-bottom:10px;">
               ${c.intention || 'Peace'} · ${c.location_name || ''} · ${date}
             </div>
             <div style="display:flex;gap:8px;flex-wrap:wrap;">
-              <button onclick="closeFindCandle();zoomToFoundCandle('${c.code.replace(/'/g,"\\'")}');" style="font-size:11px;color:var(--gold);background:none;border:1px solid rgba(200,150,62,0.3);border-radius:3px;padding:6px 12px;cursor:pointer;font-family:'DM Sans',sans-serif;">🗺 View on Map</button>
-              <a href="certificate.html?code=${c.code}" target="_blank" style="font-size:11px;color:var(--deep);background:var(--gold);text-decoration:none;padding:6px 12px;border-radius:3px;font-weight:500;">📜 Download Certificate</a>
+              ${viewBtn}
+              ${relightBtn}
+              <a href="certificate.html?code=${c.code}" target="_blank" style="font-size:11px;color:var(--deep);background:var(--gold);text-decoration:none;padding:6px 12px;border-radius:3px;font-weight:500;">📜 Certificate</a>
             </div>
           </div>`;
       }).join('');
