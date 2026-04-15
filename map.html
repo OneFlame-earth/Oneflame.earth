@@ -555,7 +555,7 @@ const CITIES = [
 
 // ─── RENDER CITY / TOWN LABELS ────────────────────────────────
 function renderCityLabels() {
-  const cityGroup = document.getElementById('cityGroup');
+  const cityGroup = document.getElementById('cityGroup') || document.querySelector('#cityGroup');
   if (!cityGroup) return;
   // Clear
   while (cityGroup.firstChild) cityGroup.removeChild(cityGroup.firstChild);
@@ -1495,7 +1495,6 @@ function checkUrlCandle() {
   }
 
   // Arriving via "View on map" from flames.html
-  // Small delay to ensure DOM and zoom are fully settled before animating
   async function fetchAndZoomToCandle() {
     try {
       let c = candles.find(x => x.code === code);
@@ -1508,42 +1507,55 @@ function checkUrlCandle() {
         if (rows && rows.length > 0) c = rows[0];
       }
       if (!c) { console.log('[OneFlame] candle not found:', code); return; }
+
       const pos = latLngToSvg(c.latitude, c.longitude);
+
+      // Zoom in to the candle
       zoomToCandle(pos.x, pos.y);
+
+      // After zoom animation completes (1400ms) add the label and popup
       setTimeout(() => {
+        // Add pulsing ring via highlightOwnCandle
         highlightOwnCandle(c);
-        const svgEl = document.getElementById('mapSvg');
-        const mapG = mapGroupEl || svgEl;
-        svgEl.querySelectorAll('.own-candle-label').forEach(el => el.remove());
-        const ls = 1 / getViewScale();
-        const lW = 100*ls, lH = 30*ls, lOff = 44*ls;
-        const labelG = document.createElementNS('http://www.w3.org/2000/svg','g');
-        labelG.setAttribute('class','own-candle own-candle-label');
-        const bg = document.createElementNS('http://www.w3.org/2000/svg','rect');
-        bg.setAttribute('x', pos.x-lW/2); bg.setAttribute('y', pos.y-lOff-lH);
-        bg.setAttribute('width', lW); bg.setAttribute('height', lH);
-        bg.setAttribute('rx', 3*ls); bg.setAttribute('fill','rgba(10,8,6,0.92)');
-        bg.setAttribute('stroke','rgba(200,150,62,0.55)'); bg.setAttribute('stroke-width', 0.8*ls);
-        const nick = document.createElementNS('http://www.w3.org/2000/svg','text');
-        nick.setAttribute('x', pos.x); nick.setAttribute('y', pos.y-lOff-lH*0.52);
-        nick.setAttribute('text-anchor','middle'); nick.setAttribute('font-family','DM Sans,sans-serif');
-        nick.setAttribute('font-size', 7*ls); nick.setAttribute('font-weight','500');
-        nick.setAttribute('fill','#F0E6D3');
-        nick.textContent = c.nickname || 'Anonymous';
-        const codeT = document.createElementNS('http://www.w3.org/2000/svg','text');
-        codeT.setAttribute('x', pos.x); codeT.setAttribute('y', pos.y-lOff-lH*0.15);
-        codeT.setAttribute('text-anchor','middle'); codeT.setAttribute('font-family','monospace');
-        codeT.setAttribute('font-size', 6.5*ls); codeT.setAttribute('font-weight','700');
-        codeT.setAttribute('fill','#E8B86D'); codeT.setAttribute('letter-spacing', 0.12*ls);
-        codeT.textContent = c.code;
-        labelG.appendChild(bg); labelG.appendChild(nick); labelG.appendChild(codeT);
-        mapG.appendChild(labelG);
+
+        // Add nickname + code label in map coordinates (moves with zoom)
+        // Use fixed small sizes since we are now zoomed in at scale 5
+        const ns = 'http://www.w3.org/2000/svg';
+        const mapG = d3.select('#mapGroup');
+        mapG.selectAll('.own-candle-label').remove();
+
+        const labelG = mapG.append('g').attr('class','own-candle own-candle-label');
+        // At scale 5, 1 SVG unit = 5 screen pixels. Use 2 units for label elements.
+        labelG.append('rect')
+          .attr('x', pos.x - 10).attr('y', pos.y - 9)
+          .attr('width', 20).attr('height', 5.5)
+          .attr('rx', 0.6)
+          .attr('fill','rgba(10,8,6,0.92)')
+          .attr('stroke','rgba(200,150,62,0.55)')
+          .attr('stroke-width', 0.15);
+        labelG.append('text')
+          .attr('x', pos.x).attr('y', pos.y - 5.5)
+          .attr('text-anchor','middle')
+          .attr('font-family','DM Sans,sans-serif')
+          .attr('font-size', 1.6)
+          .attr('font-weight','500')
+          .attr('fill','#F0E6D3')
+          .text(c.nickname || 'Anonymous');
+        labelG.append('text')
+          .attr('x', pos.x).attr('y', pos.y - 3.8)
+          .attr('text-anchor','middle')
+          .attr('font-family','monospace')
+          .attr('font-size', 1.4)
+          .attr('font-weight','700')
+          .attr('fill','#E8B86D')
+          .text(c.code);
+
+        // Show detail popup
         showCandleDetail(c, window.innerWidth/2, window.innerHeight/2);
-      }, 900);
+      }, 1500);
     } catch(e) { console.error('[OneFlame] zoom error:', e); }
   }
-  // Wait 800ms for map to fully render then zoom
-  setTimeout(fetchAndZoomToCandle, 800);
+  setTimeout(fetchAndZoomToCandle, 600);
 }
 
 function showWaitingBanner(code) {
