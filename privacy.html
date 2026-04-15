@@ -94,10 +94,42 @@
 </style>
 </head>
 <body>
+<!-- BURGER MENU -->
+<div class="burger-nav">
+  <button class="burger-btn" id="burgerBtn" onclick="toggleNav()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</div>
+<div class="nav-overlay" id="navOverlay" onclick="toggleNav()"></div>
+<nav class="nav-drawer" id="navDrawer">
+  <div class="nav-drawer-header">
+    <span class="nav-logo-text">ONE FLAME</span>
+    <button class="nav-close" onclick="toggleNav()">×</button>
+  </div>
+  <ul class="nav-links">
+    <li><a href="index.html" class="nav-link">🏠 Home</a></li>
+    <li><a href="map.html" class="nav-link">🗺 The Living Map</a></li>
+    <li><a href="flames.html" class="nav-link">🕯 All Flames</a></li>
+    <li><a href="countries.html" class="nav-link">🌍 Countries</a></li>
+    <li><a href="accounts.html" class="nav-link">💰 Financial Transparency</a></li>
+    <li><a href="receipts.html" class="nav-link">🏅 Charity Receipts</a></li>
+    <li><a href="certificate.html" class="nav-link">📜 Certificate</a></li>
+    <li><a href="terms.html" class="nav-link">📋 Terms of Use</a></li>
+    <li><a href="privacy.html" class="nav-link active">🔒 Privacy Policy</a></li>
+    <li><a href="cookies.html" class="nav-link">🍪 Cookie Policy</a></li>
+  </ul>
+  <div class="nav-cta-wrap">
+    <a href="map.html" class="nav-cta-btn">🕯 Light My Flame — £0.79</a>
+  </div>
+  <div class="nav-footer-text">
+    <span>oneflame.earth</span>
+    <span>Easter 2026 · World Cup 2026</span>
+  </div>
+</nav>
 
 <header class="page-header">
-  <a href="index.html" class="header-logo">One Flame</a>
-  <a href="index.html" class="header-back">← Home</a>
+  
+  
 </header>
 
 <!-- BURGER NAV -->
@@ -301,20 +333,24 @@
   <p style="font-size:10px;color:rgba(154,133,112,0.4);margin-top:12px;">© 2026 One Flame · Michael C · oneflame.earth · All rights reserved.</p>
 </footer>
 
+
+
 <script>
 function toggleNav() {
-  const btn = document.getElementById('burgerBtn');
-  const drawer = document.getElementById('navDrawer');
-  const overlay = document.getElementById('navOverlay');
-  btn.classList.toggle('open');
-  drawer.classList.toggle('open');
-  overlay.classList.toggle('open');
-  document.body.style.overflow = drawer.classList.contains('open') ? 'hidden' : '';
+  var btn = document.getElementById('burgerBtn');
+  var drawer = document.getElementById('navDrawer');
+  var overlay = document.getElementById('navOverlay');
+  if (!btn || !drawer || !overlay) return;
+  var isOpen = drawer.classList.contains('open');
+  btn.classList.toggle('open', !isOpen);
+  drawer.classList.toggle('open', !isOpen);
+  overlay.classList.toggle('open', !isOpen);
+  document.body.style.overflow = !isOpen ? 'hidden' : '';
 }
-document.addEventListener('keydown', e => {
+document.addEventListener('keydown', function(e) {
   if (e.key === 'Escape') {
-    const drawer = document.getElementById('navDrawer');
-    if (drawer && drawer.classList.contains('open')) toggleNav();
+    var d = document.getElementById('navDrawer');
+    if (d && d.classList.contains('open')) toggleNav();
   }
 });
 </script>

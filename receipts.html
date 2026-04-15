@@ -113,8 +113,10 @@
     .stats-grid { grid-template-columns: 1fr 1fr; }
     .receipt-card { flex-direction: column; }
   }
-  /* BURGER NAV */
-  .burger-nav { position: fixed; top: 60px; left: 16px; z-index: 500; }
+  
+
+  /* ── BURGER NAV ── */
+  .burger-nav { position: fixed; top: 14px; left: 16px; z-index: 500; }
   .burger-btn { background: rgba(10,8,6,0.92); border: 1px solid rgba(200,150,62,0.3); border-radius: 4px; width: 42px; height: 42px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; cursor: pointer; backdrop-filter: blur(8px); transition: all 0.2s; padding: 0; }
   .burger-btn:hover { border-color: #C8963E; }
   .burger-btn span { display: block; width: 18px; height: 1.5px; background: #C8963E; border-radius: 1px; transition: all 0.3s; }
@@ -153,19 +155,20 @@
     <span class="nav-logo-text">ONE FLAME</span>
     <button class="nav-close" onclick="toggleNav()">×</button>
   </div>
-    <ul class="nav-links">
+  <ul class="nav-links">
     <li><a href="index.html" class="nav-link">🏠 Home</a></li>
     <li><a href="map.html" class="nav-link">🗺 The Living Map</a></li>
     <li><a href="flames.html" class="nav-link">🕯 All Flames</a></li>
     <li><a href="countries.html" class="nav-link">🌍 Countries</a></li>
+    <li><a href="accounts.html" class="nav-link">💰 Financial Transparency</a></li>
     <li><a href="receipts.html" class="nav-link active">🏅 Charity Receipts</a></li>
-    <li><a href="accounts.html" class="nav-link">📊 Accounts &amp; Transparency</a></li>
-    <li><a href="cookies.html" class="nav-link">🍪 Cookie Policy</a></li>
-    <li><a href="terms.html" class="nav-link">📄 Terms of Use</a></li>
+    <li><a href="certificate.html" class="nav-link">📜 Certificate</a></li>
+    <li><a href="terms.html" class="nav-link">📋 Terms of Use</a></li>
     <li><a href="privacy.html" class="nav-link">🔒 Privacy Policy</a></li>
+    <li><a href="cookies.html" class="nav-link">🍪 Cookie Policy</a></li>
   </ul>
   <div class="nav-cta-wrap">
-    <a href="map.html" class="nav-cta-btn">🕯 Light My Flame — £0.49</a>
+    <a href="map.html" class="nav-cta-btn">🕯 Light My Flame — £0.79</a>
   </div>
   <div class="nav-footer-text">
     <span>oneflame.earth</span>
@@ -173,13 +176,10 @@
   </div>
 </nav>
 
+
 <header class="page-header">
   
-  <div class="header-right">
-    <a href="map.html" class="btn-nav">🗺 Live Map</a>
-    <a href="flames.html" class="btn-nav">All Flames</a>
-    <a href="map.html" class="btn-gold">🕯 Light a Flame</a>
-  </div>
+  
 </header>
 
 <!-- STATS HERO -->
@@ -397,6 +397,26 @@ document.addEventListener('keydown', e => {
   if (e.key === 'Escape') {
     const drawer = document.getElementById('navDrawer');
     if (drawer && drawer.classList.contains('open')) toggleNav();
+  }
+});
+</script>
+
+<script>
+function toggleNav() {
+  var btn = document.getElementById('burgerBtn');
+  var drawer = document.getElementById('navDrawer');
+  var overlay = document.getElementById('navOverlay');
+  if (!btn || !drawer || !overlay) return;
+  var isOpen = drawer.classList.contains('open');
+  btn.classList.toggle('open', !isOpen);
+  drawer.classList.toggle('open', !isOpen);
+  overlay.classList.toggle('open', !isOpen);
+  document.body.style.overflow = !isOpen ? 'hidden' : '';
+}
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') {
+    var d = document.getElementById('navDrawer');
+    if (d && d.classList.contains('open')) toggleNav();
   }
 });
 </script>

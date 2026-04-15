@@ -27,8 +27,8 @@
 
 html, body {
 height: 100%;
-background: var(–deep);
-color: var(–text);
+background: var(--deep);
+color: var(--text);
 font-family: ‘DM Sans’, sans-serif;
 overflow: hidden;
 }
@@ -76,7 +76,7 @@ left: 50%;
 transform: translateX(-50%);
 width: 32px;
 height: 64px;
-background: radial-gradient(ellipse at 50% 100%, #fff 0%, var(–gold-light) 20%, var(–gold) 45%, var(–ember) 72%, transparent 100%);
+background: radial-gradient(ellipse at 50% 100%, #fff 0%, var(--gold-light) 20%, var(--gold) 45%, var(--ember) 72%, transparent 100%);
 border-radius: 50% 50% 20% 20% / 60% 60% 40% 40%;
 filter: blur(1px);
 animation: flicker 1.8s ease-in-out infinite alternate;
@@ -146,7 +146,7 @@ font-size: 13px;
 font-weight: 400;
 letter-spacing: 0.3em;
 text-transform: uppercase;
-color: var(–gold);
+color: var(--gold);
 margin-bottom: 28px;
 opacity: 0;
 animation: fadeUp 0.8s ease 0.2s forwards;
@@ -166,7 +166,7 @@ animation: fadeUp 0.8s ease 0.4s forwards;
 
 .headline em {
 font-style: italic;
-color: var(–gold-light);
+color: var(--gold-light);
 }
 
 /* SUBLINE */
@@ -175,7 +175,7 @@ font-family: ‘Cormorant Garamond’, serif;
 font-size: clamp(16px, 5vw, 20px);
 font-weight: 300;
 font-style: italic;
-color: var(–text-muted);
+color: var(--text-muted);
 margin-bottom: 36px;
 line-height: 1.5;
 opacity: 0;
@@ -200,7 +200,7 @@ text-align: center;
 font-family: ‘Cormorant Garamond’, serif;
 font-size: 28px;
 font-weight: 300;
-color: var(–gold);
+color: var(--gold);
 line-height: 1;
 display: block;
 }
@@ -209,7 +209,7 @@ display: block;
 font-size: 10px;
 letter-spacing: 0.15em;
 text-transform: uppercase;
-color: var(–text-muted);
+color: var(--text-muted);
 margin-top: 3px;
 display: block;
 }
@@ -225,8 +225,8 @@ max-width: 340px;
 .cta-btn {
 display: block;
 width: 100%;
-background: var(–gold);
-color: var(–deep);
+background: var(--gold);
+color: var(--deep);
 font-family: ‘DM Sans’, sans-serif;
 font-size: 14px;
 font-weight: 500;
@@ -244,14 +244,14 @@ transition: all 0.25s;
 }
 
 .cta-btn:hover, .cta-btn:active {
-background: var(–gold-light);
+background: var(--gold-light);
 box-shadow: 0 0 60px rgba(200,150,62,0.55);
 transform: translateY(-2px);
 }
 
 .cta-note {
 font-size: 11px;
-color: var(–text-muted);
+color: var(--text-muted);
 margin-top: 10px;
 letter-spacing: 0.05em;
 }
@@ -281,7 +281,7 @@ background: rgba(200,150,62,0.12);
 border-bottom: 1px solid rgba(200,150,62,0.2);
 padding: 8px 16px;
 font-size: 11px;
-color: var(–gold);
+color: var(--gold);
 text-align: center;
 letter-spacing: 0.05em;
 z-index: 10;
@@ -293,7 +293,7 @@ z-index: 10;
 
 <div class="bg-glow"></div>
 
-<div class="safe-note">Safe to open · Tap the three dots ··· · Open in browser</div>
+<div class="safe-note">🔒 Secure · oneflame.earth · Tap ··· then Open in browser to light your candle</div>
 
 <div class="page">
 
@@ -358,7 +358,7 @@ z-index: 10;
 <script>
 const SUPABASE_URL = 'https://rytjvdptbjnlhayclcvu.supabase.co';
 const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJ5dGp2ZHB0YmpubGhheWNsY3Z1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzUzMzA1MjksImV4cCI6MjA5MDkwNjUyOX0.y6qVpN-tJKafDVY_yUk0K6yQ9xXYy5xfIhFoJvqWf48';
-const FLOOR = 1247;
+const FLOOR = 0;
 
 async function loadCount() {
   try {
@@ -367,10 +367,10 @@ async function loadCount() {
     });
     const header = res.headers.get('content-range');
     const real = header ? parseInt(header.split('/')[1]) || 0 : 0;
-    const display = real > FLOOR ? real : Math.max(real, FLOOR);
+    const display = real;
     document.getElementById('flameCount').textContent = display.toLocaleString();
   } catch(e) {
-    document.getElementById('flameCount').textContent = FLOOR.toLocaleString();
+    document.getElementById('flameCount').textContent = '0';
   }
 }
 
