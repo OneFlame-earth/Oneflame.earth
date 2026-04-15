@@ -42,7 +42,9 @@
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   html, body { height: 100%; overflow: hidden; }
   body { background: var(--deep); color: var(--text); font-family: 'DM Sans', sans-serif; font-weight: 300; display: flex; flex-direction: column; }
-  .map-header { background: rgba(10,8,6,0.96); border-bottom: 1px solid rgba(200,150,62,0.15); padding: 0 20px; height: 50px; display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; z-index: 10; }
+  .map-header { background: rgba(10,8,6,0.96); border-bottom: 1px solid rgba(200,150,62,0.15); padding: 0 20px; height: 50px; display: flex; align-items: center; justify-content: flex-end; flex-shrink: 0; z-index: 10; }
+  .btn-find-candle { background: none; border: 1px solid rgba(200,150,62,0.25); border-radius: 3px; color: var(--text-muted); font-family: 'DM Sans', sans-serif; font-size: 11px; padding: 6px 14px; cursor: pointer; transition: all 0.2s; letter-spacing: 0.05em; }
+  .btn-find-candle:hover { color: var(--gold); border-color: var(--gold); }
   .header-logo { font-family: 'Cormorant Garamond', serif; font-size: 16px; font-weight: 400; color: var(--gold); letter-spacing: 0.15em; text-decoration: none; text-transform: uppercase; }
   .header-right { display: flex; align-items: center; gap: 12px; }
   .live-count { font-size: 11px; color: var(--text-muted); letter-spacing: 0.05em; }
@@ -240,12 +242,7 @@
 </nav>
 
 <header class="map-header">
-  
-  
-    <button class="btn-nav" onclick="openFindCandle()" style="cursor:pointer;background:none;">🔍 Find My Candle</button>
-    <a href="flames.html" class="btn-nav">All Flames</a>
-    <a href="index.html" class="btn-nav">← Home</a>
-  </div>
+  <button class="btn-find-candle" onclick="openFindCandle()">🔍 Find My Candle</button>
 </header>
 
 <!-- FIND MY CANDLE MODAL -->
