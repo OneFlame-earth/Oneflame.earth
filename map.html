@@ -406,6 +406,11 @@ async function loadCandles() {
   return sbFetch(`candles?payment_confirmed=eq.true&expires_at=gt.${encodeURIComponent(now)}&select=*&order=created_at.desc`);
 }
 
+async function loadExpiredCandles() {
+  const now = new Date().toISOString();
+  return sbFetch(`candles?payment_confirmed=eq.true&expires_at=lte.${encodeURIComponent(now)}&select=*&order=expires_at.desc&limit=500`);
+}
+
 async function insertCandle(data) {
   const res = await fetch(`${SUPABASE_URL}/rest/v1/candles`, {
     method: 'POST',
@@ -1140,6 +1145,87 @@ function renderCandles(list) {
   document.getElementById('liveCount').textContent = list.length.toLocaleString();
 }
 
+function renderExpiredCandles(list) {
+  const svg = mapGroupEl || document.getElementById('mapSvg');
+  svg.querySelectorAll('.expired-dot').forEach(el => el.remove());
+  const sizes = getDotSize(list.length);
+
+  list.forEach(c => {
+    const pos = latLngToSvg(c.latitude, c.longitude);
+    const g = document.createElementNS('http://www.w3.org/2000/svg','g');
+    g.setAttribute('class','expired-dot');
+    g.style.cursor = 'pointer';
+
+    // Dim grey ghost ring
+    const ring = document.createElementNS('http://www.w3.org/2000/svg','circle');
+    ring.setAttribute('cx', pos.x); ring.setAttribute('cy', pos.y);
+    ring.setAttribute('r', sizes.glow * 0.9);
+    ring.setAttribute('fill', 'rgba(154,133,112,0.08)');
+    ring.setAttribute('stroke', 'rgba(154,133,112,0.25)');
+    ring.setAttribute('stroke-width', '0.6');
+
+    // Small dim dot
+    const dot = document.createElementNS('http://www.w3.org/2000/svg','circle');
+    dot.setAttribute('cx', pos.x); dot.setAttribute('cy', pos.y);
+    dot.setAttribute('r', sizes.dot * 0.7);
+    dot.setAttribute('fill', '#5A4A38');
+
+    g.appendChild(ring); g.appendChild(dot);
+    g.addEventListener('click', e => {
+      e.stopPropagation();
+      showRelightPopup(c, e.clientX, e.clientY);
+    });
+    g.addEventListener('mouseenter', () => {
+      dot.setAttribute('fill', '#9A8570');
+      ring.setAttribute('stroke', 'rgba(200,150,62,0.4)');
+    });
+    g.addEventListener('mouseleave', () => {
+      dot.setAttribute('fill', '#5A4A38');
+      ring.setAttribute('stroke', 'rgba(154,133,112,0.25)');
+    });
+    svg.appendChild(g);
+  });
+}
+
+function showRelightPopup(c, clientX, clientY) {
+  document.querySelectorAll('.candle-detail').forEach(el => el.remove());
+  const safeCode = (c.code || '').replace(/'/g, "\\'");
+  const safeNick = (c.nickname || 'Anonymous').replace(/'/g, "\\'");
+  const safeLoc = (c.location_name || '').replace(/'/g, "\\'");
+  const d = document.createElement('div');
+  d.className = 'candle-detail';
+  d.style.position = 'fixed';
+  d.style.zIndex = '150';
+  d.innerHTML = `
+    <button onclick="this.closest('.candle-detail').remove()" style="position:absolute;top:8px;right:10px;background:none;border:none;color:var(--text-muted);font-size:18px;cursor:pointer;padding:2px 6px;line-height:1;">×</button>
+    <div class="detail-code" style="color:var(--text-muted);">${c.code || ''}</div>
+    <div class="detail-nick">${c.nickname || 'Anonymous'}</div>
+    ${c.location_name ? `<div class="detail-location">📍 ${c.location_name}</div>` : ''}
+    <div style="font-size:11px;color:var(--ember);margin:8px 0;letter-spacing:0.05em;">🕯 This flame has gone out</div>
+    <button onclick="relightCandle('${safeCode}')"
+      style="width:100%;background:var(--gold);border:none;color:var(--deep);font-family:'DM Sans',sans-serif;font-size:12px;font-weight:500;padding:11px;border-radius:3px;cursor:pointer;letter-spacing:0.06em;text-transform:uppercase;margin-top:4px;">
+      🕯 Relight this flame — £0.79
+    </button>
+    <button class="detail-share" onclick="shareCandle('${safeCode}','${safeNick}','${safeLoc}')" style="margin-top:6px;">Share this flame</button>`;
+  document.body.appendChild(d);
+  const w = d.offsetWidth || 240;
+  const h = d.offsetHeight || 180;
+  let x = clientX + 16, y = clientY - h / 2;
+  if (window.innerWidth < 520) { x = (window.innerWidth - w) / 2; y = Math.max(80, clientY - h - 24); }
+  if (x + w > window.innerWidth - 10) x = clientX - w - 16;
+  if (y < 10) y = 10;
+  if (y + h > window.innerHeight - 10) y = window.innerHeight - h - 10;
+  d.style.left = x + 'px'; d.style.top = y + 'px';
+}
+
+function relightCandle(code) {
+  // Store the code so we can confirm it after payment returns
+  localStorage.setItem('oneflame_pending_code', code);
+  document.cookie = `oneflame_pending_code=${encodeURIComponent(code)}; path=/; max-age=3600; SameSite=Lax`;
+  // Redirect to Stripe with the existing candle code as reference
+  window.location.href = `${STRIPE_LINK}?client_reference_id=${code}`;
+}
+
 function showCandleDetail(c, clientX, clientY) {
   document.querySelectorAll('.candle-detail').forEach(el => el.remove());
   const days = Math.max(0, Math.round((new Date(c.expires_at) - Date.now()) / 86400000));
@@ -1323,7 +1409,9 @@ function checkUrlCandle() {
   // This replaces the old (!code && !!pendingCode) which broke when Stripe
   // returned ?candle=CODE — code was truthy so !code was false.
   const activeCode  = code || pendingCode;
-  const postPayment = isSuccess || (!!pendingCode && (pendingCode === code || !code));
+  // postPayment ONLY triggers when Stripe explicitly returns success=true
+  // This prevents a stale pendingCode in localStorage from hijacking the zoom flow
+  const postPayment = isSuccess && !!activeCode;
 
   console.log('[OneFlame] checkUrlCandle — code:', code, '| pendingCode:', pendingCode, '| isSuccess:', isSuccess, '| postPayment:', postPayment);
 
@@ -1675,6 +1763,12 @@ async function init() {
     renderCandles(candles);
     renderCityLabels();
     checkUrlCandle();
+
+    // Load expired candles as ghost markers for relighting
+    try {
+      const expired = await loadExpiredCandles();
+      renderExpiredCandles(expired);
+    } catch(e) { console.error('expired candles:', e); }
   } catch(e) { console.error(e); }
 
   clearTimeout(safetyTimer);
