@@ -455,14 +455,57 @@
   <div class="state-body">One moment while we retrieve your certificate.</div>
 </div>
 
+<!-- No code state - search box -->
+<div class="state-wrap" id="searchState" style="display:none;">
+  <div class="state-icon">📜</div>
+  <div class="state-title">Find your certificate</div>
+  <div class="state-body" style="margin-bottom:24px;">Enter your candle code to retrieve your certificate of peace.</div>
+  <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;max-width:360px;margin:0 auto;">
+    <input
+      id="codeSearchInput"
+      type="text"
+      placeholder="e.g. ZZ4FC"
+      maxlength="6"
+      autocomplete="off"
+      autocapitalize="characters"
+      style="background:rgba(200,150,62,0.08);border:1px solid rgba(200,150,62,0.35);border-radius:4px;color:#F0E6D3;font-family:'DM Sans',sans-serif;font-size:18px;padding:14px 18px;letter-spacing:0.2em;text-align:center;text-transform:uppercase;outline:none;width:160px;"
+      onkeydown="if(event.key==='Enter')searchCertificate()"
+    />
+    <button
+      onclick="searchCertificate()"
+      style="background:#C8963E;border:none;border-radius:4px;color:#0A0806;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;padding:14px 24px;cursor:pointer;letter-spacing:0.08em;text-transform:uppercase;">
+      Find my certificate
+    </button>
+  </div>
+  <p style="font-size:12px;color:#9A8570;margin-top:16px;">Your code was shown when you lit your candle. Check your Stripe receipt email if you need it.</p>
+  <p style="margin-top:20px;"><a href="flames.html" style="color:var(--gold-light);font-size:13px;">Browse all flames →</a></p>
+</div>
+
 <!-- Error state -->
 <div class="state-wrap" id="errorState" style="display:none;">
   <div class="state-icon">🔍</div>
   <div class="state-title">Candle not found</div>
-  <div class="state-body">
-    We could not find a confirmed candle with that code.<br><br>
-    <a href="map.html" style="color:var(--gold-light);">Return to the map →</a>
+  <div class="state-body" style="margin-bottom:24px;">
+    We could not find a confirmed candle with that code. Please check it and try again.
   </div>
+  <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;max-width:360px;margin:0 auto;">
+    <input
+      id="codeSearchInput2"
+      type="text"
+      placeholder="Try again..."
+      maxlength="6"
+      autocomplete="off"
+      autocapitalize="characters"
+      style="background:rgba(200,150,62,0.08);border:1px solid rgba(200,150,62,0.35);border-radius:4px;color:#F0E6D3;font-family:'DM Sans',sans-serif;font-size:18px;padding:14px 18px;letter-spacing:0.2em;text-align:center;text-transform:uppercase;outline:none;width:160px;"
+      onkeydown="if(event.key==='Enter')searchCertificate2()"
+    />
+    <button
+      onclick="searchCertificate2()"
+      style="background:#C8963E;border:none;border-radius:4px;color:#0A0806;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;padding:14px 24px;cursor:pointer;letter-spacing:0.08em;text-transform:uppercase;">
+      Search
+    </button>
+  </div>
+  <p style="margin-top:20px;"><a href="flames.html" style="color:var(--gold-light);font-size:13px;">Browse all flames →</a></p>
 </div>
 
 <!-- The certificate (hidden until data loads) -->
@@ -605,18 +648,23 @@ function formatDate(iso) {
   return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
 }
 
-async function loadCertificate() {
+async function loadCertificate(codeOverride) {
   const params = new URLSearchParams(window.location.search);
-  const code = (params.get('code') || '').trim().toUpperCase();
+  const code = (codeOverride || params.get('code') || '').trim().toUpperCase();
 
   if (!code) {
     document.getElementById('loadingState').style.display = 'none';
-    document.getElementById('errorState').style.display = 'flex';
+    document.getElementById('searchState').style.display = 'flex';
     return;
   }
 
+  // Show loading, hide others
+  document.getElementById('loadingState').style.display = 'flex';
+  document.getElementById('searchState').style.display = 'none';
+  document.getElementById('errorState').style.display = 'none';
+  document.getElementById('certOuter').style.display = 'none';
+
   try {
-    // Fetch candle data
     const res = await fetch(
       `${SUPABASE_URL}/rest/v1/candles?code=eq.${encodeURIComponent(code)}&payment_confirmed=eq.true&select=code,nickname,location_name,intention,created_at`,
       { headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}` } }
@@ -633,16 +681,14 @@ async function loadCertificate() {
 
     const c = rows[0];
 
-    // Populate certificate
-    document.getElementById('certName').textContent  = c.nickname || 'A Friend of Peace';
+    document.getElementById('certName').textContent = c.nickname || 'A Friend of Peace';
     document.getElementById('certIntention').textContent = c.intention || 'Peace';
-    document.getElementById('certCode').textContent  = c.code;
+    document.getElementById('certCode').textContent = c.code;
 
     const dateLine = formatDate(c.created_at);
-    const locLine  = [c.location_name, dateLine].filter(Boolean).join(' · ');
+    const locLine = [c.location_name, dateLine].filter(Boolean).join(' · ');
     document.getElementById('certLocation').textContent = locLine;
 
-    // Fetch live count for the statement line
     try {
       const cRes = await fetch(
         `${SUPABASE_URL}/rest/v1/candles?payment_confirmed=eq.true&select=code`,
@@ -655,20 +701,31 @@ async function loadCertificate() {
           document.getElementById('certCount').textContent = total.toLocaleString();
         }
       }
-    } catch(_) { /* leave default text */ }
+    } catch(_) {}
 
-    // Update page title
     document.title = `One Flame · Certificate · ${c.nickname || c.code}`;
-
-    // Show certificate
     document.getElementById('loadingState').style.display = 'none';
-    document.getElementById('certOuter').style.display    = 'flex';
+    document.getElementById('certOuter').style.display = 'flex';
 
   } catch(e) {
     console.error('Certificate error:', e);
     document.getElementById('loadingState').style.display = 'none';
     document.getElementById('errorState').style.display = 'flex';
   }
+}
+
+function searchCertificate() {
+  const input = document.getElementById('codeSearchInput');
+  const code = (input ? input.value : '').trim().toUpperCase();
+  if (!code) { if (input) input.focus(); return; }
+  loadCertificate(code);
+}
+
+function searchCertificate2() {
+  const input = document.getElementById('codeSearchInput2');
+  const code = (input ? input.value : '').trim().toUpperCase();
+  if (!code) { if (input) input.focus(); return; }
+  loadCertificate(code);
 }
 
 loadCertificate();
