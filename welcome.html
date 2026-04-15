@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>One Flame — Your Candle Is Lit</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<meta name="theme-color" content="#0A0806">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root{--gold:#C8963E;--gold-light:#E8B86D;--ember:#E05A1B;--deep:#0A0806;--dark:#13100A;--smoke:#2A211A;--text:#F0E6D3;--text-muted:#9A8570;--white:#FDFAF5}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  html,body{min-height:100%;background:var(--deep);color:var(--text);font-family:'DM Sans',sans-serif}
+  .bg-glow{position:fixed;inset:0;background:radial-gradient(ellipse 70% 50% at 50% 80%, rgba(200,150,62,0.12) 0%, transparent 60%);pointer-events:none;z-index:0}
+  .waiting{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:10;background:var(--deep);text-align:center;padding:32px}
+  .waiting-flame{font-size:48px;margin-bottom:20px;animation:pulse 1.5s ease-in-out infinite}
+  @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.6;transform:scale(0.92)}}
+  .waiting-title{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:300;color:var(--white);margin-bottom:8px}
+  .waiting-sub{font-size:13px;color:var(--text-muted);margin-bottom:24px;line-height:1.6}
+  .waiting-code{font-family:monospace;font-size:24px;font-weight:700;color:var(--gold);letter-spacing:0.25em;margin-bottom:8px}
+  .waiting-dots{font-size:13px;color:var(--text-muted)}
+  .page{max-width:480px;margin:0 auto;padding:48px 24px 60px;position:relative;z-index:1;display:none}
+  .success-icon{font-size:52px;text-align:center;margin-bottom:20px}
+  .success-title{font-family:'Cormorant Garamond',serif;font-size:clamp(32px,8vw,44px);font-weight:300;color:var(--white);text-align:center;margin-bottom:6px;line-height:1.1}
+  .success-title em{font-style:italic;color:var(--gold-light)}
+  .success-sub{font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:300;font-style:italic;color:var(--text-muted);text-align:center;margin-bottom:28px;line-height:1.5}
+  .code-block{background:rgba(200,150,62,0.08);border:1px solid rgba(200,150,62,0.3);border-radius:6px;padding:20px;text-align:center;margin-bottom:28px}
+  .code-label{font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--text-muted);margin-bottom:8px}
+  .code-value{font-family:monospace;font-size:28px;font-weight:700;color:var(--gold);letter-spacing:0.3em}
+  .code-note{font-size:11px;color:var(--text-muted);margin-top:8px;line-height:1.5}
+  hr.div{border:none;border-top:1px solid rgba(200,150,62,0.1);margin:28px 0}
+  .section-title{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:300;color:var(--white);margin-bottom:6px}
+  .section-sub{font-size:13px;color:var(--text-muted);margin-bottom:20px;line-height:1.6}
+  .field{margin-bottom:16px}
+  .field label{display:block;font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-muted);margin-bottom:6px}
+  .field input,.field select{width:100%;background:rgba(200,150,62,0.05);border:1px solid rgba(200,150,62,0.2);border-radius:3px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:15px;padding:12px 14px;outline:none;transition:border 0.2s}
+  .field input:focus,.field select:focus{border-color:rgba(200,150,62,0.6)}
+  .field select option{background:var(--dark);color:var(--text)}
+  .chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:8px}
+  .chip{background:rgba(200,150,62,0.08);border:1px solid rgba(200,150,62,0.2);border-radius:20px;padding:7px 14px;font-size:13px;color:var(--text-muted);cursor:pointer;transition:all 0.2s;-webkit-tap-highlight-color:transparent}
+  .chip.active{background:rgba(200,150,62,0.18);border-color:var(--gold);color:var(--gold-light)}
+  .btn-primary{display:block;width:100%;background:var(--gold);color:var(--deep);font-family:'DM Sans',sans-serif;font-size:14px;font-weight:500;padding:16px;border:none;border-radius:3px;cursor:pointer;letter-spacing:0.06em;text-transform:uppercase;transition:background 0.2s;margin-bottom:10px}
+  .btn-primary:disabled{opacity:0.6;cursor:default}
+  .btn-skip{display:block;width:100%;background:none;border:1px solid rgba(200,150,62,0.2);color:var(--text-muted);font-family:'DM Sans',sans-serif;font-size:13px;padding:13px;border-radius:3px;cursor:pointer;text-decoration:none;text-align:center;transition:all 0.2s}
+  .action-row{display:flex;gap:10px;margin-top:24px;flex-wrap:wrap}
+  .action-btn{flex:1;min-width:120px;background:rgba(200,150,62,0.08);border:1px solid rgba(200,150,62,0.25);border-radius:3px;color:var(--text-muted);font-family:'DM Sans',sans-serif;font-size:12px;padding:12px 8px;cursor:pointer;text-align:center;text-decoration:none;display:block;transition:all 0.2s}
+  .action-btn:hover{border-color:var(--gold);color:var(--gold)}
+</style>
+</head>
+<body>
+<div class="bg-glow"></div>
+
+<div class="waiting" id="waitingState">
+  <div class="waiting-flame">🕯</div>
+  <div class="waiting-title">Your payment is confirming</div>
+  <div class="waiting-sub">Your flame is being lit on the map.<br>Just a moment.</div>
+  <div class="waiting-code" id="waitingCode"></div>
+  <div class="waiting-dots" id="waitingDots">● ○ ○</div>
+</div>
+
+<div class="page" id="mainPage">
+  <div class="success-icon">🕯</div>
+  <h1 class="success-title">Your flame<br><em>is burning.</em></h1>
+  <p class="success-sub">It is on the map right now.<br>You are part of something real.</p>
+
+  <div class="code-block">
+    <div class="code-label">Your candle code</div>
+    <div class="code-value" id="codeDisplay">——</div>
+    <div class="code-note">Keep this. Use it to find your candle, download your certificate, or relight your flame.</div>
+  </div>
+
+  <hr class="div">
+
+  <div class="section-title">Make it yours</div>
+  <p class="section-sub">Your candle is live as Anonymous. Add your name and where you are from. Takes 30 seconds. Totally optional.</p>
+
+  <div class="field">
+    <label>Your name or nickname</label>
+    <input type="text" id="nickInput" placeholder="e.g. Sarah, Dad, A Friend" maxlength="40" autocomplete="off">
+  </div>
+
+  <div class="field">
+    <label>Country</label>
+    <select id="countrySelect">
+      <option value="">Choose your country</option>
+      <option>Afghanistan</option><option>Albania</option><option>Algeria</option><option>Argentina</option><option>Armenia</option><option>Australia</option><option>Austria</option><option>Azerbaijan</option><option>Bahrain</option><option>Bangladesh</option><option>Belarus</option><option>Belgium</option><option>Bolivia</option><option>Bosnia and Herzegovina</option><option>Brazil</option><option>Bulgaria</option><option>Cambodia</option><option>Canada</option><option>Chile</option><option>China</option><option>Colombia</option><option>Croatia</option><option>Cuba</option><option>Czech Republic</option><option>Denmark</option><option>Ecuador</option><option>Egypt</option><option>Estonia</option><option>Ethiopia</option><option>Finland</option><option>France</option><option>Georgia</option><option>Germany</option><option>Ghana</option><option>Greece</option><option>Guatemala</option><option>Hungary</option><option>India</option><option>Indonesia</option><option>Iran</option><option>Iraq</option><option>Ireland</option><option>Israel</option><option>Italy</option><option>Japan</option><option>Jordan</option><option>Kazakhstan</option><option>Kenya</option><option>Kosovo</option><option>Kuwait</option><option>Latvia</option><option>Lebanon</option><option>Libya</option><option>Lithuania</option><option>Malaysia</option><option>Mexico</option><option>Moldova</option><option>Morocco</option><option>Myanmar</option><option>Netherlands</option><option>New Zealand</option><option>Nigeria</option><option>North Macedonia</option><option>Norway</option><option>Pakistan</option><option>Palestine</option><option>Peru</option><option>Philippines</option><option>Poland</option><option>Portugal</option><option>Qatar</option><option>Romania</option><option>Russia</option><option>Saudi Arabia</option><option>Serbia</option><option>Singapore</option><option>Slovakia</option><option>Slovenia</option><option>South Africa</option><option>South Korea</option><option>Spain</option><option>Sri Lanka</option><option>Sudan</option><option>Sweden</option><option>Switzerland</option><option>Syria</option><option>Taiwan</option><option>Thailand</option><option>Tunisia</option><option>Turkey</option><option>Ukraine</option><option>United Arab Emirates</option><option>United Kingdom</option><option>United States</option><option>Uruguay</option><option>Uzbekistan</option><option>Venezuela</option><option>Vietnam</option><option>Yemen</option>
+    </select>
+  </div>
+
+  <div class="field">
+    <label>Hometown (optional)</label>
+    <input type="text" id="hometownInput" placeholder="e.g. Manchester, Cornwall, Bucharest" maxlength="60" autocomplete="off">
+  </div>
+
+  <div class="field">
+    <label>Your intention</label>
+    <div class="chips" id="chips">
+      <span class="chip active" onclick="selectChip(this,'Peace')">Peace</span>
+      <span class="chip" onclick="selectChip(this,'Hope')">Hope</span>
+      <span class="chip" onclick="selectChip(this,'Love')">Love</span>
+      <span class="chip" onclick="selectChip(this,'Health')">Health</span>
+      <span class="chip" onclick="selectChip(this,'Safety')">Safety</span>
+      <span class="chip" onclick="selectChip(this,'Freedom')">Freedom</span>
+    </div>
+    <input type="text" id="intentionInput" placeholder="Or write your own..." maxlength="80" autocomplete="off" style="margin-top:8px">
+  </div>
+
+  <button class="btn-primary" id="saveBtn" onclick="saveDetails()">Save and see my flame on the map</button>
+  <a class="btn-skip" id="skipBtn" href="map.html">Skip — take me to the map now</a>
+
+  <div class="action-row">
+    <a class="action-btn" id="certLink" href="certificate.html">📜 Certificate</a>
+    <a class="action-btn" id="mapLink" href="map.html">🗺 The map</a>
+    <button class="action-btn" onclick="shareFlame()">🔗 Share</button>
+  </div>
+</div>
+
+<script>
+const SUPABASE_URL='https://rytjvdptbjnlhayclcvu.supabase.co';
+const SUPABASE_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJ5dGp2ZHB0YmpubGhheWNsY3Z1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzUzMzA1MjksImV4cCI6MjA5MDkwNjUyOX0.y6qVpN-tJKafDVY_yUk0K6yQ9xXYy5xfIhFoJvqWf48';
+const COUNTRY_COORDS={'Afghanistan':[33.93,67.71],'Albania':[41.15,20.17],'Algeria':[28.03,1.66],'Argentina':[-38.42,-63.62],'Armenia':[40.07,45.04],'Australia':[-25.27,133.78],'Austria':[47.52,14.55],'Azerbaijan':[40.14,47.58],'Bahrain':[26.02,50.55],'Bangladesh':[23.68,90.36],'Belarus':[53.71,27.95],'Belgium':[50.50,4.47],'Bolivia':[-16.29,-63.59],'Bosnia and Herzegovina':[43.92,17.68],'Brazil':[-14.24,-51.93],'Bulgaria':[42.73,25.49],'Cambodia':[12.57,104.99],'Canada':[56.13,-106.35],'Chile':[-35.68,-71.54],'China':[35.86,104.20],'Colombia':[4.57,-74.30],'Croatia':[45.10,15.20],'Cuba':[21.52,-77.78],'Czech Republic':[49.82,15.47],'Denmark':[56.26,9.50],'Ecuador':[-1.83,-78.18],'Egypt':[26.82,30.80],'Estonia':[58.60,25.01],'Ethiopia':[9.15,40.49],'Finland':[61.92,25.75],'France':[46.23,2.21],'Georgia':[42.32,43.36],'Germany':[51.17,10.45],'Ghana':[7.95,-1.02],'Greece':[39.07,21.82],'Guatemala':[15.78,-90.23],'Hungary':[47.16,19.50],'India':[20.59,78.96],'Indonesia':[-0.79,113.92],'Iran':[32.43,53.69],'Iraq':[33.22,43.68],'Ireland':[53.41,-8.24],'Israel':[31.05,34.85],'Italy':[41.87,12.57],'Japan':[36.20,138.25],'Jordan':[30.59,36.24],'Kazakhstan':[48.02,66.92],'Kenya':[-0.02,37.91],'Kosovo':[42.60,20.90],'Kuwait':[29.31,47.48],'Latvia':[56.88,24.60],'Lebanon':[33.85,35.86],'Libya':[26.34,17.23],'Lithuania':[55.17,23.88],'Malaysia':[4.21,108.04],'Mexico':[23.63,-102.55],'Moldova':[47.41,28.37],'Morocco':[31.79,-7.09],'Myanmar':[21.92,95.96],'Netherlands':[52.13,5.29],'New Zealand':[-40.90,174.89],'Nigeria':[9.08,8.68],'North Macedonia':[41.61,21.74],'Norway':[60.47,8.47],'Pakistan':[30.38,69.35],'Palestine':[31.95,35.23],'Peru':[-9.19,-75.02],'Philippines':[12.88,121.77],'Poland':[51.92,19.15],'Portugal':[39.40,-8.22],'Qatar':[25.35,51.18],'Romania':[45.94,24.97],'Russia':[61.52,105.32],'Saudi Arabia':[23.89,45.08],'Serbia':[44.02,21.01],'Singapore':[1.35,103.82],'Slovakia':[48.67,19.70],'Slovenia':[46.15,14.99],'South Africa':[-30.56,22.94],'South Korea':[35.91,127.77],'Spain':[40.46,-3.75],'Sri Lanka':[7.87,80.77],'Sudan':[12.86,30.22],'Sweden':[60.13,18.64],'Switzerland':[46.82,8.23],'Syria':[34.80,38.99],'Taiwan':[23.70,121.00],'Thailand':[15.87,100.99],'Tunisia':[33.89,9.54],'Turkey':[38.96,35.24],'Ukraine':[48.38,31.17],'United Arab Emirates':[23.42,53.85],'United Kingdom':[55.38,-3.44],'United States':[37.09,-95.71],'Uruguay':[-32.52,-55.77],'Uzbekistan':[41.38,64.59],'Venezuela':[6.42,-66.59],'Vietnam':[14.06,108.28],'Yemen':[15.55,48.52]};
+
+let currentCode='';
+let selectedIntention='Peace';
+
+function selectChip(el,value){
+  document.querySelectorAll('.chip').forEach(c=>c.classList.remove('active'));
+  el.classList.add('active');
+  selectedIntention=value;
+  document.getElementById('intentionInput').value='';
+}
+
+function getCode(){
+  const params=new URLSearchParams(window.location.search);
+  let code=params.get('code')||'';
+  if(!code){try{code=localStorage.getItem('oneflame_pending_code')||'';}catch(e){}}
+  if(!code){const m=document.cookie.match(/oneflame_pending_code=([^;]+)/);if(m)code=decodeURIComponent(m[1]);}
+  return code.trim().toUpperCase();
+}
+
+async function pollForConfirmation(code){
+  const dotsEl=document.getElementById('waitingDots');
+  const frames=['● ○ ○','○ ● ○','○ ○ ●'];
+  let f=0;
+  const dt=setInterval(()=>{f=(f+1)%3;if(dotsEl)dotsEl.textContent=frames[f];},500);
+  let attempts=0;
+  const poll=setInterval(async()=>{
+    attempts++;
+    try{
+      const res=await fetch(`${SUPABASE_URL}/rest/v1/candles?code=eq.${encodeURIComponent(code)}&payment_confirmed=eq.true&select=code`,{headers:{'apikey':SUPABASE_KEY,'Authorization':`Bearer ${SUPABASE_KEY}`}});
+      const rows=await res.json();
+      if(rows&&rows.length>0){clearInterval(poll);clearInterval(dt);showMainPage(code);}
+      else if(attempts>=24){clearInterval(poll);clearInterval(dt);showMainPage(code);}
+    }catch(e){if(attempts>=24){clearInterval(poll);clearInterval(dt);showMainPage(code);}}
+  },5000);
+}
+
+function showMainPage(code){
+  currentCode=code;
+  document.getElementById('waitingState').style.display='none';
+  document.getElementById('mainPage').style.display='block';
+  document.getElementById('codeDisplay').textContent=code;
+  document.getElementById('certLink').href=`certificate.html?code=${code}`;
+  document.getElementById('mapLink').href=`map.html?candle=${code}`;
+  document.getElementById('skipBtn').href=`map.html?candle=${code}`;
+  try{localStorage.removeItem('oneflame_pending_code');}catch(e){}
+  document.cookie='oneflame_pending_code=; path=/; max-age=0; SameSite=Lax';
+}
+
+async function saveDetails(){
+  const btn=document.getElementById('saveBtn');
+  btn.disabled=true;btn.textContent='Saving…';
+  const nickname=(document.getElementById('nickInput').value||'').trim()||'Anonymous';
+  const country=document.getElementById('countrySelect').value;
+  const hometown=(document.getElementById('hometownInput').value||'').trim();
+  const intentionCustom=(document.getElementById('intentionInput').value||'').trim();
+  const intention=intentionCustom||selectedIntention;
+  const locationName=[hometown,country].filter(Boolean).join(', ')||'';
+  const coords=country&&COUNTRY_COORDS[country]?COUNTRY_COORDS[country]:null;
+  const jitter=()=>parseFloat(((Math.random()*4)-2).toFixed(4));
+  const update={nickname,intention,location_name:locationName};
+  if(coords){update.latitude=parseFloat((coords[0]+jitter()).toFixed(4));update.longitude=parseFloat((coords[1]+jitter()).toFixed(4));}
+  try{
+    await fetch(`${SUPABASE_URL}/rest/v1/candles?code=eq.${encodeURIComponent(currentCode)}`,{method:'PATCH',headers:{'apikey':SUPABASE_KEY,'Authorization':`Bearer ${SUPABASE_KEY}`,'Content-Type':'application/json','Prefer':'return=minimal'},body:JSON.stringify(update)});
+    window.location.href=`map.html?candle=${currentCode}`;
+  }catch(e){btn.disabled=false;btn.textContent='Save and see my flame on the map';}
+}
+
+function shareFlame(){
+  const url=`https://oneflame.earth/map.html?candle=${currentCode}`;
+  const text=`I just lit a candle for peace on the One Flame global map. ${url}`;
+  if(navigator.share){navigator.share({title:'One Flame',text,url}).catch(()=>{});}
+  else{navigator.clipboard.writeText(url).then(()=>alert('Link copied!')).catch(()=>{});}
+}
+
+window.addEventListener('load',()=>{
+  const code=getCode();
+  if(!code){window.location.href='link.html';return;}
+  document.getElementById('waitingCode').textContent=code;
+  pollForConfirmation(code);
+});
+</script>
+</body>
+</html>
