@@ -72,7 +72,7 @@ h1 em{font-style:italic;color:var(--amber-lt);}
 <script>
 const SB_URL='https://rytjvdptbjnlhayclcvu.supabase.co';
 const SB_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJ5dGp2ZHB0YmpubGhheWNsY3Z1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzUzMzA1MjksImV4cCI6MjA5MDkwNjUyOX0.y6qVpN-tJKafDVY_yUk0K6yQ9xXYy5xfIhFoJvqWf48';
-const STRIPE_LINK='https://buy.stripe.com/cNi9AU0At8DecDL7rPeME04';
+const STRIPE_LINK='https://buy.stripe.com/7sY4gA96Z6v6eLT5jHeME05';
 function genCode(){const c='ABCDEFGHJKLMNPQRSTUVWXYZ23456789';return Array.from({length:5},()=>c[Math.floor(Math.random()*c.length)]).join('');}
 function isTikTok(){return /musical_ly|TikTok|BytedanceWebview|ByteLocale/i.test(navigator.userAgent||'');}
 async function loadCount(){try{const res=await fetch(`${SB_URL}/rest/v1/candles?payment_confirmed=eq.true&select=id`,{headers:{'apikey':SB_KEY,'Authorization':`Bearer ${SB_KEY}`,'Prefer':'count=exact','Range':'0-0'}});const h=res.headers.get('content-range');document.getElementById('count').textContent=(h?parseInt(h.split('/')[1])||0:0).toLocaleString();}catch(e){}}
