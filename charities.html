@@ -1,0 +1,956 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Charities &#8212; One Flame</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<meta name="theme-color" content="#FBF7F0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;1,400&family=Source+Serif+4:ital,wght@0,300;1,300&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{--amber:#C8963E;--amber-lt:#E8B86D;--coal:#0D0A06;--char:#1A1108;--cream:#FBF7F0;--parchment:#F5ECD8;--text-dk:#1C1208;--text-mid:#5C4A2E;--text-lt:#9A8570;--green:#3D7A5A;--green-lt:#E8F5EE;--green-border:#B8DDD0;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}html{scroll-behavior:smooth;}
+body{background:var(--cream);color:var(--text-dk);font-family:'Inter',sans-serif;font-weight:300;min-height:100vh;}
+
+.page-hero{background:linear-gradient(135deg,#1A3A1A 0%,#0A2A1A 100%);padding:80px 32px 50px;text-align:center;}
+.hero-eyebrow{font-size:11px;letter-spacing:0.35em;text-transform:uppercase;color:rgba(200,150,62,0.8);margin-bottom:16px;display:block;}
+.hero-title{font-family:'Playfair Display',serif;font-size:clamp(32px,6vw,52px);font-weight:400;color:#FDFAF5;line-height:1.1;margin-bottom:12px;}
+.hero-title em{font-style:italic;color:var(--amber-lt);}
+.hero-sub{font-family:'Source Serif 4',serif;font-size:clamp(14px,2.5vw,17px);font-weight:300;font-style:italic;color:rgba(240,230,211,0.65);max-width:580px;margin:0 auto 24px;line-height:1.7;}
+.back-link{display:inline-flex;align-items:center;gap:6px;font-size:12px;color:rgba(200,150,62,0.7);text-decoration:none;letter-spacing:0.05em;border:1px solid rgba(200,150,62,0.3);border-radius:3px;padding:7px 14px;transition:all 0.2s;}
+.back-link:hover{color:var(--amber-lt);border-color:rgba(200,150,62,0.6);}
+
+.content{max-width:960px;margin:0 auto;padding:48px 24px 100px;}
+
+.section-block{margin-bottom:48px;}
+.section-label{font-size:10px;letter-spacing:0.3em;text-transform:uppercase;color:var(--amber);margin-bottom:8px;display:block;}
+.section-heading{font-family:'Playfair Display',serif;font-size:clamp(20px,3.5vw,30px);font-weight:400;color:var(--text-dk);margin-bottom:16px;line-height:1.2;}
+.section-heading em{font-style:italic;color:var(--amber);}
+.section-para{font-family:'Source Serif 4',serif;font-size:15px;font-weight:300;color:var(--text-mid);line-height:1.8;margin-bottom:16px;}
+
+.divider{border:none;border-top:1px solid rgba(200,150,62,0.15);margin:36px 0;}
+
+/* TABLE */
+.charity-table{width:100%;border-collapse:collapse;margin-bottom:8px;}
+.charity-table thead tr{background:var(--parchment);border-bottom:2px solid rgba(200,150,62,0.2);}
+.charity-table th{font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--text-lt);padding:10px 14px;text-align:left;white-space:nowrap;}
+.charity-table tbody tr{border-bottom:1px solid rgba(200,150,62,0.07);transition:background 0.15s;}
+.charity-table tbody tr:hover{background:var(--parchment);}
+.charity-table td{padding:12px 14px;vertical-align:middle;}
+.td-name{font-family:'Playfair Display',serif;font-size:15px;color:var(--text-dk);min-width:180px;}
+.td-country{font-size:12px;color:var(--text-lt);white-space:nowrap;}
+.td-focus{font-size:12px;color:var(--text-mid);max-width:200px;}
+.td-amount{font-family:'Playfair Display',serif;font-size:15px;color:var(--green);white-space:nowrap;}
+.td-amount.upcoming{color:var(--amber);}
+.td-amount.cost{color:var(--text-mid);}
+.td-status{}
+.badge-paid{display:inline-flex;align-items:center;gap:4px;font-size:10px;color:var(--green);background:var(--green-lt);border:1px solid var(--green-border);border-radius:3px;padding:3px 8px;white-space:nowrap;}
+.badge-upcoming{display:inline-flex;align-items:center;gap:4px;font-size:10px;color:var(--amber);background:rgba(200,150,62,0.08);border:1px solid rgba(200,150,62,0.2);border-radius:3px;padding:3px 8px;white-space:nowrap;}
+.badge-deduction{display:inline-flex;align-items:center;gap:4px;font-size:10px;color:var(--text-lt);background:rgba(92,74,46,0.06);border:1px solid rgba(92,74,46,0.12);border-radius:3px;padding:3px 8px;white-space:nowrap;}
+.link-btn{font-size:11px;color:var(--text-lt);background:none;border:1px solid rgba(200,150,62,0.15);border-radius:3px;padding:4px 10px;cursor:pointer;font-family:'Inter',sans-serif;transition:all 0.2s;white-space:nowrap;}
+.link-btn:hover{border-color:var(--amber);color:var(--amber);}
+.link-btn.has-link{color:var(--green);border-color:var(--green-border);background:var(--green-lt);}
+.receipt-link{font-size:11px;color:var(--green);text-decoration:none;display:inline-flex;align-items:center;gap:4px;padding:4px 10px;border:1px solid var(--green-border);border-radius:3px;background:var(--green-lt);transition:all 0.2s;}
+.receipt-link:hover{background:#D8EFEA;}
+
+.note{font-size:12px;color:var(--text-lt);font-style:italic;margin-top:8px;line-height:1.6;}
+
+@media(max-width:700px){
+  .td-country{display:none;}
+  .td-focus{display:none;}
+  .content{padding:32px 12px 80px;}
+  .charity-table th:nth-child(3),.charity-table td:nth-child(3){display:none;}
+}
+
+footer{background:var(--coal);border-top:1px solid rgba(200,150,62,0.08);padding:36px 32px 32px;text-align:center;}
+.footer-back{font-size:13px;color:var(--text-lt);}
+.footer-back a{color:var(--amber);text-decoration:none;}
+.footer-copy{font-size:11px;color:rgba(154,133,112,0.4);margin-top:8px;}
+</style>
+</head>
+<body>
+
+<section class="page-hero">
+  <span class="hero-eyebrow">One Flame &#183; Where the money goes</span>
+  <h1 class="hero-title">Costs, deductions <em>and charities.</em></h1>
+  <p class="hero-sub">A transparent breakdown of every deduction and every charitable allocation. Up to 80% of net revenue after tax goes to the charities on this page.</p>
+  <a href="accounts.html" class="back-link">&#8592; Back to Transparency</a>
+</section>
+
+<div class="content">
+
+  <!-- COST WATERFALL -->
+  <div class="section-block">
+    <span class="section-label">Deductions &#8212; in order of priority</span>
+    <h2 class="section-heading">What comes out <em>first.</em></h2>
+    <p class="section-para">Revenue from each candle purchase flows through the following deductions before charitable allocation. Each layer is shown here in full.</p>
+
+    <table class="charity-table">
+      <thead>
+        <tr>
+          <th>Item</th>
+          <th>Detail</th>
+          <th class="td-country">Recipient</th>
+          <th>Amount</th>
+          <th>Status</th>
+          <th>Link</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="td-name">1. Payment processing</td>
+          <td class="td-focus">Stripe fee per transaction</td>
+          <td class="td-country">Stripe Inc, USA</td>
+          <td class="td-amount cost">&#126;1.4% + 20p</td>
+          <td class="td-status"><span class="badge-deduction">Deducted</span></td>
+          <td><button class="link-btn" onclick="alert('Stripe pricing: stripe.com/gb/pricing')">&#128279; Add</button></td>
+        </tr>
+        <tr>
+          <td class="td-name">2. Tax &#8212; HMRC</td>
+          <td class="td-focus">NHS, Fire Brigade, Social Welfare, Security. Up to 20% retained for tax obligations, cashflow and infrastructure.</td>
+          <td class="td-country">HMRC, United Kingdom</td>
+          <td class="td-amount cost">Up to 20%</td>
+          <td class="td-status"><span class="badge-deduction">Obligation</span></td>
+          <td><button class="link-btn" onclick="alert('HMRC tax reference added when filed')">&#128279; Add</button></td>
+        </tr>
+        <tr>
+          <td class="td-name">3. Running costs</td>
+          <td class="td-focus">Domain, database, hosting, maintenance, marketing</td>
+          <td class="td-country">Various</td>
+          <td class="td-amount cost">&#60;&#163;2 / month</td>
+          <td class="td-status"><span class="badge-deduction">Ongoing</span></td>
+          <td><button class="link-btn">&#128279; Add</button></td>
+        </tr>
+      </tbody>
+    </table>
+    <p class="note">After the above deductions, up to 80% of remaining net revenue is allocated to the charities below.</p>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- PAID CHARITIES -->
+  <div class="section-block">
+    <span class="section-label">Donations made &#8212; confirmed with receipts</span>
+    <h2 class="section-heading">Promises <em>kept.</em></h2>
+
+    <table class="charity-table">
+      <thead>
+        <tr>
+          <th>Charity</th>
+          <th>Focus</th>
+          <th class="td-country">Country</th>
+          <th>Amount</th>
+          <th>Status</th>
+          <th>Receipt</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="background:rgba(61,122,90,0.04);">
+          <td class="td-name">RNLI Cornwall</td>
+          <td class="td-focus">Saves lives at sea. Cornwall lifeboat stations.</td>
+          <td class="td-country">United Kingdom</td>
+          <td class="td-amount">&#163;50.00</td>
+          <td class="td-status"><span class="badge-paid">&#10003; Donated</span></td>
+          <td><a class="receipt-link" href="RNLI_receipt.pdf" target="_blank">&#128462; Receipt</a></td>
+        </tr>
+        <tr style="background:rgba(61,122,90,0.04);">
+          <td class="td-name">Team Rubicon</td>
+          <td class="td-focus">Veterans responding to global disasters.</td>
+          <td class="td-country">USA</td>
+          <td class="td-amount">$67.78 <span style="font-size:11px;color:var(--text-lt);">(&#8776;&#163;50)</span></td>
+          <td class="td-status"><span class="badge-paid">&#10003; Donated</span></td>
+          <td><a class="receipt-link" href="TeamRubicon_receipt.pdf" target="_blank">&#128462; Receipt</a></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- UPCOMING MILESTONES -->
+  <div class="section-block">
+    <span class="section-label">Upcoming &#8212; at 1,000 candles</span>
+    <h2 class="section-heading">Next <em>milestone.</em></h2>
+    <table class="charity-table">
+      <thead>
+        <tr><th>Charity</th><th>Focus</th><th class="td-country">Country</th><th>Planned amount</th><th>Status</th><th>Link</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="td-name">RNLI</td>
+          <td class="td-focus">Lifeboat rescue and water safety</td>
+          <td class="td-country">United Kingdom</td>
+          <td class="td-amount upcoming">&#163;125</td>
+          <td class="td-status"><span class="badge-upcoming">Upcoming</span></td>
+          <td><button class="link-btn">&#128279; Add</button></td>
+        </tr>
+        <tr>
+          <td class="td-name">Team Rubicon</td>
+          <td class="td-focus">Veterans and disaster response</td>
+          <td class="td-country">USA</td>
+          <td class="td-amount upcoming">&#163;125</td>
+          <td class="td-status"><span class="badge-upcoming">Upcoming</span></td>
+          <td><button class="link-btn">&#128279; Add</button></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- FULL CHARITY LIST -->
+  <div class="section-block">
+    <span class="section-label">Selected global charities &#8212; future allocation list</span>
+    <h2 class="section-heading">The full <em>list.</em></h2>
+    <p class="section-para">These organisations have been selected for future allocation as One Flame grows. Donations will be made at each milestone and receipts published above immediately after each payment.</p>
+    <table class="charity-table">
+      <thead>
+        <tr><th>#</th><th>Charity</th><th class="td-country">Country</th><th>Focus Area</th><th>Status</th><th>Link</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="font-size:11px;color:var(--text-lt);padding:12px 14px;">1</td>
+          <td class="td-name" style="font-size:14px;">St. Jude Children's Research Hospital</td>
+          <td class="td-country">USA</td>
+          <td class="td-focus">Pediatric Cancer/Leukaemia</td>
+          <td class="td-status"><span class="badge-upcoming">Future</span></td>
+          <td><button class="link-btn">&#128279; Add</button></td>
+        </tr>
+        <tr>
+          <td style="font-size:11px;color:var(--text-lt);padding:12px 14px;">2</td>
+          <td class="td-name" style="font-size:14px;">SickKids Foundation</td>
+          <td class="td-country">Canada</td>
+          <td class="td-focus">General Child Health/Surgery</td>
+          <td class="td-status"><span class="badge-upcoming">Future</span></td>
+          <td><button class="link-btn">&#128279; Add</button></td>
+        </tr>
+        <tr>
+          <td style="font-size:11px;color:var(--text-lt);padding:12px 14px;">3</td>
+          <td class="td-name" style="font-size:14px;">Bal Raksha Bharat (Save the Children)</td>
+          <td class="td-country">India</td>
+          <td class="td-focus">Health & Nutrition</td>
+          <td class="td-status"><span class="badge-upcoming">Future</span></td>
+          <td><button class="link-btn">&#128279; Add</button></td>
+        </tr>
+        <tr>
+          <td style="font-size:11px;color:var(--text-lt);padding:12px 14px;">4</td>
+          <td class="td-name" style="font-size:14px;">Gustave Roussy Foundation</td>
+          <td class="td-country">France</td>
+          <td class="td-focus">Paediatric Oncology/Cancer</td>
+          <td class="td-status"><span class="badge-upcoming">Future</span></td>
+          <td><button class="link-btn">&#128279; Add</button></td>
+        </tr>
+        <tr>
+          <td style="font-size:11px;color:var(--text-lt);padding:12px 14px;">5</td>
+          <td class="td-name" style="font-size:14px;">Deutsche Kinderkrebsstiftung</td>
+          <td class="td-country">Germany</td>
+          <td class="td-focus">Childhood Cancer</td>
+          <td class="td-status"><span class="badge-upcoming">Future</span></td>
+          <td><button class="link-btn">&#128279; Add</button></td>
+        </tr>
+        <tr>
+          <td style="font-size:11px;color:var(--text-lt);padding:12px 14px;">6</td>
+          <td class="td-name" style="font-size:14px;">Inocenti Foundation</td>
+          <td class="td-country">Romania</td>
+          <td class="td-focus">Mobility/Special Needs</td>
+          <td class="td-status"><span class="badge-upcoming">Future</span></td>
+          <td><button class="link-btn">&#128279; Add</button></td>
+        </tr>
+        <tr>
+          <td style="font-size:11px;color:var(--text-lt);padding:12px 14px;">7</td>
+          <td class="td-name" style="font-size:14px;">Caritas Bulgaria</td>
+          <td class="td-country">Bulgaria</td>
+          <td class="td-focus">Child Healthcare/Social Support</td>
+          <td class="td-status"><span class="badge-upcoming">Future</span></td>
+          <td><button class="link-btn">&#128279; Add</button></td>
+        </tr>
+        <tr>
+          <td style="font-size:11px;color:var(--text-lt);padding:12px 14px;">8</td>
+          <td class="td-name" style="font-size:14px;">The Smile of the Child</td>
+          <td class="td-country">Greece</td>
+          <td class="td-focus">Medical Support/Emergency Care</td>
+          <td class="td-status"><span class="badge-upcoming">Future</span></td>
+          <td><button class="link-btn">&#128279; Add</button></td>
+        </tr>
+        <tr>
+          <td style="font-size:11px;color:var(--text-lt);padding:12px 14px;">9</td>
+          <td class="td-name" style="font-size:14px;">Al Jalila Foundation</td>
+          <td class="td-country">UAE</td>
+          <td class="td-focus">Life-saving Treatment/Research</td>
+          <td class="td-status"><span class="badge-upcoming">Future</span></td>
+          <td><button class="link-btn">&#128279; Add</button></td>
+        </tr>
+        <tr>
+          <td style="font-size:11px;color:var(--text-lt);padding:12px 14px;">10</td>
+          <td class="td-name" style="font-size:14px;">Qatar Charity (Children's Healthcare)</td>
+          <td class="td-country">Qatar</td>
+          <td class="td-focus">Global Paediatric Health</td>
+          <td class="td-status"><span class="badge-upcoming">Future</span></td>
+          <td><button class="link-btn">&#128279; Add</button></td>
+        </tr>
+        <tr>
+          <td style="font-size:11px;color:var(--text-lt);padding:12px 14px;">11</td>
+          <td class="td-name" style="font-size:14px;">American Childhood Cancer Organization</td>
+          <td class="td-country">USA</td>
+          <td class="td-focus">Cancer/Leukaemia</td>
+          <td class="td-status"><span class="badge-upcoming">Future</span></td>
+          <td><button class="link-btn">&#128279; Add</button></td>
+        </tr>
+        <tr>
+          <td style="font-size:11px;color:var(--text-lt);padding:12px 14px;">12</td>
+          <td class="td-name" style="font-size:14px;">BC Children's Hospital Foundation</td>
+          <td class="td-country">Canada</td>
+          <td class="td-focus">Specialised Paediatrics</td>
+          <td class="td-status"><span class="badge-upcoming">Future</span></td>
+          <td><button class="link-btn">&#128279; Add</button></td>
+        </tr>
+        <tr>
+          <td style="font-size:11px;color:var(--text-lt);padding:12px 14px;">13</td>
+          <td class="td-name" style="font-size:14px;">CanKids KidsCan</td>
+          <td class="td-country">India</td>
+          <td class="td-focus">Paediatric Oncology</td>
+          <td class="td-status"><span class="badge-upcoming">Future</span></td>
+          <td><button class="link-btn">&#128279; Add</button></td>
+        </tr>
+        <tr>
+          <td style="font-size:11px;color:var(--text-lt);padding:12px 14px;">14</td>
+          <td class="td-name" style="font-size:14px;">Imagine for Margo</td>
+          <td class="td-country">France</td>
+          <td class="td-focus">Childhood Cancer Research</td>
+          <td class="td-status"><span class="badge-upcoming">Future</span></td>
+          <td><button class="link-btn">&#128279; Add</button></td>
+        </tr>
+        <tr>
+          <td style="font-size:11px;color:var(--text-lt);padding:12px 14px;">15</td>
+          <td class="td-name" style="font-size:14px;">Kinderträume e.V.</td>
+          <td class="td-country">Germany</td>
+          <td class="td-focus">Life-threatening Illnesses</td>
+          <td class="td-status"><span class="badge-upcoming">Future</span></td>
+          <td><button class="link-btn">&#128279; Add</button></td>
+        </tr>
+        <tr>
+          <td style="font-size:11px;color:var(--text-lt);padding:12px 14px;">16</td>
+          <td class="td-name" style="font-size:14px;">Hospice Casa Sperantei</td>
+          <td class="td-country">Romania</td>
+          <td class="td-focus">Paediatric Palliative Care</td>
+          <td class="td-status"><span class="badge-upcoming">Future</span></td>
+          <td><button class="link-btn">&#128279; Add</button></td>
+        </tr>
+        <tr>
+          <td style="font-size:11px;color:var(--text-lt);padding:12px 14px;">17</td>
+          <td class="td-name" style="font-size:14px;">For Our Children Foundation</td>
+          <td class="td-country">Bulgaria</td>
+          <td class="td-focus">Child Health & Development</td>
+          <td class="td-status"><span class="badge-upcoming">Future</span></td>
+          <td><button class="link-btn">&#128279; Add</button></td>
+        </tr>
+        <tr>
+          <td style="font-size:11px;color:var(--text-lt);padding:12px 14px;">18</td>
+          <td class="td-name" style="font-size:14px;">ELPIDA Association</td>
+          <td class="td-country">Greece</td>
+          <td class="td-focus">Childhood Cancer</td>
+          <td class="td-status"><span class="badge-upcoming">Future</span></td>
+          <td><button class="link-btn">&#128279; Add</button></td>
+        </tr>
+        <tr>
+          <td style="font-size:11px;color:var(--text-lt);padding:12px 14px;">19</td>
+          <td class="td-name" style="font-size:14px;">Make-A-Wish Foundation UAE</td>
+          <td class="td-country">UAE</td>
+          <td class="td-focus">Critical Illnesses</td>
+          <td class="td-status"><span class="badge-upcoming">Future</span></td>
+          <td><button class="link-btn">&#128279; Add</button></td>
+        </tr>
+        <tr>
+          <td style="font-size:11px;color:var(--text-lt);padding:12px 14px;">20</td>
+          <td class="td-name" style="font-size:14px;">Sidra Medicine Foundation</td>
+          <td class="td-country">Qatar</td>
+          <td class="td-focus">Rare Diseases/Specialised Health</td>
+          <td class="td-status"><span class="badge-upcoming">Future</span></td>
+          <td><button class="link-btn">&#128279; Add</button></td>
+        </tr>
+        <tr>
+          <td style="font-size:11px;color:var(--text-lt);padding:12px 14px;">21</td>
+          <td class="td-name" style="font-size:14px;">Shriners Hospitals for Children</td>
+          <td class="td-country">USA</td>
+          <td class="td-focus">Orthopaedics/Mobility</td>
+          <td class="td-status"><span class="badge-upcoming">Future</span></td>
+          <td><button class="link-btn">&#128279; Add</button></td>
+        </tr>
+        <tr>
+          <td style="font-size:11px;color:var(--text-lt);padding:12px 14px;">22</td>
+          <td class="td-name" style="font-size:14px;">CHEO Foundation</td>
+          <td class="td-country">Canada</td>
+          <td class="td-focus">Paediatric Health</td>
+          <td class="td-status"><span class="badge-upcoming">Future</span></td>
+          <td><button class="link-btn">&#128279; Add</button></td>
+        </tr>
+        <tr>
+          <td style="font-size:11px;color:var(--text-lt);padding:12px 14px;">23</td>
+          <td class="td-name" style="font-size:14px;">Childline India Foundation</td>
+          <td class="td-country">India</td>
+          <td class="td-focus">Emergency Medical/Health</td>
+          <td class="td-status"><span class="badge-upcoming">Future</span></td>
+          <td><button class="link-btn">&#128279; Add</button></td>
+        </tr>
+        <tr>
+          <td style="font-size:11px;color:var(--text-lt);padding:12px 14px;">24</td>
+          <td class="td-name" style="font-size:14px;">Association Petits Princes</td>
+          <td class="td-country">France</td>
+          <td class="td-focus">Severe Sickness</td>
+          <td class="td-status"><span class="badge-upcoming">Future</span></td>
+          <td><button class="link-btn">&#128279; Add</button></td>
+        </tr>
+        <tr>
+          <td style="font-size:11px;color:var(--text-lt);padding:12px 14px;">25</td>
+          <td class="td-name" style="font-size:14px;">Kindernothilfe</td>
+          <td class="td-country">Germany</td>
+          <td class="td-focus">Global Child Health</td>
+          <td class="td-status"><span class="badge-upcoming">Future</span></td>
+          <td><button class="link-btn">&#128279; Add</button></td>
+        </tr>
+        <tr>
+          <td style="font-size:11px;color:var(--text-lt);padding:12px 14px;">26</td>
+          <td class="td-name" style="font-size:14px;">Daruieste Viata</td>
+          <td class="td-country">Romania</td>
+          <td class="td-focus">Oncology/Hospital Infrastructure</td>
+          <td class="td-status"><span class="badge-upcoming">Future</span></td>
+          <td><button class="link-btn">&#128279; Add</button></td>
+        </tr>
+        <tr>
+          <td style="font-size:11px;color:var(--text-lt);padding:12px 14px;">27</td>
+          <td class="td-name" style="font-size:14px;">Cedar Foundation</td>
+          <td class="td-country">Bulgaria</td>
+          <td class="td-focus">Disability/Mobility</td>
+          <td class="td-status"><span class="badge-upcoming">Future</span></td>
+          <td><button class="link-btn">&#128279; Add</button></td>
+        </tr>
+        <tr>
+          <td style="font-size:11px;color:var(--text-lt);padding:12px 14px;">28</td>
+          <td class="td-name" style="font-size:14px;">Floga Parents Association</td>
+          <td class="td-country">Greece</td>
+          <td class="td-focus">Cancer/Leukaemia</td>
+          <td class="td-status"><span class="badge-upcoming">Future</span></td>
+          <td><button class="link-btn">&#128279; Add</button></td>
+        </tr>
+        <tr>
+          <td style="font-size:11px;color:var(--text-lt);padding:12px 14px;">29</td>
+          <td class="td-name" style="font-size:14px;">Dubai Cares</td>
+          <td class="td-country">UAE</td>
+          <td class="td-focus">Integrated Child Health</td>
+          <td class="td-status"><span class="badge-upcoming">Future</span></td>
+          <td><button class="link-btn">&#128279; Add</button></td>
+        </tr>
+        <tr>
+          <td style="font-size:11px;color:var(--text-lt);padding:12px 14px;">30</td>
+          <td class="td-name" style="font-size:14px;">Education Above All</td>
+          <td class="td-country">Qatar</td>
+          <td class="td-focus">Healthcare/Displaced Children</td>
+          <td class="td-status"><span class="badge-upcoming">Future</span></td>
+          <td><button class="link-btn">&#128279; Add</button></td>
+        </tr>
+        <tr>
+          <td style="font-size:11px;color:var(--text-lt);padding:12px 14px;">31</td>
+          <td class="td-name" style="font-size:14px;">HelpAge India</td>
+          <td class="td-country">India</td>
+          <td class="td-focus">Geriatric Health & Rights</td>
+          <td class="td-status"><span class="badge-upcoming">Future</span></td>
+          <td><button class="link-btn">&#128279; Add</button></td>
+        </tr>
+        <tr>
+          <td style="font-size:11px;color:var(--text-lt);padding:12px 14px;">32</td>
+          <td class="td-name" style="font-size:14px;">Alzheimer Society of Canada</td>
+          <td class="td-country">Canada</td>
+          <td class="td-focus">Dementia & Alzheimer's</td>
+          <td class="td-status"><span class="badge-upcoming">Future</span></td>
+          <td><button class="link-btn">&#128279; Add</button></td>
+        </tr>
+        <tr>
+          <td style="font-size:11px;color:var(--text-lt);padding:12px 14px;">33</td>
+          <td class="td-name" style="font-size:14px;">Les Petits Frères des Pauvres</td>
+          <td class="td-country">France</td>
+          <td class="td-focus">Isolation & Health</td>
+          <td class="td-status"><span class="badge-upcoming">Future</span></td>
+          <td><button class="link-btn">&#128279; Add</button></td>
+        </tr>
+        <tr>
+          <td style="font-size:11px;color:var(--text-lt);padding:12px 14px;">34</td>
+          <td class="td-name" style="font-size:14px;">Alzheimer Forschung Initiative</td>
+          <td class="td-country">Germany</td>
+          <td class="td-focus">Alzheimer's Research</td>
+          <td class="td-status"><span class="badge-upcoming">Future</span></td>
+          <td><button class="link-btn">&#128279; Add</button></td>
+        </tr>
+        <tr>
+          <td style="font-size:11px;color:var(--text-lt);padding:12px 14px;">35</td>
+          <td class="td-name" style="font-size:14px;">Foundation for Elderly Care (FEC)</td>
+          <td class="td-country">Romania</td>
+          <td class="td-focus">Day Care & Medical Services</td>
+          <td class="td-status"><span class="badge-upcoming">Future</span></td>
+          <td><button class="link-btn">&#128279; Add</button></td>
+        </tr>
+        <tr>
+          <td style="font-size:11px;color:var(--text-lt);padding:12px 14px;">36</td>
+          <td class="td-name" style="font-size:14px;">Caritas Bulgaria (Elderly Division)</td>
+          <td class="td-country">Bulgaria</td>
+          <td class="td-focus">Home Care & Mobility</td>
+          <td class="td-status"><span class="badge-upcoming">Future</span></td>
+          <td><button class="link-btn">&#128279; Add</button></td>
+        </tr>
+        <tr>
+          <td style="font-size:11px;color:var(--text-lt);padding:12px 14px;">37</td>
+          <td class="td-name" style="font-size:14px;">The People's Trust</td>
+          <td class="td-country">Greece</td>
+          <td class="td-focus">Social Support for Seniors</td>
+          <td class="td-status"><span class="badge-upcoming">Future</span></td>
+          <td><button class="link-btn">&#128279; Add</button></td>
+        </tr>
+        <tr>
+          <td style="font-size:11px;color:var(--text-lt);padding:12px 14px;">38</td>
+          <td class="td-name" style="font-size:14px;">AARP Foundation</td>
+          <td class="td-country">USA</td>
+          <td class="td-focus">Elder Poverty & Health</td>
+          <td class="td-status"><span class="badge-upcoming">Future</span></td>
+          <td><button class="link-btn">&#128279; Add</button></td>
+        </tr>
+        <tr>
+          <td style="font-size:11px;color:var(--text-lt);padding:12px 14px;">39</td>
+          <td class="td-name" style="font-size:14px;">Al Jalila Foundation (Elderly Care)</td>
+          <td class="td-country">UAE</td>
+          <td class="td-focus">Medical Treatment/Research</td>
+          <td class="td-status"><span class="badge-upcoming">Future</span></td>
+          <td><button class="link-btn">&#128279; Add</button></td>
+        </tr>
+        <tr>
+          <td style="font-size:11px;color:var(--text-lt);padding:12px 14px;">40</td>
+          <td class="td-name" style="font-size:14px;">Qatar Charity (Elderly Support)</td>
+          <td class="td-country">Qatar</td>
+          <td class="td-focus">Health & Inclusion</td>
+          <td class="td-status"><span class="badge-upcoming">Future</span></td>
+          <td><button class="link-btn">&#128279; Add</button></td>
+        </tr>
+        <tr>
+          <td style="font-size:11px;color:var(--text-lt);padding:12px 14px;">41</td>
+          <td class="td-name" style="font-size:14px;">Meals on Wheels America</td>
+          <td class="td-country">USA</td>
+          <td class="td-focus">Nutrition & Wellness</td>
+          <td class="td-status"><span class="badge-upcoming">Future</span></td>
+          <td><button class="link-btn">&#128279; Add</button></td>
+        </tr>
+        <tr>
+          <td style="font-size:11px;color:var(--text-lt);padding:12px 14px;">42</td>
+          <td class="td-name" style="font-size:14px;">Dignity in Aging</td>
+          <td class="td-country">Canada</td>
+          <td class="td-focus">Senior Advocacy</td>
+          <td class="td-status"><span class="badge-upcoming">Future</span></td>
+          <td><button class="link-btn">&#128279; Add</button></td>
+        </tr>
+        <tr>
+          <td style="font-size:11px;color:var(--text-lt);padding:12px 14px;">43</td>
+          <td class="td-name" style="font-size:14px;">Dignity Foundation</td>
+          <td class="td-country">India</td>
+          <td class="td-focus">Social Support/Dementia</td>
+          <td class="td-status"><span class="badge-upcoming">Future</span></td>
+          <td><button class="link-btn">&#128279; Add</button></td>
+        </tr>
+        <tr>
+          <td style="font-size:11px;color:var(--text-lt);padding:12px 14px;">44</td>
+          <td class="td-name" style="font-size:14px;">France Alzheimer</td>
+          <td class="td-country">France</td>
+          <td class="td-focus">Brain Health/Memory Care</td>
+          <td class="td-status"><span class="badge-upcoming">Future</span></td>
+          <td><button class="link-btn">&#128279; Add</button></td>
+        </tr>
+        <tr>
+          <td style="font-size:11px;color:var(--text-lt);padding:12px 14px;">45</td>
+          <td class="td-name" style="font-size:14px;">Malteser Hilfsdienst</td>
+          <td class="td-country">Germany</td>
+          <td class="td-focus">Geriatric Nursing/Palliative Care</td>
+          <td class="td-status"><span class="badge-upcoming">Future</span></td>
+          <td><button class="link-btn">&#128279; Add</button></td>
+        </tr>
+        <tr>
+          <td style="font-size:11px;color:var(--text-lt);padding:12px 14px;">46</td>
+          <td class="td-name" style="font-size:14px;">Hospice Casa Sperantei (Geriatric)</td>
+          <td class="td-country">Romania</td>
+          <td class="td-focus">Palliative Care/Chronic Sickness</td>
+          <td class="td-status"><span class="badge-upcoming">Future</span></td>
+          <td><button class="link-btn">&#128279; Add</button></td>
+        </tr>
+        <tr>
+          <td style="font-size:11px;color:var(--text-lt);padding:12px 14px;">47</td>
+          <td class="td-name" style="font-size:14px;">Cedar Foundation (Elderly Services)</td>
+          <td class="td-country">Bulgaria</td>
+          <td class="td-focus">Mobility/Long-term Care</td>
+          <td class="td-status"><span class="badge-upcoming">Future</span></td>
+          <td><button class="link-btn">&#128279; Add</button></td>
+        </tr>
+        <tr>
+          <td style="font-size:11px;color:var(--text-lt);padding:12px 14px;">48</td>
+          <td class="td-name" style="font-size:14px;">Mission ANTHROPOS</td>
+          <td class="td-country">Greece</td>
+          <td class="td-focus">Medical Care for the Elderly</td>
+          <td class="td-status"><span class="badge-upcoming">Future</span></td>
+          <td><button class="link-btn">&#128279; Add</button></td>
+        </tr>
+        <tr>
+          <td style="font-size:11px;color:var(--text-lt);padding:12px 14px;">49</td>
+          <td class="td-name" style="font-size:14px;">Family Care Society</td>
+          <td class="td-country">UAE</td>
+          <td class="td-focus">Senior Social & Health Services</td>
+          <td class="td-status"><span class="badge-upcoming">Future</span></td>
+          <td><button class="link-btn">&#128279; Add</button></td>
+        </tr>
+        <tr>
+          <td style="font-size:11px;color:var(--text-lt);padding:12px 14px;">50</td>
+          <td class="td-name" style="font-size:14px;">Ehssan (Qatar Center for Rehabilitation)</td>
+          <td class="td-country">Qatar</td>
+          <td class="td-focus">Geriatric Rehabilitation</td>
+          <td class="td-status"><span class="badge-upcoming">Future</span></td>
+          <td><button class="link-btn">&#128279; Add</button></td>
+        </tr>
+        <tr>
+          <td style="font-size:11px;color:var(--text-lt);padding:12px 14px;">51</td>
+          <td class="td-name" style="font-size:14px;">BrightFocus Foundation</td>
+          <td class="td-country">USA</td>
+          <td class="td-focus">Alzheimer's & Vision Loss</td>
+          <td class="td-status"><span class="badge-upcoming">Future</span></td>
+          <td><button class="link-btn">&#128279; Add</button></td>
+        </tr>
+        <tr>
+          <td style="font-size:11px;color:var(--text-lt);padding:12px 14px;">52</td>
+          <td class="td-name" style="font-size:14px;">HelpAge Canada</td>
+          <td class="td-country">Canada</td>
+          <td class="td-focus">Senior Mobility/Isolation</td>
+          <td class="td-status"><span class="badge-upcoming">Future</span></td>
+          <td><button class="link-btn">&#128279; Add</button></td>
+        </tr>
+        <tr>
+          <td style="font-size:11px;color:var(--text-lt);padding:12px 14px;">53</td>
+          <td class="td-name" style="font-size:14px;">AgeWell Foundation</td>
+          <td class="td-country">India</td>
+          <td class="td-focus">Senior Healthcare/Advocacy</td>
+          <td class="td-status"><span class="badge-upcoming">Future</span></td>
+          <td><button class="link-btn">&#128279; Add</button></td>
+        </tr>
+        <tr>
+          <td style="font-size:11px;color:var(--text-lt);padding:12px 14px;">54</td>
+          <td class="td-name" style="font-size:14px;">Fondation de France (Solidarité)</td>
+          <td class="td-country">France</td>
+          <td class="td-focus">Vulnerable Elderly</td>
+          <td class="td-status"><span class="badge-upcoming">Future</span></td>
+          <td><button class="link-btn">&#128279; Add</button></td>
+        </tr>
+        <tr>
+          <td style="font-size:11px;color:var(--text-lt);padding:12px 14px;">55</td>
+          <td class="td-name" style="font-size:14px;">Deutsches Altenhilfswerk</td>
+          <td class="td-country">Germany</td>
+          <td class="td-focus">Gerontology & Home Care</td>
+          <td class="td-status"><span class="badge-upcoming">Future</span></td>
+          <td><button class="link-btn">&#128279; Add</button></td>
+        </tr>
+        <tr>
+          <td style="font-size:11px;color:var(--text-lt);padding:12px 14px;">56</td>
+          <td class="td-name" style="font-size:14px;">Margareta of Romania Royal Foundation</td>
+          <td class="td-country">Romania</td>
+          <td class="td-focus">Elderly Isolation & Medical</td>
+          <td class="td-status"><span class="badge-upcoming">Future</span></td>
+          <td><button class="link-btn">&#128279; Add</button></td>
+        </tr>
+        <tr>
+          <td style="font-size:11px;color:var(--text-lt);padding:12px 14px;">57</td>
+          <td class="td-name" style="font-size:14px;">BCRC Bulgaria</td>
+          <td class="td-country">Bulgaria</td>
+          <td class="td-focus">Humanitarian/Geriatric Aid</td>
+          <td class="td-status"><span class="badge-upcoming">Future</span></td>
+          <td><button class="link-btn">&#128279; Add</button></td>
+        </tr>
+        <tr>
+          <td style="font-size:11px;color:var(--text-lt);padding:12px 14px;">58</td>
+          <td class="td-name" style="font-size:14px;">Lifeline Hellas</td>
+          <td class="td-country">Greece</td>
+          <td class="td-focus">Medical Equipment for Seniors</td>
+          <td class="td-status"><span class="badge-upcoming">Future</span></td>
+          <td><button class="link-btn">&#128279; Add</button></td>
+        </tr>
+        <tr>
+          <td style="font-size:11px;color:var(--text-lt);padding:12px 14px;">59</td>
+          <td class="td-name" style="font-size:14px;">Red Crescent UAE (Senior Care)</td>
+          <td class="td-country">UAE</td>
+          <td class="td-focus">Health & Home Assistance</td>
+          <td class="td-status"><span class="badge-upcoming">Future</span></td>
+          <td><button class="link-btn">&#128279; Add</button></td>
+        </tr>
+        <tr>
+          <td style="font-size:11px;color:var(--text-lt);padding:12px 14px;">60</td>
+          <td class="td-name" style="font-size:14px;">Qatar Red Crescent Society</td>
+          <td class="td-country">Qatar</td>
+          <td class="td-focus">Emergency Healthcare for Seniors</td>
+          <td class="td-status"><span class="badge-upcoming">Future</span></td>
+          <td><button class="link-btn">&#128279; Add</button></td>
+        </tr>
+        <tr>
+          <td style="font-size:11px;color:var(--text-lt);padding:12px 14px;">61</td>
+          <td class="td-name" style="font-size:14px;">Australian Red Cross (Seniors)</td>
+          <td class="td-country">Australia</td>
+          <td class="td-focus">Loneliness & Home Health</td>
+          <td class="td-status"><span class="badge-upcoming">Future</span></td>
+          <td><button class="link-btn">&#128279; Add</button></td>
+        </tr>
+        <tr>
+          <td style="font-size:11px;color:var(--text-lt);padding:12px 14px;">62</td>
+          <td class="td-name" style="font-size:14px;">Dementia Australia</td>
+          <td class="td-country">Australia</td>
+          <td class="td-focus">Alzheimer's & Brain Health</td>
+          <td class="td-status"><span class="badge-upcoming">Future</span></td>
+          <td><button class="link-btn">&#128279; Add</button></td>
+        </tr>
+        <tr>
+          <td style="font-size:11px;color:var(--text-lt);padding:12px 14px;">63</td>
+          <td class="td-name" style="font-size:14px;">Charity Foundation Starenki</td>
+          <td class="td-country">Ukraine</td>
+          <td class="td-focus">Food & Medicine for Isolated Elderly</td>
+          <td class="td-status"><span class="badge-upcoming">Future</span></td>
+          <td><button class="link-btn">&#128279; Add</button></td>
+        </tr>
+        <tr>
+          <td style="font-size:11px;color:var(--text-lt);padding:12px 14px;">64</td>
+          <td class="td-name" style="font-size:14px;">Turbota pro Litnikh v Ukraini</td>
+          <td class="td-country">Ukraine</td>
+          <td class="td-focus">Geriatric Rights & Health</td>
+          <td class="td-status"><span class="badge-upcoming">Future</span></td>
+          <td><button class="link-btn">&#128279; Add</button></td>
+        </tr>
+        <tr>
+          <td style="font-size:11px;color:var(--text-lt);padding:12px 14px;">65</td>
+          <td class="td-name" style="font-size:14px;">Red Cross of Serbia</td>
+          <td class="td-country">Serbia</td>
+          <td class="td-focus">Home Care & Mobility Aids</td>
+          <td class="td-status"><span class="badge-upcoming">Future</span></td>
+          <td><button class="link-btn">&#128279; Add</button></td>
+        </tr>
+        <tr>
+          <td style="font-size:11px;color:var(--text-lt);padding:12px 14px;">66</td>
+          <td class="td-name" style="font-size:14px;">Amity Foundation Serbia</td>
+          <td class="td-country">Serbia</td>
+          <td class="td-focus">Social Integration & Health Advocacy</td>
+          <td class="td-status"><span class="badge-upcoming">Future</span></td>
+          <td><button class="link-btn">&#128279; Add</button></td>
+        </tr>
+        <tr>
+          <td style="font-size:11px;color:var(--text-lt);padding:12px 14px;">67</td>
+          <td class="td-name" style="font-size:14px;">Darülaceze Foundation</td>
+          <td class="td-country">Turkey</td>
+          <td class="td-focus">Geriatric Medical Care/Shelter</td>
+          <td class="td-status"><span class="badge-upcoming">Future</span></td>
+          <td><button class="link-btn">&#128279; Add</button></td>
+        </tr>
+        <tr>
+          <td style="font-size:11px;color:var(--text-lt);padding:12px 14px;">68</td>
+          <td class="td-name" style="font-size:14px;">Turkish Alzheimer Association</td>
+          <td class="td-country">Turkey</td>
+          <td class="td-focus">Dementia Care & Research</td>
+          <td class="td-status"><span class="badge-upcoming">Future</span></td>
+          <td><button class="link-btn">&#128279; Add</button></td>
+        </tr>
+        <tr>
+          <td style="font-size:11px;color:var(--text-lt);padding:12px 14px;">69</td>
+          <td class="td-name" style="font-size:14px;">Caritas Georgia (Health Program)</td>
+          <td class="td-country">Georgia</td>
+          <td class="td-focus">Home Nursing & Rehabilitation</td>
+          <td class="td-status"><span class="badge-upcoming">Future</span></td>
+          <td><button class="link-btn">&#128279; Add</button></td>
+        </tr>
+        <tr>
+          <td style="font-size:11px;color:var(--text-lt);padding:12px 14px;">70</td>
+          <td class="td-name" style="font-size:14px;">Hippo (Humanitarian Foundation)</td>
+          <td class="td-country">Georgia</td>
+          <td class="td-focus">Vulnerable Senior Support</td>
+          <td class="td-status"><span class="badge-upcoming">Future</span></td>
+          <td><button class="link-btn">&#128279; Add</button></td>
+        </tr>
+        <tr>
+          <td style="font-size:11px;color:var(--text-lt);padding:12px 14px;">71</td>
+          <td class="td-name" style="font-size:14px;">Caritas Azerbaijan</td>
+          <td class="td-country">Azerbaijan</td>
+          <td class="td-focus">Medical & Social Support</td>
+          <td class="td-status"><span class="badge-upcoming">Future</span></td>
+          <td><button class="link-btn">&#128279; Add</button></td>
+        </tr>
+        <tr>
+          <td style="font-size:11px;color:var(--text-lt);padding:12px 14px;">72</td>
+          <td class="td-name" style="font-size:14px;">Red Crescent Society of Azerbaijan</td>
+          <td class="td-country">Azerbaijan</td>
+          <td class="td-focus">Elderly Disaster/Health Relief</td>
+          <td class="td-status"><span class="badge-upcoming">Future</span></td>
+          <td><button class="link-btn">&#128279; Add</button></td>
+        </tr>
+        <tr>
+          <td style="font-size:11px;color:var(--text-lt);padding:12px 14px;">73</td>
+          <td class="td-name" style="font-size:14px;">AAGG (Gerontology Association)</td>
+          <td class="td-country">Albania</td>
+          <td class="td-focus">Geriatric Medicine</td>
+          <td class="td-status"><span class="badge-upcoming">Future</span></td>
+          <td><button class="link-btn">&#128279; Add</button></td>
+        </tr>
+        <tr>
+          <td style="font-size:11px;color:var(--text-lt);padding:12px 14px;">74</td>
+          <td class="td-name" style="font-size:14px;">Caritas Albania (Elderly Care)</td>
+          <td class="td-country">Albania</td>
+          <td class="td-focus">Home-based Healthcare</td>
+          <td class="td-status"><span class="badge-upcoming">Future</span></td>
+          <td><button class="link-btn">&#128279; Add</button></td>
+        </tr>
+        <tr>
+          <td style="font-size:11px;color:var(--text-lt);padding:12px 14px;">75</td>
+          <td class="td-name" style="font-size:14px;">National Seniors Australia</td>
+          <td class="td-country">Australia</td>
+          <td class="td-focus">Research & Health Policy</td>
+          <td class="td-status"><span class="badge-upcoming">Future</span></td>
+          <td><button class="link-btn">&#128279; Add</button></td>
+        </tr>
+        <tr>
+          <td style="font-size:11px;color:var(--text-lt);padding:12px 14px;">76</td>
+          <td class="td-name" style="font-size:14px;">Age Concern Ukraine</td>
+          <td class="td-country">Ukraine</td>
+          <td class="td-focus">Chronic Sickness Support</td>
+          <td class="td-status"><span class="badge-upcoming">Future</span></td>
+          <td><button class="link-btn">&#128279; Add</button></td>
+        </tr>
+        <tr>
+          <td style="font-size:11px;color:var(--text-lt);padding:12px 14px;">77</td>
+          <td class="td-name" style="font-size:14px;">Bread of Life (Hleb Života)</td>
+          <td class="td-country">Serbia</td>
+          <td class="td-focus">Elderly Nursing & Care</td>
+          <td class="td-status"><span class="badge-upcoming">Future</span></td>
+          <td><button class="link-btn">&#128279; Add</button></td>
+        </tr>
+        <tr>
+          <td style="font-size:11px;color:var(--text-lt);padding:12px 14px;">78</td>
+          <td class="td-name" style="font-size:14px;">Kızılay (Turkish Red Crescent)</td>
+          <td class="td-country">Turkey</td>
+          <td class="td-focus">Elderly Respite & Health</td>
+          <td class="td-status"><span class="badge-upcoming">Future</span></td>
+          <td><button class="link-btn">&#128279; Add</button></td>
+        </tr>
+        <tr>
+          <td style="font-size:11px;color:var(--text-lt);padding:12px 14px;">79</td>
+          <td class="td-name" style="font-size:14px;">MACAS (Senior Support)</td>
+          <td class="td-country">Australia</td>
+          <td class="td-focus">Geriatric Mental Health</td>
+          <td class="td-status"><span class="badge-upcoming">Future</span></td>
+          <td><button class="link-btn">&#128279; Add</button></td>
+        </tr>
+        <tr>
+          <td style="font-size:11px;color:var(--text-lt);padding:12px 14px;">80</td>
+          <td class="td-name" style="font-size:14px;">The Smith Family (Seniors Program)</td>
+          <td class="td-country">Australia</td>
+          <td class="td-focus">Integrated Community Health</td>
+          <td class="td-status"><span class="badge-upcoming">Future</span></td>
+          <td><button class="link-btn">&#128279; Add</button></td>
+        </tr>
+        <tr>
+          <td style="font-size:11px;color:var(--text-lt);padding:12px 14px;">81</td>
+          <td class="td-name" style="font-size:14px;">CARE Australia (Caucasus Branch)</td>
+          <td class="td-country">Georgia</td>
+          <td class="td-focus">Vulnerable Community Health</td>
+          <td class="td-status"><span class="badge-upcoming">Future</span></td>
+          <td><button class="link-btn">&#128279; Add</button></td>
+        </tr>
+        <tr>
+          <td style="font-size:11px;color:var(--text-lt);padding:12px 14px;">82</td>
+          <td class="td-name" style="font-size:14px;">Project HOPE (Ukraine Response)</td>
+          <td class="td-country">Ukraine</td>
+          <td class="td-focus">Medical Supplies for Seniors</td>
+          <td class="td-status"><span class="badge-upcoming">Future</span></td>
+          <td><button class="link-btn">&#128279; Add</button></td>
+        </tr>
+        <tr>
+          <td style="font-size:11px;color:var(--text-lt);padding:12px 14px;">83</td>
+          <td class="td-name" style="font-size:14px;">Fondacioni Arsimor Shqiptar</td>
+          <td class="td-country">Albania</td>
+          <td class="td-focus">Social Care & Senior Health</td>
+          <td class="td-status"><span class="badge-upcoming">Future</span></td>
+          <td><button class="link-btn">&#128279; Add</button></td>
+        </tr>
+        <tr>
+          <td style="font-size:11px;color:var(--text-lt);padding:12px 14px;">84</td>
+          <td class="td-name" style="font-size:14px;">Belhospice (Palliative Care)</td>
+          <td class="td-country">Serbia</td>
+          <td class="td-focus">Cancer & Palliative Care</td>
+          <td class="td-status"><span class="badge-upcoming">Future</span></td>
+          <td><button class="link-btn">&#128279; Add</button></td>
+        </tr>
+        <tr>
+          <td style="font-size:11px;color:var(--text-lt);padding:12px 14px;">85</td>
+          <td class="td-name" style="font-size:14px;">Handicap International (Turkey)</td>
+          <td class="td-country">Turkey</td>
+          <td class="td-focus">Physical Mobility/Disability</td>
+          <td class="td-status"><span class="badge-upcoming">Future</span></td>
+          <td><button class="link-btn">&#128279; Add</button></td>
+        </tr>
+        <tr>
+          <td style="font-size:11px;color:var(--text-lt);padding:12px 14px;">86</td>
+          <td class="td-name" style="font-size:14px;">Bolnisi Home Care</td>
+          <td class="td-country">Georgia</td>
+          <td class="td-focus">Geriatric Nursing</td>
+          <td class="td-status"><span class="badge-upcoming">Future</span></td>
+          <td><button class="link-btn">&#128279; Add</button></td>
+        </tr>
+        <tr>
+          <td style="font-size:11px;color:var(--text-lt);padding:12px 14px;">87</td>
+          <td class="td-name" style="font-size:14px;">Qatar Red Crescent (Region Support)</td>
+          <td class="td-country">Azerbaijan</td>
+          <td class="td-focus">Healthcare Missions</td>
+          <td class="td-status"><span class="badge-upcoming">Future</span></td>
+          <td><button class="link-btn">&#128279; Add</button></td>
+        </tr>
+        <tr>
+          <td style="font-size:11px;color:var(--text-lt);padding:12px 14px;">88</td>
+          <td class="td-name" style="font-size:14px;">GlobalGiving (Albania Relief)</td>
+          <td class="td-country">Albania</td>
+          <td class="td-focus">Community Health/Elderly</td>
+          <td class="td-status"><span class="badge-upcoming">Future</span></td>
+          <td><button class="link-btn">&#128279; Add</button></td>
+        </tr>
+        <tr>
+          <td style="font-size:11px;color:var(--text-lt);padding:12px 14px;">89</td>
+          <td class="td-name" style="font-size:14px;">COTA Australia (Ageing)</td>
+          <td class="td-country">Australia</td>
+          <td class="td-focus">Geriatric Policy & Health</td>
+          <td class="td-status"><span class="badge-upcoming">Future</span></td>
+          <td><button class="link-btn">&#128279; Add</button></td>
+        </tr>
+        <tr>
+          <td style="font-size:11px;color:var(--text-lt);padding:12px 14px;">90</td>
+          <td class="td-name" style="font-size:14px;">LifeLine Ukraine</td>
+          <td class="td-country">Ukraine</td>
+          <td class="td-focus">Senior Mental Health/Crisis</td>
+          <td class="td-status"><span class="badge-upcoming">Future</span></td>
+          <td><button class="link-btn">&#128279; Add</button></td>
+        </tr>
+      </tbody>
+    </table>
+    <p class="note">All donations are made in the currency of the receiving charity. Where amounts are in a currency other than GBP, the approximate sterling equivalent at the time of donation is shown in brackets.</p>
+  </div>
+
+</div>
+
+<footer>
+  <p class="footer-back"><a href="accounts.html">&#8592; Back to Financial Transparency</a></p>
+  <p class="footer-copy">&#169; 2026 One Flame &#183; oneflame.earth</p>
+</footer>
+
+<script>
+// Link buttons — placeholder for future receipt/link attachment
+document.querySelectorAll('.link-btn:not(.has-link)').forEach(btn => {
+  if (!btn.onclick) {
+    btn.addEventListener('click', function() {
+      const name = this.closest('tr').querySelector('.td-name')?.textContent || 'this item';
+      alert('Receipt or link for ' + name.trim() + ' will be added here when available.');
+    });
+  }
+});
+</script>
+</body>
+</html>
