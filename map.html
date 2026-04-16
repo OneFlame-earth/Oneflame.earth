@@ -821,19 +821,13 @@ function renderExpiredCandles(list) {
     g.setAttribute('class','expired-dot');
     g.style.cursor = 'pointer';
 
-    const ring = document.createElementNS('http://www.w3.org/2000/svg','circle');
-    ring.setAttribute('cx',pos.x); ring.setAttribute('cy',pos.y);
-    ring.setAttribute('r', sz.glow * 0.8);
-    ring.setAttribute('fill','rgba(154,133,112,0.07)');
-    ring.setAttribute('stroke','rgba(154,133,112,0.2)');
-    ring.setAttribute('stroke-width','0.5');
-
+    // Ghost: tiny nearly-transparent pale dot only — no glow ring
     const dot = document.createElementNS('http://www.w3.org/2000/svg','circle');
     dot.setAttribute('cx',pos.x); dot.setAttribute('cy',pos.y);
-    dot.setAttribute('r', sz.dot * 0.6);
-    dot.setAttribute('fill','#4A3828');
+    dot.setAttribute('r', sz.dot * 0.28);
+    dot.setAttribute('fill','rgba(240,230,211,0.22)');
 
-    g.appendChild(ring); g.appendChild(dot);
+    g.appendChild(dot);
 
     // Hover on expired
     const tt = document.getElementById('candleTooltip');
@@ -858,8 +852,8 @@ function renderExpiredCandles(list) {
       showRelightPopup(c, t.clientX, t.clientY);
     }, {passive:false});
 
-    g.addEventListener('mouseenter', () => { dot.setAttribute('fill','#6A5840'); ring.setAttribute('stroke','rgba(200,150,62,0.35)'); });
-    g.addEventListener('mouseleave', () => { dot.setAttribute('fill','#4A3828'); ring.setAttribute('stroke','rgba(154,133,112,0.2)'); });
+    g.addEventListener('mouseenter', () => { dot.setAttribute('fill','rgba(240,230,211,0.55)'); });
+    g.addEventListener('mouseleave', () => { dot.setAttribute('fill','rgba(240,230,211,0.22)'); });
 
     (mapGroupEl || svgEl).appendChild(g);
   });
