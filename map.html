@@ -812,7 +812,10 @@ function positionTooltip(cx, cy) {
 function renderExpiredCandles(list) {
   const svgEl = document.getElementById('mapSvg');
   svgEl.querySelectorAll('.expired-dot').forEach(el => el.remove());
-  const sz = dotSize();
+
+  // Fixed radius in SVG units — independent of candles array length or zoom state
+  // At k=1 (world view) this is ~1.2px on screen. Tiny, unobtrusive.
+  const ghostR = 1.2 / currentK;
 
   list.forEach(c => {
     if (!c.latitude || (c.code||'').startsWith('S')) return;
@@ -821,11 +824,11 @@ function renderExpiredCandles(list) {
     g.setAttribute('class','expired-dot');
     g.style.cursor = 'pointer';
 
-    // Ghost: tiny nearly-transparent pale dot only — no glow ring
+    // Ghost: single tiny dot, nearly transparent pale cream, no glow ring
     const dot = document.createElementNS('http://www.w3.org/2000/svg','circle');
     dot.setAttribute('cx',pos.x); dot.setAttribute('cy',pos.y);
-    dot.setAttribute('r', sz.dot * 0.28);
-    dot.setAttribute('fill','rgba(240,230,211,0.22)');
+    dot.setAttribute('r', ghostR);
+    dot.setAttribute('fill','rgba(240,230,211,0.25)');
 
     g.appendChild(dot);
 
@@ -852,8 +855,8 @@ function renderExpiredCandles(list) {
       showRelightPopup(c, t.clientX, t.clientY);
     }, {passive:false});
 
-    g.addEventListener('mouseenter', () => { dot.setAttribute('fill','rgba(240,230,211,0.55)'); });
-    g.addEventListener('mouseleave', () => { dot.setAttribute('fill','rgba(240,230,211,0.22)'); });
+    g.addEventListener('mouseenter', () => { dot.setAttribute('fill','rgba(240,230,211,0.7)'); dot.setAttribute('r', ghostR * 2); });
+    g.addEventListener('mouseleave', () => { dot.setAttribute('fill','rgba(240,230,211,0.25)'); dot.setAttribute('r', ghostR); });
 
     (mapGroupEl || svgEl).appendChild(g);
   });
