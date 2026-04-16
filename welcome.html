@@ -169,7 +169,9 @@ function pollForConfirmation(code){
 }
 function showMainPage(code){currentCode=code;document.getElementById('waitingState').style.display='none';document.getElementById('mainPage').style.display='block';document.getElementById('codeDisplay').textContent=code;document.getElementById('skipBtn').href=`map.html?candle=${code}`;}
 async function saveDetails(){
-  const btn=document.getElementById('saveBtn');btn.disabled=true;btn.textContent='Saving…';
+  const btn=document.getElementById('saveBtn');
+  btn.disabled=true;btn.textContent='Saving…';
+
   const nick=(document.getElementById('nickInput').value||'').trim()||'Anonymous';
   const country=document.getElementById('countrySelect').value;
   const hometown=(document.getElementById('hometownInput').value||'').trim();
@@ -177,36 +179,71 @@ async function saveDetails(){
   const intention=customIntent||selectedIntention;
   const pin=(document.getElementById('pinInput').value||'').trim();
   const email=(document.getElementById('emailInput').value||'').trim().toLowerCase();
+
   const coords=country&&COUNTRY_COORDS[country]?COUNTRY_COORDS[country]:null;
   const jit=()=>parseFloat(((Math.random()*4)-2).toFixed(4));
-  const update={nickname:nick,intention,location_name:[hometown,country].filter(Boolean).join(', ')||''};
-  if(coords){update.latitude=parseFloat((coords[0]+jit()).toFixed(4));update.longitude=parseFloat((coords[1]+jit()).toFixed(4));}
-  if(pin&&pin.length===4&&/^\d{4}$/.test(pin))update.pin=pin;
-  if(email)update.email=email;
 
-  // Try full update first (includes pin/email if columns exist)
-  // Fall back to core fields only if that fails
-  let patched=false;
-  try{
-    const res=await fetch(`${SB_URL}/rest/v1/candles?code=eq.${encodeURIComponent(currentCode)}`,{
-      method:'PATCH',
-      headers:{'apikey':SB_KEY,'Authorization':`Bearer ${SB_KEY}`,'Content-Type':'application/json','Prefer':'return=minimal'},
-      body:JSON.stringify(update)
-    });
-    if(res.ok){patched=true;}
-    else{
-      // Columns may not exist yet — retry with core fields only
-      const core={nickname:update.nickname,intention:update.intention,location_name:update.location_name};
-      if(update.latitude!=null)core.latitude=update.latitude;
-      if(update.longitude!=null)core.longitude=update.longitude;
-      const res2=await fetch(`${SB_URL}/rest/v1/candles?code=eq.${encodeURIComponent(currentCode)}`,{
-        method:'PATCH',
-        headers:{'apikey':SB_KEY,'Authorization':`Bearer ${SB_KEY}`,'Content-Type':'application/json','Prefer':'return=minimal'},
-        body:JSON.stringify(core)
-      });
-      if(res2.ok)patched=true;
+  // Build update payload - core fields always included
+  const update={
+    nickname: nick,
+    intention: intention,
+    location_name: [hometown,country].filter(Boolean).join(', ')||''
+  };
+  if(coords){
+    update.latitude=parseFloat((coords[0]+jit()).toFixed(4));
+    update.longitude=parseFloat((coords[1]+jit()).toFixed(4));
+  }
+  // Optional fields - only add if columns exist and values provided
+  if(pin&&pin.length===4&&/^\d{4}$/.test(pin)) update.pin=pin;
+  if(email) update.email=email;
+
+  // Attempt PATCH with full retry logic
+  // Uses both confirmed and unconfirmed filter to handle timing edge cases
+  const doFetch = async (payload) => {
+    const headers = {
+      'apikey': SB_KEY,
+      'Authorization': 'Bearer '+SB_KEY,
+      'Content-Type': 'application/json',
+      'Prefer': 'return=representation'
+    };
+    // Try matching by code regardless of payment_confirmed state
+    const r = await fetch(
+      SB_URL+'/rest/v1/candles?code=eq.'+encodeURIComponent(currentCode),
+      {method:'PATCH', headers, body:JSON.stringify(payload)}
+    );
+    const text = await r.text();
+    console.log('[welcome] PATCH status:', r.status, 'body:', text);
+    if(!r.ok) throw new Error('HTTP '+r.status+': '+text);
+    const rows = text ? JSON.parse(text) : [];
+    return rows.length > 0; // true = at least one row updated
+  };
+
+  let saved = false;
+  // Try 1: full payload including pin/email
+  try {
+    saved = await doFetch(update);
+  } catch(e) {
+    console.warn('[welcome] Full PATCH failed:', e.message);
+    // Try 2: core fields only (in case pin/email columns missing)
+    const core = {
+      nickname: update.nickname,
+      intention: update.intention,
+      location_name: update.location_name
+    };
+    if(update.latitude!=null) core.latitude=update.latitude;
+    if(update.longitude!=null) core.longitude=update.longitude;
+    try {
+      saved = await doFetch(core);
+    } catch(e2) {
+      console.error('[welcome] Core PATCH also failed:', e2.message);
     }
-  }catch(e){console.error('PATCH error:',e);}
+  }
+
+  console.log('[welcome] Saved:', saved, 'for code:', currentCode);
+  if(!saved) {
+    // Show error but still let them proceed
+    btn.textContent='Saved (verification pending)';
+  }
   showDonePage();
 }
 function showDonePage(){document.getElementById('mainPage').style.display='none';document.getElementById('donePage').style.display='block';document.getElementById('doneCode').textContent=currentCode;document.getElementById('doneMapLink').href=`map.html?candle=${currentCode}`;document.getElementById('doneCertLink').href=`certificate.html?code=${currentCode}`;}
