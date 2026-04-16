@@ -1168,10 +1168,19 @@ async function runFind() {
 function zoomToCandle(code) {
   const c = candles.find(x => x.code === code) || expiredCandles.find(x => x.code === code);
   if (!c) {
-    // Try fetching it if not in memory
-    sbGet(`candles?code=eq.${encodeURIComponent(code)}&payment_confirmed=eq.true&select=*`)
-      .then(rows => { if (rows && rows.length > 0) _doZoom(rows[0]); })
-      .catch(() => {});
+    // Not in memory yet — fetch directly from Supabase with retry
+    const attempt = (retries) => {
+      sbGet(`candles?code=eq.${encodeURIComponent(code)}&payment_confirmed=eq.true&select=*`)
+        .then(rows => {
+          if (rows && rows.length > 0) {
+            _doZoom(rows[0]);
+          } else if (retries > 0) {
+            setTimeout(() => attempt(retries - 1), 2000);
+          }
+        })
+        .catch(() => { if (retries > 0) setTimeout(() => attempt(retries - 1), 2000); });
+    };
+    attempt(5); // retry up to 5 times, 2s apart
     return;
   }
   _doZoom(c);

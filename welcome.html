@@ -183,7 +183,30 @@ async function saveDetails(){
   if(coords){update.latitude=parseFloat((coords[0]+jit()).toFixed(4));update.longitude=parseFloat((coords[1]+jit()).toFixed(4));}
   if(pin&&pin.length===4&&/^\d{4}$/.test(pin))update.pin=pin;
   if(email)update.email=email;
-  try{await fetch(`${SB_URL}/rest/v1/candles?code=eq.${encodeURIComponent(currentCode)}`,{method:'PATCH',headers:{'apikey':SB_KEY,'Authorization':`Bearer ${SB_KEY}`,'Content-Type':'application/json','Prefer':'return=minimal'},body:JSON.stringify(update)});}catch(e){}
+
+  // Try full update first (includes pin/email if columns exist)
+  // Fall back to core fields only if that fails
+  let patched=false;
+  try{
+    const res=await fetch(`${SB_URL}/rest/v1/candles?code=eq.${encodeURIComponent(currentCode)}`,{
+      method:'PATCH',
+      headers:{'apikey':SB_KEY,'Authorization':`Bearer ${SB_KEY}`,'Content-Type':'application/json','Prefer':'return=minimal'},
+      body:JSON.stringify(update)
+    });
+    if(res.ok){patched=true;}
+    else{
+      // Columns may not exist yet — retry with core fields only
+      const core={nickname:update.nickname,intention:update.intention,location_name:update.location_name};
+      if(update.latitude!=null)core.latitude=update.latitude;
+      if(update.longitude!=null)core.longitude=update.longitude;
+      const res2=await fetch(`${SB_URL}/rest/v1/candles?code=eq.${encodeURIComponent(currentCode)}`,{
+        method:'PATCH',
+        headers:{'apikey':SB_KEY,'Authorization':`Bearer ${SB_KEY}`,'Content-Type':'application/json','Prefer':'return=minimal'},
+        body:JSON.stringify(core)
+      });
+      if(res2.ok)patched=true;
+    }
+  }catch(e){console.error('PATCH error:',e);}
   showDonePage();
 }
 function showDonePage(){document.getElementById('mainPage').style.display='none';document.getElementById('donePage').style.display='block';document.getElementById('doneCode').textContent=currentCode;document.getElementById('doneMapLink').href=`map.html?candle=${currentCode}`;document.getElementById('doneCertLink').href=`certificate.html?code=${currentCode}`;}
