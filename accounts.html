@@ -6,10 +6,11 @@
 <title>Financial Transparency &#8212; One Flame</title>
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <meta name="theme-color" content="#FBF7F0">
-<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;1,400&family=Source+Serif+4:ital,wght@0,300;1,300&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<meta name="description" content="Complete financial transparency from One Flame. Every pound declared. Every charity donation proven with receipts.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;1,400&family=Source+Serif+4:ital,wght@0,300;1,300&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
-
-:root{--amber:#C8963E;--amber-lt:#E8B86D;--ember:#E05A1B;--coal:#0D0A06;--char:#1A1108;--cream:#FBF7F0;--parchment:#F5ECD8;--sand:#EDE0C8;--text-dk:#1C1208;--text-mid:#5C4A2E;--text-lt:#9A8570;--green:#3D7A5A;}
+:root{--amber:#C8963E;--amber-lt:#E8B86D;--ember:#E05A1B;--coal:#0D0A06;--char:#1A1108;--cream:#FBF7F0;--parchment:#F5ECD8;--sand:#EDE0C8;--text-dk:#1C1208;--text-mid:#5C4A2E;--text-lt:#9A8570;--green:#3D7A5A;--green-lt:#E8F5EE;--green-border:#B8DDD0;}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}html{scroll-behavior:smooth;}
 body{background:var(--cream);color:var(--text-dk);font-family:'Inter',sans-serif;font-weight:300;min-height:100vh;}
 .burger-nav{position:fixed;top:14px;left:16px;z-index:500;}
@@ -32,33 +33,67 @@ body{background:var(--cream);color:var(--text-dk);font-family:'Inter',sans-serif
 .nav-cta-wrap{padding:16px 20px;border-top:1px solid rgba(200,150,62,0.1);}
 .nav-cta-btn{display:block;width:100%;background:var(--amber);color:var(--coal);font-family:'Inter',sans-serif;font-size:13px;font-weight:500;padding:13px 16px;border-radius:3px;text-decoration:none;text-align:center;letter-spacing:0.04em;}
 .nav-cta-btn:hover{background:var(--amber-lt);}
-.page-hero{padding:90px 32px 60px;text-align:center;}
-.hero-eyebrow{font-size:11px;letter-spacing:0.35em;text-transform:uppercase;color:var(--amber);margin-bottom:16px;display:block;}
-.hero-title{font-family:'Playfair Display',serif;font-size:clamp(36px,7vw,60px);font-weight:400;color:var(--text-dk);line-height:1.1;margin-bottom:12px;}
-.hero-title em{font-style:italic;color:var(--amber);}
-.hero-sub{font-family:'Source Serif 4',serif;font-size:clamp(15px,2.5vw,18px);font-weight:300;font-style:italic;color:var(--text-mid);max-width:540px;margin:0 auto;line-height:1.7;}
-.content{max-width:780px;margin:0 auto;padding:48px 32px 100px;}
-.content h2{font-family:'Playfair Display',serif;font-size:clamp(20px,3.5vw,28px);font-weight:400;color:var(--text-dk);margin:44px 0 14px;}
-.content h2:first-child{margin-top:0;}
-.content p{font-family:'Source Serif 4',serif;font-size:clamp(15px,2vw,17px);font-weight:300;color:var(--text-mid);line-height:1.85;margin-bottom:16px;}
-.content ul,.content ol{margin:0 0 16px 24px;}
-.content li{font-family:'Source Serif 4',serif;font-size:16px;color:var(--text-mid);line-height:1.8;margin-bottom:6px;}
-.content a{color:var(--amber);text-decoration:none;}
-.content a:hover{text-decoration:underline;}
-.content hr{border:none;border-top:1px solid rgba(200,150,62,0.15);margin:32px 0;}
-.content strong{color:var(--text-dk);font-weight:400;}
+
+.page-hero{background:linear-gradient(135deg,#1A3A1A 0%,#0A2A0A 100%);padding:90px 32px 60px;text-align:center;}
+.hero-eyebrow{font-size:11px;letter-spacing:0.35em;text-transform:uppercase;color:rgba(200,150,62,0.8);margin-bottom:16px;display:block;}
+.hero-title{font-family:'Playfair Display',serif;font-size:clamp(36px,7vw,60px);font-weight:400;color:#FDFAF5;line-height:1.1;margin-bottom:12px;}
+.hero-title em{font-style:italic;color:var(--amber-lt);}
+.hero-sub{font-family:'Source Serif 4',serif;font-size:clamp(15px,2.5vw,18px);font-weight:300;font-style:italic;color:rgba(240,230,211,0.65);max-width:540px;margin:0 auto;line-height:1.7;}
+
+.content{max-width:820px;margin:0 auto;padding:60px 32px 100px;}
+
+.section-label{font-size:11px;letter-spacing:0.3em;text-transform:uppercase;color:var(--amber);margin-bottom:12px;display:block;}
+.section-heading{font-family:'Playfair Display',serif;font-size:clamp(24px,4vw,36px);font-weight:400;color:var(--text-dk);margin-bottom:8px;line-height:1.15;}
+.section-heading em{font-style:italic;color:var(--amber);}
+.section-para{font-family:'Source Serif 4',serif;font-size:16px;font-weight:300;color:var(--text-mid);line-height:1.85;margin-bottom:24px;}
+
+.divider{border:none;border-top:1px solid rgba(200,150,62,0.15);margin:48px 0;}
+
+/* COST TABLE */
+.cost-table{width:100%;border-collapse:collapse;margin-bottom:24px;}
+.cost-table th{font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--text-lt);padding:8px 12px;text-align:left;border-bottom:2px solid rgba(200,150,62,0.15);}
+.cost-table td{padding:12px 12px;font-family:'Source Serif 4',serif;font-size:15px;color:var(--text-mid);border-bottom:1px solid rgba(200,150,62,0.08);}
+.cost-table td:last-child{text-align:right;font-weight:400;color:var(--text-dk);}
+
+/* CHARITY CARDS */
+.charity-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;margin-top:28px;}
+.charity-card{background:#fff;border:1px solid rgba(200,150,62,0.18);border-radius:6px;padding:28px;position:relative;overflow:hidden;}
+.charity-card.donated{border-color:rgba(61,122,90,0.3);}
+.charity-card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;}
+.charity-card.donated::before{background:linear-gradient(90deg,var(--green),#6AAE8A);}
+.charity-card.upcoming::before{background:linear-gradient(90deg,var(--amber),var(--amber-lt));}
+.charity-amount{font-family:'Playfair Display',serif;font-size:28px;font-weight:400;color:var(--amber);margin-bottom:4px;}
+.charity-amount.green{color:var(--green);}
+.charity-name{font-family:'Playfair Display',serif;font-size:18px;color:var(--text-dk);margin-bottom:8px;}
+.charity-trigger{font-size:11px;letter-spacing:0.05em;color:var(--text-lt);margin-bottom:10px;}
+.charity-desc{font-family:'Source Serif 4',serif;font-size:14px;color:var(--text-mid);line-height:1.6;margin-bottom:16px;}
+.charity-footer{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;}
+.status-badge{display:inline-flex;align-items:center;gap:5px;font-size:11px;letter-spacing:0.05em;padding:4px 10px;border-radius:3px;}
+.status-paid{background:var(--green-lt);color:var(--green);border:1px solid var(--green-border);}
+.status-upcoming{background:rgba(200,150,62,0.08);color:var(--amber);border:1px solid rgba(200,150,62,0.2);}
+.receipt-link{font-size:12px;color:var(--green);text-decoration:none;display:inline-flex;align-items:center;gap:4px;padding:4px 10px;border:1px solid var(--green-border);border-radius:3px;background:var(--green-lt);transition:all 0.2s;}
+.receipt-link:hover{background:#D8EFEA;}
+.receipt-detail{font-size:11px;color:var(--text-lt);margin-top:8px;line-height:1.5;}
+
+/* MILESTONE TIMELINE */
+.milestone-timeline{margin-top:28px;}
+.milestone-row{display:flex;gap:20px;margin-bottom:20px;align-items:flex-start;}
+.milestone-dot{width:14px;height:14px;border-radius:50%;flex-shrink:0;margin-top:4px;}
+.milestone-dot.done{background:var(--green);}
+.milestone-dot.upcoming{background:rgba(200,150,62,0.4);border:2px solid rgba(200,150,62,0.4);}
+.milestone-body{}
+.milestone-target{font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-lt);margin-bottom:2px;}
+.milestone-desc{font-family:'Source Serif 4',serif;font-size:15px;color:var(--text-mid);line-height:1.6;}
+.milestone-desc strong{color:var(--text-dk);font-weight:400;}
+
+@media(max-width:600px){.content{padding:48px 20px 80px;}.charity-grid{grid-template-columns:1fr;}}
+
 footer{background:var(--coal);border-top:1px solid rgba(200,150,62,0.08);padding:48px 32px 40px;text-align:center;}
 .footer-logo{font-family:'Playfair Display',serif;font-size:18px;color:var(--amber);margin-bottom:20px;}
 .footer-links{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;margin-bottom:20px;}
 .footer-links a{font-size:12px;color:var(--text-lt);text-decoration:none;transition:color 0.2s;}
 .footer-links a:hover{color:var(--amber);}
 .footer-copy{font-size:11px;color:rgba(154,133,112,0.4);}
-
-.page-hero{background:linear-gradient(135deg,#1A3A1A 0%,#0A2A0A 100%);padding:90px 32px 60px;text-align:center;}
-.page-hero .hero-title{color:#FDFAF5;}
-.page-hero .hero-eyebrow{color:rgba(200,150,62,0.8);}
-.page-hero .hero-sub{color:rgba(240,230,211,0.65);}
-
 </style>
 </head>
 <body>
@@ -80,52 +115,124 @@ footer{background:var(--coal);border-top:1px solid rgba(200,150,62,0.08);padding
   </ul>
   <div class="nav-cta-wrap"><a href="https://buy.stripe.com/cNi9AU0At8DecDL7rPeME04" class="nav-cta-btn">&#128367;&#65039; Your candle always &#8212; &#163;1.78</a></div>
 </nav>
+
 <section class="page-hero">
   <span class="hero-eyebrow">One Flame &#183; Transparency</span>
   <h1 class="hero-title">Every penny, <em>accounted for.</em></h1>
-  <p class="hero-sub">Full financial transparency. Every pound in and out.</p>
+  <p class="hero-sub">Full financial transparency. Every donation made is published here with the original receipt as proof.</p>
 </section>
+
 <div class="content">
 
-<h2>Why we publish this</h2>
-<p>Every candle lit on One Flame generates revenue. We believe you have the right to know exactly where that money goes. This page is updated regularly and shows the complete financial picture.</p>
-<h2>Revenue</h2>
-<p>Each candle is purchased for £1.78. After Stripe's payment processing fee (approximately 1.4% + 20p per transaction for UK cards), the net revenue per candle is approximately £1.55.</p>
-<h2>Costs</h2>
-<ul>
-  <li>Domain registration (Namecheap): £12/year</li>
-  <li>Database (Supabase free tier): £0/month</li>
-  <li>Hosting (GitHub Pages): £0/month</li>
-  <li>Total fixed monthly costs: under £2/month</li>
-</ul>
-<h2>Charitable giving</h2>
-<p>Donations are made personally by the founder at each milestone. They are not taken from operating revenue but are a personal commitment.</p>
-<p>Current milestones:</p>
-<ul>
-  <li>100 candles &#8212; £50 to RNLI Cornwall &#9989; Donated</li>
-  <li>200 candles &#8212; £50 to Team Rubicon &#9989; Donated</li>
-  <li>1,000 candles &#8212; £250 to a charity chosen by the community (upcoming)</li>
-  <li>10,000 candles &#8212; £1,000 (upcoming)</li>
-</ul>
-<h2>Receipts</h2>
-<p>Every donation receipt is published on the <a href="receipts.html">Our Story</a> page. No exceptions. If a donation is made and no receipt is published within 14 days, please contact us.</p>
-<h2>What the founder takes</h2>
-<p>One Flame is a solo project built over Easter 2026. Any income generated above costs is retained by the founder as compensation for the time invested in building and maintaining the platform. This is disclosed here in the spirit of full transparency.</p>
-<h2>Contact</h2>
-<p>Questions about finances: <a href="mailto:hello@oneflame.earth">hello@oneflame.earth</a></p>
-<hr>
-<p>Last updated: April 2026</p>
+  <span class="section-label">Revenue</span>
+  <h2 class="section-heading">How we <em>earn.</em></h2>
+  <p class="section-para">Each candle is purchased for &#163;1.78. After Stripe&#8217;s payment processing fee (approximately 1.4% + 20p per UK card transaction), net revenue per candle is approximately &#163;1.55.</p>
+
+  <hr class="divider">
+
+  <span class="section-label">Running costs</span>
+  <h2 class="section-heading">What it costs to <em>run this.</em></h2>
+  <table class="cost-table">
+    <thead><tr><th>Item</th><th>Provider</th><th>Cost</th></tr></thead>
+    <tbody>
+      <tr><td>Domain registration</td><td>Namecheap</td><td>&#163;12 / year</td></tr>
+      <tr><td>Database</td><td>Supabase (free tier)</td><td>&#163;0 / month</td></tr>
+      <tr><td>Hosting</td><td>GitHub Pages</td><td>&#163;0 / month</td></tr>
+      <tr><td>Payment processing</td><td>Stripe</td><td>&#126;1.4% + 20p / transaction</td></tr>
+      <tr><td><strong>Total fixed monthly</strong></td><td></td><td><strong>Under &#163;2 / month</strong></td></tr>
+    </tbody>
+  </table>
+
+  <hr class="divider">
+
+  <span class="section-label">What the founder takes</span>
+  <h2 class="section-heading">The <em>founder&#8217;s share.</em></h2>
+  <p class="section-para">One Flame is built and maintained solo. Any income above running costs is retained by the founder as compensation for time. This is disclosed here without exception.</p>
+
+  <hr class="divider">
+
+  <span class="section-label">Charitable giving &#8212; donations made</span>
+  <h2 class="section-heading">Promises <em>kept.</em></h2>
+  <p class="section-para">These donations were made personally by the founder. The receipts are reproduced here in full. Click any receipt to view the original document.</p>
+
+  <div class="charity-grid">
+
+    <div class="charity-card donated">
+      <div class="charity-amount green">&#163;50.00</div>
+      <div class="charity-name">RNLI Cornwall</div>
+      <div class="charity-trigger">Milestone: first donations made &#183; 16 April 2026</div>
+      <div class="charity-desc">The Royal National Lifeboat Institution saves lives at sea. Cornwall stations cover some of the most challenging waters around the British Isles.</div>
+      <div class="charity-footer">
+        <span class="status-badge status-paid">&#10003; Donated &#183; &#163;50.00</span>
+        <a class="receipt-link" href="RNLI_receipt.pdf" target="_blank">&#128462; View receipt</a>
+      </div>
+      <div class="receipt-detail">Receipt ref: 601535540 &#183; Confirmed by Max Seal, RNLI Supporter Experience &#183; 16 April 2026</div>
+    </div>
+
+    <div class="charity-card donated">
+      <div class="charity-amount green">$67.78</div>
+      <div class="charity-name">Team Rubicon</div>
+      <div class="charity-trigger">Milestone: first donations made &#183; 16 April 2026</div>
+      <div class="charity-desc">Veterans responding to disasters worldwide. They go where it is hardest and stay until the work is done. Led by Greyshirt volunteers.</div>
+      <div class="charity-footer">
+        <span class="status-badge status-paid">&#10003; Donated &#183; $67.78</span>
+        <a class="receipt-link" href="TeamRubicon_receipt.pdf" target="_blank">&#128462; View receipt</a>
+      </div>
+      <div class="receipt-detail">Receipt ref: 2026I00000511 &#183; Confirmed by Jim Brooks, CEO &#183; 16 April 2026</div>
+    </div>
+
+  </div>
+
+  <hr class="divider">
+
+  <span class="section-label">Upcoming milestones</span>
+  <h2 class="section-heading">What comes <em>next.</em></h2>
+  <p class="section-para">The following donations will be made when each milestone is reached. Receipts will be published here immediately after each donation.</p>
+
+  <div class="milestone-timeline">
+
+    <div class="milestone-row">
+      <div class="milestone-dot done"></div>
+      <div class="milestone-body">
+        <div class="milestone-target">Launch donations &#8212; completed</div>
+        <div class="milestone-desc"><strong>&#163;50 to RNLI</strong> and <strong>$67.78 to Team Rubicon.</strong> Receipts published above.</div>
+      </div>
+    </div>
+
+    <div class="milestone-row">
+      <div class="milestone-dot upcoming"></div>
+      <div class="milestone-body">
+        <div class="milestone-target">1,000 candles lit</div>
+        <div class="milestone-desc"><strong>&#163;125 to RNLI</strong> and <strong>&#163;125 to Team Rubicon.</strong> Receipts will be published here within 14 days of the milestone being reached.</div>
+      </div>
+    </div>
+
+    <div class="milestone-row">
+      <div class="milestone-dot upcoming"></div>
+      <div class="milestone-body">
+        <div class="milestone-target">10,000 candles lit</div>
+        <div class="milestone-desc">Donation amount and recipient to be announced. Will be published here when confirmed.</div>
+      </div>
+    </div>
+
+  </div>
+
+  <hr class="divider">
+
+  <span class="section-label">Our commitment</span>
+  <p class="section-para">If a donation is made and no receipt is published within 14 days, contact us at <a href="mailto:hello@oneflame.earth" style="color:var(--amber);">hello@oneflame.earth</a> and we will provide it immediately.</p>
 
 </div>
+
 <footer>
   <div class="footer-logo">One Flame</div>
   <div class="footer-links">
     <a href="index.html">Home</a><a href="map.html">Map</a><a href="flames.html">All Flames</a>
-    <a href="certificate.html">Certificate</a><a href="receipts.html">Our Story</a>
-    <a href="terms.html">Terms</a><a href="privacy.html">Privacy</a><a href="cookies.html">Cookies</a>
+    <a href="receipts.html">Our Story</a><a href="terms.html">Terms</a><a href="privacy.html">Privacy</a>
   </div>
   <p class="footer-copy">&#169; 2026 One Flame &#183; oneflame.earth</p>
 </footer>
+
 <script>
 function toggleNav(){const btn=document.getElementById('burgerBtn'),d=document.getElementById('navDrawer'),o=document.getElementById('navOverlay');if(!btn||!d||!o)return;const open=d.classList.contains('open');btn.classList.toggle('open',!open);d.classList.toggle('open',!open);o.classList.toggle('open',!open);document.body.style.overflow=!open?'hidden':'';}
 document.addEventListener('keydown',e=>{if(e.key==='Escape'){const d=document.getElementById('navDrawer');if(d&&d.classList.contains('open'))toggleNav();}});
