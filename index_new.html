@@ -1,0 +1,1028 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>One Flame — Your Candle. Always.</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<meta name="theme-color" content="#1a0f00">
+<meta name="description" content="One flame. Yours forever. Light it for peace, for hope, for someone you love. Relight it any time. One fee. Your candle always.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="One Flame — Your Candle. Always.">
+<meta property="og:description" content="One fee. Your candle forever. Relight any time. For peace, for hope, for the ones you love.">
+<meta property="og:image" content="https://oneflame.earth/og-image.png">
+<meta property="og:url" content="https://oneflame.earth">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400;1,500&family=Source+Serif+4:ital,wght@0,300;0,400;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-DE073YZBKL"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-DE073YZBKL');</script>
+<style>
+/* ── TOKENS ─────────────────────────────────────────────── */
+:root {
+  --flame:    #E8821A;
+  --amber:    #C8963E;
+  --amber-lt: #E8B86D;
+  --ember:    #E05A1B;
+  --coal:     #0D0A06;
+  --char:     #1A1108;
+  --warm-dk:  #2C1F0E;
+  --warm-mid: #7A5C38;
+  --cream:    #FBF7F0;
+  --parchment:#F5ECD8;
+  --sand:     #DDD0B8;
+  --text-dk:  #1C1208;
+  --text-mid: #5C4A2E;
+  --text-lt:  #9A8570;
+}
+
+*,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
+html { scroll-behavior:smooth; overflow-x:hidden; }
+
+body {
+  font-family:'Inter', sans-serif;
+  font-weight:300;
+  background:var(--coal);
+  color:var(--cream);
+  overflow-x:hidden;
+}
+
+/* ── BURGER NAV ─────────────────────────────────────────── */
+.burger-nav {
+  position:fixed; top:20px; left:20px; z-index:500;
+}
+.burger-btn {
+  background:rgba(13,10,6,0.85); border:1px solid rgba(200,150,62,0.3);
+  border-radius:4px; width:44px; height:44px;
+  display:flex; flex-direction:column; align-items:center;
+  justify-content:center; gap:5px; cursor:pointer;
+  backdrop-filter:blur(8px); transition:all 0.2s; padding:0;
+}
+.burger-btn:hover { border-color:var(--amber); }
+.burger-btn span { display:block; width:18px; height:1.5px; background:var(--amber); border-radius:1px; transition:all 0.3s; }
+.burger-btn.open span:nth-child(1) { transform:translateY(6.5px) rotate(45deg); }
+.burger-btn.open span:nth-child(2) { opacity:0; transform:scaleX(0); }
+.burger-btn.open span:nth-child(3) { transform:translateY(-6.5px) rotate(-45deg); }
+.nav-overlay { position:fixed; inset:0; background:rgba(0,0,0,0.6); z-index:490; opacity:0; pointer-events:none; transition:opacity 0.3s; }
+.nav-overlay.open { opacity:1; pointer-events:all; }
+.nav-drawer { position:fixed; top:0; left:0; bottom:0; width:290px; background:var(--char); border-right:1px solid rgba(200,150,62,0.15); z-index:495; transform:translateX(-100%); transition:transform 0.35s cubic-bezier(0.4,0,0.2,1); display:flex; flex-direction:column; }
+.nav-drawer.open { transform:translateX(0); }
+.nav-drawer-header { display:flex; align-items:center; justify-content:space-between; padding:20px; border-bottom:1px solid rgba(200,150,62,0.1); height:64px; }
+.nav-logo-text { font-family:'Playfair Display',serif; font-size:16px; color:var(--amber); letter-spacing:0.1em; }
+.nav-close { background:none; border:none; color:var(--text-lt); font-size:24px; cursor:pointer; padding:4px 8px; line-height:1; }
+.nav-links { list-style:none; padding:16px 0; flex:1; overflow-y:auto; }
+.nav-link { display:block; padding:13px 24px; font-family:'Inter',sans-serif; font-size:14px; font-weight:300; color:var(--text-lt); text-decoration:none; transition:all 0.2s; border-left:2px solid transparent; }
+.nav-link:hover { color:var(--amber-lt); background:rgba(200,150,62,0.05); border-left-color:var(--amber); padding-left:28px; }
+.nav-cta-wrap { padding:16px 20px; border-top:1px solid rgba(200,150,62,0.1); }
+.nav-cta-btn { display:block; width:100%; background:var(--amber); color:var(--coal); font-family:'Inter',sans-serif; font-size:13px; font-weight:500; padding:13px 16px; border-radius:3px; text-decoration:none; text-align:center; letter-spacing:0.04em; transition:background 0.2s; }
+.nav-cta-btn:hover { background:var(--amber-lt); }
+
+/* ── SECTION 1: DARK HERO ───────────────────────────────── */
+.hero {
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding:80px 32px 60px;
+  position:relative;
+  overflow:hidden;
+  background:radial-gradient(ellipse 80% 60% at 50% 75%, rgba(224,90,27,0.22) 0%, transparent 65%),
+             radial-gradient(ellipse 60% 50% at 50% 60%, rgba(200,150,62,0.12) 0%, transparent 55%),
+             var(--coal);
+}
+
+/* Subtle particle field */
+.hero::before {
+  content:'';
+  position:absolute;
+  inset:0;
+  background-image:
+    radial-gradient(1px 1px at 20% 30%, rgba(200,150,62,0.4) 0%, transparent 100%),
+    radial-gradient(1px 1px at 80% 20%, rgba(200,150,62,0.3) 0%, transparent 100%),
+    radial-gradient(1px 1px at 60% 70%, rgba(200,150,62,0.25) 0%, transparent 100%),
+    radial-gradient(1px 1px at 35% 80%, rgba(200,150,62,0.2) 0%, transparent 100%),
+    radial-gradient(1px 1px at 75% 55%, rgba(200,150,62,0.3) 0%, transparent 100%),
+    radial-gradient(1.5px 1.5px at 10% 55%, rgba(232,130,26,0.35) 0%, transparent 100%),
+    radial-gradient(1.5px 1.5px at 90% 40%, rgba(232,130,26,0.3) 0%, transparent 100%),
+    radial-gradient(1px 1px at 50% 15%, rgba(200,150,62,0.25) 0%, transparent 100%);
+  pointer-events:none;
+}
+
+.hero-word {
+  font-family:'Playfair Display',serif;
+  font-size:clamp(11px,2.5vw,14px);
+  font-weight:400;
+  letter-spacing:0.35em;
+  text-transform:uppercase;
+  color:var(--amber);
+  margin-bottom:48px;
+  opacity:0;
+  animation:riseIn 1s ease 0.2s forwards;
+}
+
+/* ── FLAME ───────────────────────────────────────────────── */
+.flame-stage {
+  position:relative;
+  width:100px;
+  height:150px;
+  margin:0 auto 48px;
+  animation:breathe 4s ease-in-out infinite;
+}
+@keyframes breathe {
+  0%,100% { transform:translateY(0) scale(1); }
+  50% { transform:translateY(-10px) scale(1.02); }
+}
+.f-glow {
+  position:absolute;
+  bottom:-20px; left:50%;
+  transform:translateX(-50%);
+  width:120px; height:60px;
+  background:radial-gradient(ellipse, rgba(224,90,27,0.5) 0%, rgba(200,150,62,0.2) 40%, transparent 70%);
+  border-radius:50%;
+  animation:glowPulse 2s ease-in-out infinite alternate;
+}
+@keyframes glowPulse { 0%{opacity:0.6;transform:translateX(-50%) scale(0.9)} 100%{opacity:1;transform:translateX(-50%) scale(1.2)} }
+.f-outer {
+  position:absolute;
+  bottom:30px; left:50%;
+  transform:translateX(-50%);
+  width:50px; height:95px;
+  background:radial-gradient(ellipse at 50% 100%, #fff 0%, var(--amber-lt) 18%, var(--amber) 38%, var(--ember) 65%, rgba(224,90,27,0.3) 85%, transparent 100%);
+  border-radius:50% 50% 22% 22% / 60% 60% 40% 40%;
+  filter:blur(1.5px);
+  animation:flicker1 2s ease-in-out infinite alternate;
+}
+.f-inner {
+  position:absolute;
+  bottom:32px; left:50%;
+  transform:translateX(-50%);
+  width:28px; height:60px;
+  background:radial-gradient(ellipse at 50% 100%, rgba(255,255,255,0.95) 0%, rgba(255,230,120,0.7) 40%, transparent 80%);
+  border-radius:50% 50% 20% 20% / 60% 60% 40% 40%;
+  animation:flicker2 1.5s ease-in-out infinite alternate-reverse;
+}
+.f-wick {
+  position:absolute;
+  bottom:26px; left:50%;
+  transform:translateX(-50%);
+  width:2px; height:8px;
+  background:#1A0A00;
+  border-radius:1px;
+}
+.f-candle {
+  position:absolute;
+  bottom:0; left:50%;
+  transform:translateX(-50%);
+  width:16px; height:28px;
+  background:linear-gradient(180deg,#F0E6D3 0%,#D4C4A8 60%,#B8A882 100%);
+  border-radius:2px 2px 1px 1px;
+}
+@keyframes flicker1 {
+  0%{transform:translateX(-50%) scaleX(1) rotate(-1.5deg)}
+  100%{transform:translateX(-50%) scaleX(0.9) scaleY(1.06) rotate(2deg)}
+}
+@keyframes flicker2 {
+  0%{transform:translateX(-50%) rotate(1deg) scaleY(0.95)}
+  100%{transform:translateX(-50%) rotate(-1.5deg) scaleY(1.05)}
+}
+
+.hero-title {
+  font-family:'Playfair Display',serif;
+  font-size:clamp(42px,10vw,80px);
+  font-weight:400;
+  line-height:1.05;
+  color:#FDFAF5;
+  margin-bottom:20px;
+  opacity:0;
+  animation:riseIn 1s ease 0.5s forwards;
+}
+.hero-title em {
+  font-style:italic;
+  color:var(--amber-lt);
+}
+.hero-subtitle {
+  font-family:'Source Serif 4',serif;
+  font-size:clamp(16px,4vw,22px);
+  font-weight:300;
+  font-style:italic;
+  color:rgba(240,230,211,0.65);
+  line-height:1.6;
+  margin-bottom:48px;
+  max-width:520px;
+  opacity:0;
+  animation:riseIn 1s ease 0.8s forwards;
+}
+
+.cta-group {
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:14px;
+  opacity:0;
+  animation:riseIn 1s ease 1.1s forwards;
+}
+.btn-light {
+  display:inline-block;
+  background:var(--amber);
+  color:var(--coal);
+  font-family:'Inter',sans-serif;
+  font-size:15px;
+  font-weight:500;
+  letter-spacing:0.05em;
+  padding:20px 44px;
+  border-radius:3px;
+  text-decoration:none;
+  border:none;
+  cursor:pointer;
+  box-shadow:0 0 50px rgba(200,150,62,0.4), 0 0 100px rgba(224,90,27,0.2);
+  transition:all 0.3s;
+  -webkit-tap-highlight-color:transparent;
+}
+.btn-light:hover {
+  background:var(--amber-lt);
+  box-shadow:0 0 70px rgba(200,150,62,0.6), 0 0 120px rgba(224,90,27,0.3);
+  transform:translateY(-2px);
+}
+.cta-note {
+  font-size:12px;
+  color:var(--text-lt);
+  letter-spacing:0.04em;
+  line-height:1.8;
+}
+.cta-note strong { color:var(--amber); font-weight:400; }
+
+.hero-count {
+  margin-top:56px;
+  opacity:0;
+  animation:riseIn 1s ease 1.4s forwards;
+}
+.count-num {
+  font-family:'Playfair Display',serif;
+  font-size:clamp(48px,8vw,72px);
+  font-weight:400;
+  color:var(--amber);
+  line-height:1;
+  display:block;
+}
+.count-label {
+  font-size:11px;
+  letter-spacing:0.3em;
+  text-transform:uppercase;
+  color:var(--text-lt);
+  margin-top:8px;
+  display:block;
+}
+
+@keyframes riseIn {
+  from { opacity:0; transform:translateY(20px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+
+/* Scroll cue */
+.scroll-cue {
+  position:absolute;
+  bottom:32px; left:50%;
+  transform:translateX(-50%);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:8px;
+  opacity:0;
+  animation:riseIn 1s ease 2s forwards;
+}
+.scroll-cue span {
+  font-size:10px;
+  letter-spacing:0.25em;
+  text-transform:uppercase;
+  color:rgba(154,133,112,0.5);
+}
+.scroll-arrow {
+  width:1px; height:40px;
+  background:linear-gradient(180deg, rgba(200,150,62,0.5) 0%, transparent 100%);
+  animation:scrollArrow 2s ease-in-out infinite;
+}
+@keyframes scrollArrow {
+  0%,100% { transform:scaleY(1); opacity:0.5; }
+  50% { transform:scaleY(1.3); opacity:1; }
+}
+
+/* ── TRANSITION: dark to light ──────────────────────────── */
+.bridge {
+  background:linear-gradient(180deg,
+    var(--coal) 0%,
+    #1C1208 15%,
+    #2E1C0A 30%,
+    #4A2E14 45%,
+    #7A5028 58%,
+    #B8845A 70%,
+    #D4A878 80%,
+    #EDD8B8 90%,
+    var(--parchment) 100%
+  );
+  padding:100px 32px 80px;
+  position:relative;
+}
+
+.bridge-inner {
+  max-width:680px;
+  margin:0 auto;
+  text-align:center;
+}
+
+.bridge-eyebrow {
+  font-size:11px;
+  letter-spacing:0.3em;
+  text-transform:uppercase;
+  color:rgba(200,150,62,0.7);
+  margin-bottom:24px;
+}
+
+.bridge-quote {
+  font-family:'Playfair Display',serif;
+  font-size:clamp(26px,5vw,44px);
+  font-weight:400;
+  font-style:italic;
+  color:#F0E6D3;
+  line-height:1.35;
+  margin-bottom:32px;
+  opacity:0;
+  transition:opacity 0.8s, transform 0.8s;
+  transform:translateY(30px);
+}
+.bridge-quote.visible { opacity:1; transform:translateY(0); }
+.bridge-quote em { color:var(--amber-lt); font-style:normal; }
+
+.bridge-body {
+  font-family:'Source Serif 4',serif;
+  font-size:clamp(15px,3vw,18px);
+  font-weight:300;
+  color:rgba(240,230,211,0.7);
+  line-height:1.8;
+  opacity:0;
+  transition:opacity 0.8s 0.2s, transform 0.8s 0.2s;
+  transform:translateY(20px);
+}
+.bridge-body.visible { opacity:1; transform:translateY(0); }
+
+/* ── SECTION 2: LIGHT — THE PILLARS ────────────────────── */
+.pillars {
+  background:var(--parchment);
+  padding:100px 32px;
+}
+
+.pillars-header {
+  text-align:center;
+  max-width:600px;
+  margin:0 auto 80px;
+}
+.section-label {
+  font-size:11px;
+  letter-spacing:0.3em;
+  text-transform:uppercase;
+  color:var(--warm-mid);
+  margin-bottom:16px;
+  display:block;
+}
+.section-title-light {
+  font-family:'Playfair Display',serif;
+  font-size:clamp(34px,6vw,58px);
+  font-weight:400;
+  color:var(--text-dk);
+  line-height:1.1;
+  margin-bottom:16px;
+}
+.section-title-light em { font-style:italic; color:var(--amber); }
+.section-sub-light {
+  font-family:'Source Serif 4',serif;
+  font-size:17px;
+  font-weight:300;
+  font-style:italic;
+  color:var(--text-mid);
+  line-height:1.7;
+}
+
+.pillars-grid {
+  display:grid;
+  grid-template-columns:repeat(auto-fit, minmax(280px, 1fr));
+  gap:3px;
+  max-width:1100px;
+  margin:0 auto;
+}
+
+.pillar {
+  background:var(--cream);
+  padding:48px 36px;
+  position:relative;
+  overflow:hidden;
+  opacity:0;
+  transform:translateY(40px);
+  transition:opacity 0.7s, transform 0.7s;
+}
+.pillar.visible { opacity:1; transform:translateY(0); }
+.pillar::before {
+  content:'';
+  position:absolute;
+  top:0; left:0; right:0;
+  height:3px;
+}
+.pillar:nth-child(1)::before { background:linear-gradient(90deg,#E8821A,#C8963E); }
+.pillar:nth-child(2)::before { background:linear-gradient(90deg,#4A9B6E,#7AC99B); }
+.pillar:nth-child(3)::before { background:linear-gradient(90deg,#C8603E,#E88A6D); }
+.pillar:nth-child(4)::before { background:linear-gradient(90deg,#3E6AC8,#6D9BE8); }
+.pillar:nth-child(5)::before { background:linear-gradient(90deg,#C8963E,#E8B86D); }
+
+.pillar-icon {
+  font-size:32px;
+  margin-bottom:20px;
+  display:block;
+  line-height:1;
+}
+.pillar-word {
+  font-family:'Playfair Display',serif;
+  font-size:clamp(28px,4vw,38px);
+  font-weight:400;
+  color:var(--text-dk);
+  line-height:1.1;
+  margin-bottom:14px;
+}
+.pillar-desc {
+  font-family:'Source Serif 4',serif;
+  font-size:15px;
+  font-weight:300;
+  color:var(--text-mid);
+  line-height:1.75;
+}
+.pillar-delay-1 { transition-delay:0.1s; }
+.pillar-delay-2 { transition-delay:0.2s; }
+.pillar-delay-3 { transition-delay:0.3s; }
+.pillar-delay-4 { transition-delay:0.4s; }
+
+/* ── SECTION 3: THE MESSAGE ─────────────────────────────── */
+.message-section {
+  background:var(--cream);
+  border-top:1px solid rgba(180,150,110,0.2);
+  padding:100px 32px;
+}
+
+.message-inner {
+  max-width:720px;
+  margin:0 auto;
+}
+
+.message-eyebrow {
+  font-size:11px;
+  letter-spacing:0.3em;
+  text-transform:uppercase;
+  color:var(--warm-mid);
+  margin-bottom:28px;
+  display:block;
+}
+
+.message-title {
+  font-family:'Playfair Display',serif;
+  font-size:clamp(30px,5vw,50px);
+  font-weight:400;
+  color:var(--text-dk);
+  line-height:1.15;
+  margin-bottom:40px;
+}
+.message-title em { font-style:italic; color:var(--amber); }
+
+.message-body {
+  font-family:'Source Serif 4',serif;
+  font-size:clamp(16px,2.5vw,19px);
+  font-weight:300;
+  color:var(--text-mid);
+  line-height:1.9;
+}
+.message-body p { margin-bottom:24px; }
+.message-body strong { color:var(--text-dk); font-weight:400; }
+
+.message-sig {
+  margin-top:48px;
+  padding-top:32px;
+  border-top:1px solid rgba(180,150,110,0.2);
+}
+.sig-name {
+  font-family:'Playfair Display',serif;
+  font-size:30px;
+  font-style:italic;
+  color:var(--text-dk);
+  margin-bottom:4px;
+}
+.sig-role {
+  font-size:12px;
+  letter-spacing:0.15em;
+  text-transform:uppercase;
+  color:var(--warm-mid);
+}
+
+/* ── SECTION 4: HOW IT WORKS ────────────────────────────── */
+.how {
+  background:var(--parchment);
+  border-top:1px solid rgba(180,150,110,0.2);
+  padding:100px 32px;
+}
+
+.how-inner {
+  max-width:900px;
+  margin:0 auto;
+}
+
+.how-header {
+  text-align:center;
+  margin-bottom:70px;
+}
+
+.how-steps {
+  display:grid;
+  grid-template-columns:repeat(auto-fit, minmax(250px,1fr));
+  gap:48px;
+}
+
+.how-step {
+  opacity:0;
+  transform:translateY(30px);
+  transition:opacity 0.7s, transform 0.7s;
+}
+.how-step.visible { opacity:1; transform:translateY(0); }
+
+.step-num {
+  font-family:'Playfair Display',serif;
+  font-size:56px;
+  font-weight:400;
+  color:rgba(200,150,62,0.25);
+  line-height:1;
+  margin-bottom:16px;
+}
+.step-title {
+  font-family:'Playfair Display',serif;
+  font-size:22px;
+  font-weight:400;
+  color:var(--text-dk);
+  margin-bottom:10px;
+}
+.step-desc {
+  font-family:'Source Serif 4',serif;
+  font-size:15px;
+  font-weight:300;
+  color:var(--text-mid);
+  line-height:1.75;
+}
+
+/* ── SECTION 5: CTA ─────────────────────────────────────── */
+.final-cta {
+  background:var(--char);
+  padding:120px 32px;
+  text-align:center;
+  position:relative;
+  overflow:hidden;
+}
+.final-cta::before {
+  content:'';
+  position:absolute;
+  inset:0;
+  background:radial-gradient(ellipse 70% 60% at 50% 80%, rgba(224,90,27,0.25) 0%, transparent 65%),
+             radial-gradient(ellipse 50% 40% at 50% 60%, rgba(200,150,62,0.15) 0%, transparent 55%);
+  pointer-events:none;
+}
+
+.final-cta-inner {
+  position:relative;
+  z-index:1;
+  max-width:600px;
+  margin:0 auto;
+}
+
+.final-flame-mini {
+  font-size:48px;
+  margin-bottom:32px;
+  display:block;
+  animation:breathe 4s ease-in-out infinite;
+}
+
+.final-title {
+  font-family:'Playfair Display',serif;
+  font-size:clamp(36px,7vw,64px);
+  font-weight:400;
+  color:var(--cream);
+  line-height:1.1;
+  margin-bottom:16px;
+}
+.final-title em { font-style:italic; color:var(--amber-lt); }
+
+.final-sub {
+  font-family:'Source Serif 4',serif;
+  font-size:clamp(15px,3vw,19px);
+  font-weight:300;
+  font-style:italic;
+  color:rgba(240,230,211,0.6);
+  line-height:1.7;
+  margin-bottom:48px;
+}
+
+.btn-light-lg {
+  display:inline-block;
+  background:var(--amber);
+  color:var(--coal);
+  font-family:'Inter',sans-serif;
+  font-size:16px;
+  font-weight:500;
+  letter-spacing:0.05em;
+  padding:22px 52px;
+  border-radius:3px;
+  text-decoration:none;
+  border:none;
+  cursor:pointer;
+  box-shadow:0 0 60px rgba(200,150,62,0.45), 0 0 120px rgba(224,90,27,0.25);
+  transition:all 0.3s;
+  -webkit-tap-highlight-color:transparent;
+  margin-bottom:20px;
+  display:block;
+  max-width:360px;
+  margin-left:auto;
+  margin-right:auto;
+}
+.btn-light-lg:hover {
+  background:var(--amber-lt);
+  transform:translateY(-3px);
+  box-shadow:0 0 80px rgba(200,150,62,0.6), 0 0 140px rgba(224,90,27,0.35);
+}
+
+.final-note {
+  font-size:13px;
+  color:rgba(154,133,112,0.7);
+  line-height:1.9;
+  margin-top:20px;
+}
+.final-note strong { color:var(--amber-lt); font-weight:400; }
+
+/* ── FOOTER ─────────────────────────────────────────────── */
+footer {
+  background:var(--coal);
+  border-top:1px solid rgba(200,150,62,0.08);
+  padding:48px 32px 40px;
+  text-align:center;
+}
+.footer-logo {
+  font-family:'Playfair Display',serif;
+  font-size:20px;
+  color:var(--amber);
+  letter-spacing:0.1em;
+  margin-bottom:24px;
+}
+.footer-links {
+  display:flex;
+  gap:20px;
+  justify-content:center;
+  flex-wrap:wrap;
+  margin-bottom:24px;
+}
+.footer-links a {
+  font-size:12px;
+  color:var(--text-lt);
+  text-decoration:none;
+  letter-spacing:0.04em;
+  transition:color 0.2s;
+}
+.footer-links a:hover { color:var(--amber); }
+.footer-copy {
+  font-size:11px;
+  color:rgba(154,133,112,0.4);
+}
+
+/* ── COOKIE BANNER ──────────────────────────────────────── */
+.cookie-banner {
+  position:fixed;
+  bottom:0; left:0; right:0;
+  background:var(--char);
+  border-top:1px solid rgba(200,150,62,0.2);
+  padding:16px 24px;
+  z-index:1000;
+  display:flex;
+  align-items:center;
+  gap:16px;
+  flex-wrap:wrap;
+  transform:translateY(100%);
+  transition:transform 0.4s ease;
+}
+.cookie-banner.visible { transform:translateY(0); }
+.cookie-text { font-size:12px; color:var(--text-lt); line-height:1.6; flex:1; min-width:200px; }
+.cookie-text a { color:var(--amber); text-decoration:none; }
+.cookie-btns { display:flex; gap:8px; flex-shrink:0; }
+.cookie-btn { font-size:12px; font-family:'Inter',sans-serif; padding:8px 16px; border-radius:3px; cursor:pointer; border:1px solid rgba(200,150,62,0.3); background:none; color:var(--text-lt); transition:all 0.2s; }
+.cookie-btn.accept { background:var(--amber); color:var(--coal); border-color:var(--amber); font-weight:500; }
+.cookie-btn:hover { border-color:var(--amber); color:var(--amber); }
+.cookie-btn.accept:hover { background:var(--amber-lt); }
+
+/* ── RESPONSIVE ─────────────────────────────────────────── */
+@media(max-width:600px) {
+  .bridge { padding:70px 24px 60px; }
+  .pillars, .message-section, .how, .final-cta { padding:70px 24px; }
+  .how-steps { gap:36px; }
+}
+</style>
+</head>
+<body>
+
+<!-- BURGER NAV -->
+<div class="burger-nav">
+  <button class="burger-btn" id="burgerBtn" onclick="toggleNav()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</div>
+<div class="nav-overlay" id="navOverlay" onclick="toggleNav()"></div>
+<nav class="nav-drawer" id="navDrawer">
+  <div class="nav-drawer-header">
+    <span class="nav-logo-text">One Flame</span>
+    <button class="nav-close" onclick="toggleNav()">×</button>
+  </div>
+  <ul class="nav-links">
+    <li><a href="index.html" class="nav-link">🏠 Home</a></li>
+    <li><a href="map.html" class="nav-link">🗺 The Living Map</a></li>
+    <li><a href="flames.html" class="nav-link">🕯 All Flames</a></li>
+    <li><a href="countries.html" class="nav-link">🌍 Countries</a></li>
+    <li><a href="certificate.html" class="nav-link">📜 My Certificate</a></li>
+    <li><a href="accounts.html" class="nav-link">💰 Transparency</a></li>
+    <li><a href="receipts.html" class="nav-link">🤝 Our Story</a></li>
+    <li><a href="terms.html" class="nav-link">📋 Terms</a></li>
+    <li><a href="privacy.html" class="nav-link">🔒 Privacy</a></li>
+    <li><a href="cookies.html" class="nav-link">🍪 Cookies</a></li>
+  </ul>
+  <div class="nav-cta-wrap">
+    <a href="https://buy.stripe.com/cNi9AU0At8DecDL7rPeME04" class="nav-cta-btn">🕯 Your candle always — £1.78</a>
+  </div>
+</nav>
+
+<!-- ── HERO: DARK ─────────────────────────────────────── -->
+<section class="hero">
+  <p class="hero-word">One Flame</p>
+
+  <div class="flame-stage">
+    <div class="f-glow"></div>
+    <div class="f-outer"></div>
+    <div class="f-inner"></div>
+    <div class="f-wick"></div>
+    <div class="f-candle"></div>
+  </div>
+
+  <h1 class="hero-title">Your candle.<br><em>Always.</em></h1>
+  <p class="hero-subtitle">One fee. Yours forever.<br>Relight it any time you choose.</p>
+
+  <div class="cta-group">
+    <a href="https://buy.stripe.com/cNi9AU0At8DecDL7rPeME04" class="btn-light">
+      🕯 Your candle always. Relight anytime.
+    </a>
+    <p class="cta-note">
+      Apple Pay · Card · Secure via Stripe<br>
+      <strong>£1.78 once. Free to relight. Your certificate included.</strong>
+    </p>
+  </div>
+
+  <div class="hero-count">
+    <span class="count-num" id="counter">—</span>
+    <span class="count-label">candles burning around the world</span>
+  </div>
+
+  <div class="scroll-cue">
+    <span>Scroll</span>
+    <div class="scroll-arrow"></div>
+  </div>
+</section>
+
+<!-- ── BRIDGE: DARK TO LIGHT ─────────────────────────── -->
+<section class="bridge">
+  <div class="bridge-inner">
+    <p class="bridge-eyebrow">What this is</p>
+    <blockquote class="bridge-quote fade-in">
+      Not a petition. Not a protest.<br>
+      <em>Something visible, living, growing in real time.</em>
+    </blockquote>
+    <p class="bridge-body fade-in">
+      One Flame started as a question. What if we could show the people who make decisions, 
+      in a way they could not ignore, that the majority of the world simply wants peace?<br><br>
+      Every person who lights a candle on this map adds their voice to something that did not exist before. 
+      You stand next to strangers from countries you may never visit, and you say the same thing they said.
+    </p>
+  </div>
+</section>
+
+<!-- ── PILLARS: LIGHT ─────────────────────────────────── -->
+<section class="pillars">
+  <div class="pillars-header">
+    <span class="section-label">What we believe</span>
+    <h2 class="section-title-light">Five words.<br><em>One truth.</em></h2>
+    <p class="section-sub-light">Each flame lit here is a voice that says: this is what I want for the world.</p>
+  </div>
+
+  <div class="pillars-grid">
+    <div class="pillar fade-in">
+      <span class="pillar-icon">🕊</span>
+      <h3 class="pillar-word">Peace</h3>
+      <p class="pillar-desc">A candle for calm where there is conflict. For quiet where there is noise. For the world your children will inherit.</p>
+    </div>
+    <div class="pillar fade-in pillar-delay-1">
+      <span class="pillar-icon">🌱</span>
+      <h3 class="pillar-word">Hope</h3>
+      <p class="pillar-desc">A candle lit on behalf of belief itself. That things get better. That people are mostly good. That tomorrow can be different.</p>
+    </div>
+    <div class="pillar fade-in pillar-delay-2">
+      <span class="pillar-icon">🤲</span>
+      <h3 class="pillar-word">Health</h3>
+      <p class="pillar-desc">For someone who is ill. For someone you love who is struggling. A candle lit in the space between worry and faith.</p>
+    </div>
+    <div class="pillar fade-in pillar-delay-3">
+      <span class="pillar-icon">❤️</span>
+      <h3 class="pillar-word">Love</h3>
+      <p class="pillar-desc">For a person, a place, a memory. For the neighbour you barely know but care about anyway. Love made visible on a map.</p>
+    </div>
+    <div class="pillar fade-in pillar-delay-4">
+      <span class="pillar-icon">👶</span>
+      <h3 class="pillar-word">For the children</h3>
+      <p class="pillar-desc">The simplest reason of all. Light a candle for the ones who did not choose the world they were born into, and deserve better than the one we're giving them.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ── THE FOUNDER MESSAGE ────────────────────────────── -->
+<section class="message-section">
+  <div class="message-inner">
+    <span class="message-eyebrow">A personal message</span>
+    <h2 class="message-title">You did not just spend<br><em>£1.78.</em></h2>
+    <div class="message-body">
+      <p>You added your voice to something that did not exist before. You stood next to strangers from countries you may never visit, and said the same thing they said. <strong>Enough. We want something better.</strong></p>
+      <p>One Flame started as a question. What if we could show the people who make decisions, in a way they could not ignore, that the majority of the world simply wants peace? Not a petition. Not a protest. Something visible, living, growing in real time.</p>
+      <p>Every single person who lights a candle on this map makes that possible. The charity donations are not the point of this. They are a promise kept. When I said your flame would help others, I meant it, and the receipts on this site are the proof.</p>
+      <p>I do not know where One Flame goes from here. I know it started with a map of golden lights growing slowly from nothing. And I know that every one of those lights was a real person, making a real choice to believe that their voice matters.</p>
+      <p><strong>It does. You do. Thank you for being part of this.</strong></p>
+    </div>
+    <div class="message-sig">
+      <div class="sig-name">Michael C</div>
+      <div class="sig-role">Founder · oneflame.earth</div>
+    </div>
+  </div>
+</section>
+
+<!-- ── HOW IT WORKS ───────────────────────────────────── -->
+<section class="how">
+  <div class="how-inner">
+    <div class="how-header">
+      <span class="section-label">Simple as a candle</span>
+      <h2 class="section-title-light">How it <em>works</em></h2>
+    </div>
+    <div class="how-steps">
+      <div class="how-step fade-in">
+        <div class="step-num">01</div>
+        <h3 class="step-title">Light your candle</h3>
+        <p class="step-desc">One payment of £1.78. Your candle appears on the live world map immediately. Anonymous by default — make it yours with a name and a place if you choose.</p>
+      </div>
+      <div class="how-step fade-in pillar-delay-1">
+        <div class="step-num">02</div>
+        <h3 class="step-title">It burns for 7 days</h3>
+        <p class="step-desc">Your candle glows on the map for seven days. When it goes out, it leaves a trace. A ghost of light. Proof you were here.</p>
+      </div>
+      <div class="how-step fade-in pillar-delay-2">
+        <div class="step-num">03</div>
+        <h3 class="step-title">Relight. Always free.</h3>
+        <p class="step-desc">Your candle is yours forever. Relight it any time, as many times as you want. No further charge. Your flame never truly goes out.</p>
+      </div>
+      <div class="how-step fade-in pillar-delay-3">
+        <div class="step-num">04</div>
+        <h3 class="step-title">Your certificate</h3>
+        <p class="step-desc">Provide your email at any point and receive a certificate of peace. Proof that you were part of this. Your name, your candle code, your flame on the map.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FINAL CTA ──────────────────────────────────────── -->
+<section class="final-cta">
+  <div class="final-cta-inner">
+    <span class="final-flame-mini">🕯</span>
+    <h2 class="final-title">Your candle.<br><em>Your voice.</em><br>Always.</h2>
+    <p class="final-sub">Join people from every corner of this planet<br>who chose to believe it matters.</p>
+    <a href="https://buy.stripe.com/cNi9AU0At8DecDL7rPeME04" class="btn-light-lg">
+      🕯 Light my candle — £1.78
+    </a>
+    <p class="final-note">
+      One fee. Yours forever. Free to relight any time.<br>
+      <strong>Certificate provided. Secure via Stripe.</strong><br>
+      Apple Pay · Debit · Credit Card
+    </p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">One Flame</div>
+  <div class="footer-links">
+    <a href="map.html">Living Map</a>
+    <a href="flames.html">All Flames</a>
+    <a href="countries.html">Countries</a>
+    <a href="certificate.html">Certificate</a>
+    <a href="receipts.html">Our Story</a>
+    <a href="accounts.html">Transparency</a>
+    <a href="terms.html">Terms</a>
+    <a href="privacy.html">Privacy</a>
+    <a href="cookies.html">Cookies</a>
+  </div>
+  <p class="footer-copy">© 2026 One Flame · oneflame.earth · All rights reserved</p>
+</footer>
+
+<!-- COOKIE BANNER -->
+<div class="cookie-banner" id="cookieBanner">
+  <p class="cookie-text">We use cookies to understand how people find this site and to improve it. See our <a href="cookies.html">Cookie Policy</a>.</p>
+  <div class="cookie-btns">
+    <button class="cookie-btn" onclick="declineCookies()">Essential only</button>
+    <button class="cookie-btn accept" onclick="acceptCookies()">Accept</button>
+  </div>
+</div>
+
+<script>
+const SUPABASE_URL = 'https://rytjvdptbjnlhayclcvu.supabase.co';
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJ5dGp2ZHB0YmpubGhheWNsY3Z1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzUzMzA1MjksImV4cCI6MjA5MDkwNjUyOX0.y6qVpN-tJKafDVY_yUk0K6yQ9xXYy5xfIhFoJvqWf48';
+
+// Counter
+let displayedCount = 0;
+async function fetchCount() {
+  try {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/candles?payment_confirmed=eq.true&select=id`, {
+      headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}`, 'Prefer': 'count=exact', 'Range': '0-0' }
+    });
+    const h = res.headers.get('content-range');
+    return h ? parseInt(h.split('/')[1]) || 0 : 0;
+  } catch(e) { return 0; }
+}
+
+function animateCount(target) {
+  const el = document.getElementById('counter');
+  const start = displayedCount;
+  const dur = 2000;
+  const t0 = performance.now();
+  function tick(t) {
+    const p = Math.min((t - t0) / dur, 1);
+    const e = 1 - Math.pow(1 - p, 3);
+    displayedCount = Math.floor(start + (target - start) * e);
+    el.textContent = displayedCount.toLocaleString();
+    if (p < 1) requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+}
+
+// Scroll animations
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.12 });
+document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+// Burger nav
+function toggleNav() {
+  const btn = document.getElementById('burgerBtn');
+  const drawer = document.getElementById('navDrawer');
+  const overlay = document.getElementById('navOverlay');
+  if (!btn || !drawer || !overlay) return;
+  const open = drawer.classList.contains('open');
+  btn.classList.toggle('open', !open);
+  drawer.classList.toggle('open', !open);
+  overlay.classList.toggle('open', !open);
+  document.body.style.overflow = !open ? 'hidden' : '';
+}
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
+    const d = document.getElementById('navDrawer');
+    if (d && d.classList.contains('open')) toggleNav();
+  }
+});
+
+// Cookies
+function acceptCookies() {
+  localStorage.setItem('oneflame_cookie_consent','all');
+  hideCookie();
+}
+function declineCookies() {
+  localStorage.setItem('oneflame_cookie_consent','essential');
+  hideCookie();
+}
+function hideCookie() {
+  const b = document.getElementById('cookieBanner');
+  b.style.transform = 'translateY(100%)';
+  setTimeout(() => b.remove(), 400);
+}
+
+window.addEventListener('load', async () => {
+  const n = await fetchCount();
+  animateCount(n);
+  setInterval(async () => {
+    const n2 = await fetchCount();
+    if (n2 > displayedCount) animateCount(n2);
+  }, 60000);
+
+  if (!localStorage.getItem('oneflame_cookie_consent')) {
+    setTimeout(() => document.getElementById('cookieBanner').classList.add('visible'), 2000);
+  }
+});
+</script>
+</body>
+</html>
